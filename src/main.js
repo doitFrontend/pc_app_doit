@@ -13,11 +13,18 @@ import { hasPermission } from '@/utils/index';
 import axios from 'axios';
 import REGEXP from '@/utils/regExp';
 
+// element辅助
+import { Autocomplete } from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import './theme/element_index.scss';
+Vue.use(Autocomplete);
+
 Vue.use(router);
 Vue.use(store);
 Vue.use(iView);
 
 Vue.prototype.hasPermission = hasPermission;
+// 根据env获取路径
 const baseURL = process.env.API;
 console.log(baseURL);
 axios.defaults.baseURL = baseURL;

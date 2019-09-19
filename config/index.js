@@ -11,13 +11,14 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '/3rdApis': {
-      //   target: 'https://www.ele.me/restapi/shopping/v1/cities',
-      //   changeOrigin: true,
-      //   pathRewrite: {
-      //     '^/3rdApis': '',
-      //   },
-      // },
+      '/3rdApis': {
+        // target: 'https://www.ele.me/restapi/shopping/v1/cities',
+        target: 'https://www.ele.me/restapi/shopping/v1',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/3rdApis': '',
+        },
+      },
       // '/localApis': {
       //   // target: 'http://192.168.1.254:8080/diantuo/',
       //   target: 'https://dtwx3.doit10019.com/diantuo/',

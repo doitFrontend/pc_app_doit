@@ -1,6 +1,7 @@
 <template>
     <div id="gymDetails">
       <div class="inner">
+        <div>场馆介绍</div>
         <div>
           <Tabs value="ticket" type="card">
             <TabPane label="购票" name="ticket">
@@ -46,10 +47,14 @@ export default {
         display: inline-block;
         background: lightpink;
         &:nth-child(1) {
+          display: block;
+          padding: 1em;
+        }
+        &:nth-child(2) {
           background: #fff;
           width: 700px;
         }
-        &:nth-child(2) {
+        &:nth-child(3) {
           width: 272px;
         }
       }

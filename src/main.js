@@ -70,6 +70,12 @@ router.beforeEach((to, from, next) => {
   }
 });
 
+// mode: hash模式下，解决路由跳转，页面会记住滚动位置的问题
+router.afterEach(() => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

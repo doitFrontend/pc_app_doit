@@ -4,7 +4,7 @@
       <div class="inner">
         <Row :gutter="16">
           <Col :sm="4" :md="4" :lg="4">
-            <div>票类别：</div>
+            <div class="label">票类别：</div>
           </Col>
           <Col :sm="18" :md="18" :lg="18">
             <RadioGroup v-model="default_button" type="button">
@@ -124,6 +124,11 @@ export default {
     .container {
       .inner {
         padding: 0 1em;
+        &:nth-child(1) {
+          .label {
+            text-align: center;
+          }
+        }
         &:nth-child(3) {
           min-height: 500px;
           .item_ticket {

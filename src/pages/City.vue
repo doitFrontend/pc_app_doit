@@ -6,17 +6,18 @@
           <Row :gutter="16">
             <Col span="12">
               按省份选择：
-              <!-- <Select v-model="model">
-                <Option v-for="pitem in pList" :value="value" :key="item"></Option>
+              <Select size="large" v-model="pModel" style="width: 140px;" @on-change="handleChooseProvince">
+                <Option v-for="pItem in provinceList" :value="pItem.value" :key="pItem.value">{{pItem.label}}</Option>
               </Select>
-              <Select v-model="model">
-                <Option v-for="citem in cList" :value="value" :key="item"></Option>
-              </Select> -->
+              <Select :disabled="!(cityList.length)" size="large" v-model="cModel" style="width: 140px;">
+                <Option v-for="cItem in cityList" :value="cItem.value" :key="cItem.value" @click.native="chooseCity(cItem.label, 'hot')">{{cItem.label}}</Option>
+              </Select>
             </Col>
             <Col span="8">
               直接搜索：
               <el-autocomplete
                 class="inline-input"
+                size="medium"
                 v-model="likeCityName"
                 placeholder="请输入城市中文或拼音"
                 :fetch-suggestions="querySearch"
@@ -59,6 +60,7 @@
 <script>
 import BackToTop from '@/components/BackToTop';
 import cityJson from '@/utils/city.json';
+import provinceCity from '@/utils/provinceCity';
 import { ajax } from 'jquery';
 export default {
   name: 'City',
@@ -72,6 +74,10 @@ export default {
       guessCityName: '',
       likeCityName: '',
       cityJsonTemp: [], // 用于模糊查询的所有城市数据
+      provinceList: [],
+      cityList: [],
+      pModel: '',
+      cModel: '',
     };
   },
   computed: {
@@ -91,6 +97,10 @@ export default {
     window.removeEventListener('scroll', this.fixHeader);
   },
   methods: {
+    handleChooseProvince(pValue) {
+      let tempCityList = (this.provinceList.filter(pItem => pItem.value === pValue));
+      this.cityList = tempCityList[0].children;
+    },
     handleSelect(item) {
       this.chooseCity(item.name, 'hot');
     },
@@ -116,6 +126,9 @@ export default {
       });
     },
     getCityList() {
+      // 省市级联
+      this.provinceList = JSON.parse(JSON.stringify(provinceCity));
+      // 直接搜索
       this.listData = cityJson;
       this.letterList = [...Object.keys(cityJson)];
       this.letterList.forEach((item) => {

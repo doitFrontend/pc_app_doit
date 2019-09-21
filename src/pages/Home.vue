@@ -5,7 +5,7 @@
       <div class="inner">
         <h2>附近场馆</h2>
         <Row>
-          <Col :sm="12" :md="12" :lg="8" v-for="(item, i) in MockData.goodLists" :key="i">
+          <Col :sm="12" :md="12" :lg="8" v-for="(item, i) in goodLists" :key="i">
             <goods-item :imgSrc="item.img" :baseRate="10" @goodItemDetails="gotoGym(item)">
               <span slot="title" style="font-size: 16px;">{{item.title}}</span>
               <span slot="rate">{{item.rate}} {{item.comment}}条评价</span>
@@ -34,12 +34,11 @@
       <div class="inner">
         <h2>热门赛事</h2>
         <Row>
-          <Col :sm="12" :md="12" :lg="6" v-for="(item, i) in MockData.hotGameLists" :key="i">
+          <Col :sm="12" :md="12" :lg="6" v-for="(item, i) in hotGameLists" :key="i">
             <goods-item :imgSrc="item.img" :baseRate="10" :o_height="410" :i_height="310">
-              <span slot="title" style="font-size: 16px;">{{item.title}}</span>
-              <span slot="rate">{{item.rate}} {{item.comment}}条评价</span>
-              <span slot="address">{{item.address}}</span>
-              <span slot="price">人均消费<span style="color: #ffac2d">￥{{item.price}}</span></span>
+              <span slot="title" style="font-size: 14px;">{{item.event}}</span><br>
+              <span slot="address">{{item.title}}-{{item.time}}</span>
+              <span slot="price"><span style="color: #ffac2d">￥{{item.price}} 起</span></span>
             </goods-item>
           </Col>
         </Row>
@@ -69,6 +68,7 @@
 </template>
 <script>
 import GoodsItem from '@/components/GoodsItem.vue';
+import { goodLists, hotGameLists } from '@/utils/mockdata';
 import Mock from 'mockjs';
 export default {
   name: 'Home',
@@ -82,26 +82,10 @@ export default {
     };
   },
   created() {
+    this.goodLists = goodLists;
+    this.hotGameLists = hotGameLists;
     setTimeout(() => {
       this.MockData = Mock.mock({
-        'goodLists|6': [{
-          'id|+1': 1,
-          'img': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566215007264&di=2795f9a4d030891b83edeb928048237f&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2F61c712f4a4da4e7b13e22de8a1a6a652348ee102.jpg', // 加载的动画 && 加载完没有图片的，给个默认图片
-          'title': '点拓体育中心',
-          'rate': 9.8,
-          'comment': 98,
-          'address': '世伦路',
-          'price': 1000,
-        }],
-        'hotGameLists|4': [{
-          'id|+1': 1,
-          'img': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566215007264&di=2795f9a4d030891b83edeb928048237f&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2F61c712f4a4da4e7b13e22de8a1a6a652348ee102.jpg', // 加载的动画 && 加载完没有图片的，给个默认图片
-          'title': '点拓体育中心',
-          'rate': 9.8,
-          'comment': 78,
-          'address': '世伦路',
-          'price': 1000,
-        }],
         'hotSaleLists|6': [{
           'id|+1': 1,
           'img': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566215007264&di=2795f9a4d030891b83edeb928048237f&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2F61c712f4a4da4e7b13e22de8a1a6a652348ee102.jpg', // 加载的动画 && 加载完没有图片的，给个默认图片
@@ -112,7 +96,7 @@ export default {
           'price': 1000,
         }]
       });
-    }, 1000);
+    }, 500);
   },
   methods: {
     gotoGym(item) {
@@ -163,16 +147,19 @@ export default {
           &:nth-child(1) {
             div {
               height: inherit;
-              background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566215007264&di=2795f9a4d030891b83edeb928048237f&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2F61c712f4a4da4e7b13e22de8a1a6a652348ee102.jpg') no-repeat;
+              background: url('../assets/temp/goswim.png') no-repeat;
+              background-size: contain;
+              background-position: center;
             }
           }
           &:nth-child(2) {
             div {
               margin-left: 1em;
-              background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566215007264&di=2795f9a4d030891b83edeb928048237f&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2F61c712f4a4da4e7b13e22de8a1a6a652348ee102.jpg') no-repeat;
+              background: url('../assets/temp/gobasket.png') no-repeat;
               height: 48%;
               &:nth-child(2) {
                 margin-top: 1em;
+                background: url('../assets/temp/gopinpong.png') no-repeat;
               }
             }
           }

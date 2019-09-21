@@ -37,6 +37,7 @@ Vue.config.productionTip = false;
 Vue.prototype.REGEXP = REGEXP;
 
 router.beforeEach((to, from, next) => {
+  iView.LoadingBar.start();
   // to and from are both route objects. must call `next`.
   console.log(to.fullPath);
   let notOpenUrl = ['/train', '/games', 'mall', '/community'];
@@ -72,6 +73,7 @@ router.beforeEach((to, from, next) => {
 
 // mode: hash模式下，解决路由跳转，页面会记住滚动位置的问题
 router.afterEach(() => {
+  iView.LoadingBar.finish();
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 });

@@ -145,7 +145,7 @@ $g_border_radius: 20px;
   .header {
     width: 100%;
     height: 6em;
-    background: #bdbdbd;
+    background: $g_default_color;
     .header_inner {
       height: inherit;
       width: $g_width;
@@ -172,7 +172,10 @@ $g_border_radius: 20px;
           height: inherit;
           .ivu-btn-default {
             color: #fff;
-            background: #bdbdbd;
+            background: $g_default_color;
+            &:hover {
+              border-color: #fff;
+            }
           }
         }
       }

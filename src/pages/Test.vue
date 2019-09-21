@@ -19,6 +19,7 @@
   </div>
 </template>
 <script>
+import provinceCity from '@/utils/provinceCity';
 export default {
   data() {
     return {
@@ -63,6 +64,7 @@ export default {
         },
       ],
       msg: Date(),
+      tempCityList: [],
     };
   },
   created() {
@@ -71,6 +73,9 @@ export default {
     console.log(this.$route.params);
     this.msg = Date() + 'c';
     this.atest();
+    console.log(provinceCity);
+    this.handleRecursive(provinceCity);
+    console.log(this.tempCityList);
   },
   // watch: {
   //   '$route'(to, from) {
@@ -84,6 +89,24 @@ export default {
   methods: {
     atest() {
       console.log(this);
+    },
+    handleRecursive(data) {
+      if (Object.prototype.toString.call(data) === '[object Object]') {
+        // data.hasOwnProperty('children') // children字段是判断是否需要递归的重要字段
+        if (data.hasOwnProperty('children')) {
+          this.handleRecursive(data);
+        } else {
+          this.tempCityList.push(data);
+        }
+      } else if (Object.prototype.toString.call(data) === '[object Array]') {
+        data.forEach(item => {
+          if (!item.hasOwnProperty('children')) {
+            this.tempCityList.push(item);
+          } else {
+            this.handleRecursive(item.children);
+          }
+        });
+      };
     },
   },
 };

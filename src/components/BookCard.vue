@@ -46,7 +46,6 @@
 <script>
 import ButtonGroups from './ButtonGroups';
 import Mock from 'mockjs';
-const Random = Mock.Random;
 export default {
   name: 'BookCard',
   components: {
@@ -100,10 +99,9 @@ export default {
       'cardLists|6': [{
         'id|+1': 1,
         'icon': '#icon-youyong',
-        'title': '羽毛球年卡',
-        'rate': Random.integer(0, 10),
-        'price': Random.integer(60, 100),
-        'time': '2022-09-08',
+        'title|1': ['游泳季卡', '器械健身月卡', '羽毛球年卡', '篮球年卡'],
+        'price|1': [120, 320, 200, 400, 280],
+        'time|1': ['2019-11-20', '2019-11-23', '2019-11-29'],
         'num': 0,
       }],
     });

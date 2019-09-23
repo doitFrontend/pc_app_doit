@@ -3,7 +3,7 @@
     <div class="showImg"></div>
     <div class="container">
       <div class="inner">
-        <h2>附近场馆</h2>
+        <h2>附近场馆<Button size="small">更多</Button></h2>
         <Row>
           <Col :sm="12" :md="12" :lg="8" v-for="(item, i) in goodLists" :key="i">
             <goods-item :imgSrc="item.img" :baseRate="10" @goodItemDetails="gotoGym(item)">
@@ -18,7 +18,7 @@
     </div>
     <div class="container">
       <div class="inner">
-        <h2>超值课程</h2>
+        <h2>超值课程<Button size="small">更多</Button></h2>
         <Row>
           <Col :sm="15" :md="15" :lg="15">
             <div></div>
@@ -32,7 +32,7 @@
     </div>
     <div class="container">
       <div class="inner">
-        <h2>热门赛事</h2>
+        <h2>热门赛事<Button size="small">更多</Button></h2>
         <Row>
           <Col :sm="12" :md="12" :lg="6" v-for="(item, i) in hotGameLists" :key="i">
             <goods-item :imgSrc="item.img" :baseRate="10" :o_height="410" :i_height="310">
@@ -46,19 +46,18 @@
     </div>
     <div class="container">
       <div class="inner">
-        <h2>特惠热卖</h2>
+        <h2>特惠热卖<Button size="small">更多</Button></h2>
         <Row>
           <Col :sm="12" :md="12" :lg="6">
             <div class="sale">
 
             </div>
           </Col>
-          <Col :sm="12" :md="12" :lg="6" v-for="(item, i) in MockData.hotSaleLists" :key="i">
+          <Col :sm="12" :md="12" :lg="6" v-for="(item, i) in hotSaleLists" :key="i">
             <goods-item :imgSrc="item.img" :baseRate="10">
               <span slot="title" style="font-size: 16px;">{{item.title}}</span>
-              <span slot="rate">{{item.rate}} {{item.comment}}条评价</span>
-              <span slot="address">{{item.address}}</span>
-              <span slot="price">人均消费<span style="color: #ffac2d">￥{{item.price}}</span></span>
+              <span slot="rate">{{item.rate}}</span>
+              <span slot="price">商品价格<span style="color: #ffac2d">￥{{item.price}}</span></span>
             </goods-item>
           </Col>
         </Row>
@@ -68,8 +67,7 @@
 </template>
 <script>
 import GoodsItem from '@/components/GoodsItem.vue';
-import { goodLists, hotGameLists } from '@/utils/mockdata';
-import Mock from 'mockjs';
+import { goodLists, hotGameLists, hotSaleLists } from '@/utils/mockdata';
 export default {
   name: 'Home',
   components: { GoodsItem },
@@ -78,30 +76,18 @@ export default {
       goodLists: [],
       hotGameLists: [],
       hotSaleLists: [],
-      MockData: {},
     };
   },
   created() {
     this.goodLists = goodLists;
     this.hotGameLists = hotGameLists;
-    setTimeout(() => {
-      this.MockData = Mock.mock({
-        'hotSaleLists|6': [{
-          'id|+1': 1,
-          'img': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566215007264&di=2795f9a4d030891b83edeb928048237f&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2F61c712f4a4da4e7b13e22de8a1a6a652348ee102.jpg', // 加载的动画 && 加载完没有图片的，给个默认图片
-          'title': '点拓体育中心',
-          'rate': 9.8,
-          'comment': 58,
-          'address': '世伦路',
-          'price': 1000,
-        }]
-      });
-    }, 500);
+    this.hotSaleLists = hotSaleLists;
   },
   methods: {
     gotoGym(item) {
       this.$router.push({
         path: `gym/${item.id}`,
+        query: item,
       });
     },
   },
@@ -132,7 +118,8 @@ export default {
       }
       div.sale {
         height: ($o_default_height + 8px) * 2;
-        background: #000;
+        background: url('../assets/temp/left.png') no-repeat;
+        background-size: contain;
       }
     }
     &:nth-child(2) {

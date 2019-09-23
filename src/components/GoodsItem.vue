@@ -22,6 +22,7 @@
           <div>
             <slot name="price"></slot>
           </div>
+          <slot></slot>
         </Col>
       </Row>
     </div>
@@ -41,6 +42,9 @@
       </div>
       <div>
         <slot name="price"></slot>
+      </div>
+      <div>
+        <slot></slot>
       </div>
     </div>
   </div>

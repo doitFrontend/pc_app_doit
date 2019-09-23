@@ -5,7 +5,7 @@ const goodLists = [
     title: '苏州吴中文体中心',
     rate: 9.8,
     comment: 198,
-    address: '苏州吴中文体中心',
+    address: '江苏省苏州市吴中区宝带东路345号',
     price: 70,
   },
   {
@@ -14,8 +14,8 @@ const goodLists = [
     title: '广西南宁玖悦健身会所',
     rate: 9.7,
     comment: 61,
-    address: '广西南宁玖悦健身会所',
-    price: 55,
+    address: '广西壮族自治区南宁市江南区那洪大道37号',
+    price: 35,
   },
   {
     id: 3,
@@ -90,7 +90,53 @@ const hotGameLists = [
   },
 ];
 
+const hotSaleLists = [
+  {
+    id: 1,
+    img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569211030059&di=722cc4c67712913ed198d4845eb72bf2&imgtype=0&src=http%3A%2F%2Fimg1.99114.com%2Fgroup10%2FM00%2F6F%2F50%2FrBADs1oU2veAeN7eAAEpg0ZLgT8078.jpg',
+    title: '运动背包',
+    rate: 9.8,
+    price: 248,
+  },
+  {
+    id: 2,
+    img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569211114875&di=880b0bae8e59e45b56dddab2f67fa30c&imgtype=0&src=http%3A%2F%2Ftu.ossfiles.cn%3A9186%2Fgroup1%2FM00%2F12%2FB7%2FrBgIBlxzhcnbEzipAAIKGAoSuDs184.jpg',
+    title: '护膝',
+    rate: 9.7,
+    price: 58,
+  },
+  {
+    id: 3,
+    img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569211181082&di=70109ef0a0716293a98cdb0e1fe26dde&imgtype=0&src=http%3A%2F%2Fm.360buyimg.com%2Fn12%2Fjfs%2Ft2908%2F119%2F2906106948%2F201334%2F1c71c9b%2F5777840eNeb4db9ec.jpg%2521q70.jpg',
+    title: '泳镜',
+    rate: 9.2,
+    price: 110,
+  },
+  {
+    id: 4,
+    img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569805987&di=3794af2944d5c607eff346cf05404383&imgtype=jpg&er=1&src=http%3A%2F%2Fdpic.tiankong.com%2Feg%2Ffs%2FQJ8370787322.jpg',
+    title: '游泳漂浮板',
+    rate: 9.0,
+    price: 70,
+  },
+  {
+    id: 5,
+    img: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3185268517,2013168197&fm=26&gp=0.jpg',
+    title: '手臂浮圈',
+    rate: 9.9,
+    price: 48,
+  },
+  {
+    id: 6,
+    img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569806135&di=c46f07495956fa2320d929f5d8cc70c6&imgtype=jpg&er=1&src=http%3A%2F%2Fm.360buyimg.com%2Fn12%2Fjfs%2Ft1801%2F42%2F1457800378%2F277548%2F2865dc00%2F55ee48e4N4651e100.jpg%21q70.jpg',
+    title: '泳衣',
+    rate: 9.4,
+    price: 315,
+  },
+];
+
 export {
   goodLists,
   hotGameLists,
+  hotSaleLists,
 };

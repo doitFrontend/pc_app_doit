@@ -48,7 +48,6 @@
 <script>
 import ButtonGroups from './ButtonGroups';
 import Mock from 'mockjs';
-const Random = Mock.Random;
 export default {
   name: 'BookTicket',
   components: {
@@ -102,10 +101,9 @@ export default {
       'ticketLists|6': [{
         'id|+1': 1,
         'icon': '#icon-youyong',
-        'title': '游泳票',
-        'rate': Random.integer(0, 10),
-        'price': Random.integer(60, 100),
-        'time': '2019-09-14',
+        'title|1': ['游泳票', '器械健身', '羽毛球票', '篮球票'],
+        'price|1': [12, 32, 20, 40, 28],
+        'time|1': ['2019-11-20', '2019-11-23', '2019-11-29'],
         'num': 0,
       }],
     });

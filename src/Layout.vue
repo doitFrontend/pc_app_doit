@@ -80,15 +80,24 @@ export default {
       isBtnShow: false,
       is_nav_fixed: false,
       isNone: true, // 默认隐藏
-      location: '',
+      // location: '',
     };
   },
   computed: {
     isSignIn: function() {
       return sessionStorage['username'];
     },
+    location: {
+      get: function() {
+        return localStorage['currentCity'];
+      },
+      set: function(newV) {
+        localStorage['currentCity'] = newV;
+      },
+    },
   },
   mounted() {
+    console.log(location);
     window.addEventListener('scroll', this.fixHeader);
   },
   destroyed() {
@@ -127,9 +136,17 @@ export default {
         vm.location = localStorage['currentCity'];
       });
     } else {
-      next(vm => {
-        vm.location = localStorage['currentCity'];
-      });
+      if (localStorage['currentCity']) {
+        next(vm => {
+          vm.location = localStorage['currentCity'];
+        });
+      } else {
+        next(vm => {
+          vm.$router.push({
+            name: 'City',
+          });
+        });
+      }
     }
   },
 };

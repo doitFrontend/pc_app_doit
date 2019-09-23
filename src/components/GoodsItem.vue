@@ -5,7 +5,7 @@
       <Row type="flex" justify="start" :gutter="16">
         <Col>
           <div>
-            <img :style="{ width: `${i_width}px`, height: '100%', backgroundSize: 'cover', }" :src="imgSrc" alt="">
+            <img :style="{ width: `${i_width}px`, height: '140px', backgroundSize: 'cover', }" :src="imgSrc" alt="">
           </div>
         </Col>
         <Col>

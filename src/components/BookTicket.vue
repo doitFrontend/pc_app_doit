@@ -183,17 +183,17 @@ export default {
       }
     }
   }
-  .ivu-radio-default {
-    margin: 0 0 1em 1em;
-  }
-  .ivu-radio-wrapper {
-    border-radius: 4px !important;
-    border: 1px solid #dcdee2 !important;
-    &::before {
-      content: none;
-    }
-    &::after {
-      content: none;
-    }
-  }
+  // .ivu-radio-default {
+  //   margin: 0 0 1em 1em;
+  // }
+  // .ivu-radio-wrapper {
+  //   border-radius: 4px !important;
+  //   border: 1px solid #dcdee2 !important;
+  //   &::before {
+  //     content: none;
+  //   }
+  //   &::after {
+  //     content: none;
+  //   }
+  // }
 </style>

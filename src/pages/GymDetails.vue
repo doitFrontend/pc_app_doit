@@ -4,8 +4,8 @@
         <div>
           <div>{{gymInfo.title}}</div>
           <div>{{gymInfo.address}}</div>
-          <div>评分：{{gymInfo.rate}}</div>
-          <div>评论：{{gymInfo.comment}}</div>
+          <div>评分：{{gymInfo.rate}}分</div>
+          <div>评论：{{gymInfo.comment}}条</div>
         </div>
         <div>
           <Tabs value="ticket" type="card">
@@ -13,9 +13,10 @@
               <book-ticket></book-ticket>
             </TabPane>
             <TabPane label="购卡" name="card">
-              <book-card></book-card>
+              暂未开放
+              <!-- <book-card></book-card> -->
             </TabPane>
-            <TabPane label="场地预定" name="field" style="overflow-x: auto; height: 720px;">
+            <TabPane label="场地预定" name="field" style="overflow-x: auto; height: 820px;">
               <book-field></book-field>
             </TabPane>
           </Tabs>

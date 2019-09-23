@@ -1,13 +1,28 @@
 <template>
   <div id="BookField">
-    <div class="signs">场地类别：台球</div>
+    <div class="fieldType">场地类别：
+      <RadioGroup v-model="default_button" type="button">
+        <!-- <Radio label="所有"></Radio> -->
+        <Radio v-for="(item, i) in fieldTypeList" :key="i" :label="item.sportItem"></Radio>
+      </RadioGroup>
+    </div>
+    <div class="signs">
+      <!-- *图例说明：#acce22-上课专属场地-88 lightblue-可选场地-0 已预订场地 已过期 -->
+      *图例说明：
+      <div></div>上课专属场地
+      <div></div>可选场地
+      <div></div>已预订场地
+    </div>
+    <div class="container">
+      <div class="content time" v-for="(item, i) in timeLineList" :key="i">{{item.time}}</div>
+    </div>
     <template>
       <div v-for="(item, index) in tableFieldData" :key="index" class="container">
         <div class="title">{{item.place}}</div>
         <div v-for="(itemIn, indexIn) in item.data" :key="indexIn" class="content"
         :style="{'background': itemIn.status === 0 ? 'lightblue' : itemIn.status === 2 ? '#ff9000': itemIn.status === 88 ? '#acce22': 'red',
         'cursor': itemIn.status === 0 ? 'pointer' : 'not-allowed'}"
-        :class="content_style" @click="handleCellClick($event, itemIn)">
+        :class="content_style" @click.stop="handleCellClick($event, itemIn)">
           <Tooltip placement="top" :delay="500">
             {{itemIn.money}}
             <div slot="content">
@@ -23,6 +38,7 @@
 </template>
 <script>
 import moment from 'moment';
+moment.locale('zh-cn'); // 局部设置moment语言
 export default {
   name: 'BookField',
   data() {
@@ -38,8 +54,11 @@ export default {
           key: 'test',
         },
       ],
-      isActive: false,
+      isActive: false, // 选中样式
       line_timer: null,
+      fieldTypeList: [],
+      default_button: '',
+      timeLineList: [],
     };
   },
   computed: {
@@ -48,9 +67,13 @@ export default {
         active: this.isActive,
       };
     },
+    // timeLineList: function() {
+    //   return this.tableFieldData[0].data || [];
+    // }
   },
   created() {
     this.getFieldTableData();
+    this.getFieldTypes();
   },
   mounted() {
     // 每60s调用一次
@@ -70,9 +93,10 @@ export default {
         operator_id: '2014011166',
         operator_role: 'admin',
         orgId: 'c4f67f3177d111e986f98cec4bb1848c',
-        today: '2019-09-17',
-        week: '星期二',
+        today: moment().format('YYYY-MM-DD'),
+        week: moment().format('dddd'),
       };
+      console.log(data);
       this.$axios({
         method: 'POST',
         url: 'fieldSale/listFieldSale.do',
@@ -81,6 +105,7 @@ export default {
         if (res.data.code === 200) {
           if (res.data.data.length) {
             this.tableFieldData = res.data.data;
+            this.timeLineList = res.data.data[0].data;
           } else {
             // todo 无数据页面展示
           }
@@ -125,7 +150,32 @@ export default {
         return;
       }
       event.target.classList.toggle('active');
+      console.log(event);
+      console.log(event.target);
       this.isActive = !this.isActive;
+    },
+    // 获取所有场地
+    getFieldTypes() {
+      let data = {
+        operator_id: 'c4fb984777d111e986f98cec4bb1848c',
+        operator_role: 'admin',
+        orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+        fieldSaleStatus: 1,
+      };
+      this.$axios({
+        method: 'POST',
+        url: 'fieldSale/listApiFieldSaleNew1.do',
+        data: data,
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.fieldTypeList = res.data.rows;
+          this.default_button = this.fieldTypeList[0].sportItem;
+        } else {
+          this.$Message.warning(res.code);
+        }
+      }).catch(error => {
+        console.log(error);
+      });
     },
   }
 };
@@ -133,12 +183,32 @@ export default {
 <style lang="scss" scoped>
   $border: 1px solid #fff;
   #BookField {
-    width: 1000px;
+    width: 1200px;
     position: relative;
+    .fieldType {
+      padding: 0 0 1em 1em;
+    }
     .signs {
       width: 100%;
       height: 50px;
       padding: 0 0 1em 1em;
+      & > div {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        // justify-content: center;
+        align-items: center;
+        &:nth-child(1) {
+          background: #acce22;
+        }
+        &:nth-child(2) {
+          background: lightblue;
+        }
+        &:nth-child(3) {
+          background: #ffad30;
+        }
+      }
     }
     .container {
       border: $border;
@@ -173,6 +243,12 @@ export default {
           }
         }
       }
+      .time {
+        background: $g_default_color;
+        &:hover {
+          background: $g_default_color;
+        }
+      }
     }
     .line {
       border-top: 1px solid #fff;
@@ -194,6 +270,6 @@ export default {
     }
   }
   .active {
-    background: #ff6600;
+    background: $g_default_color !important;
   }
 </style>

@@ -2,10 +2,34 @@
   <div id="city">
     <div class="container">
       <Row>
-        <!-- <Col span="24">
-          按省份选择：
-          直接搜索：
-        </Col> -->
+        <Col span="24">
+          <Row :gutter="16">
+            <Col span="12">
+              按省份选择：
+              <Select size="large" v-model="pModel" style="width: 140px;" @on-change="handleChooseProvince">
+                <Option v-for="pItem in provinceList" :value="pItem.value" :key="pItem.value">{{pItem.label}}</Option>
+              </Select>
+              <Select :disabled="!(cityList.length)" size="large" v-model="cModel" style="width: 140px;">
+                <Option v-for="cItem in cityList" :value="cItem.value" :key="cItem.value" @click.native="chooseCity(cItem.label, 'hot')">{{cItem.label}}</Option>
+              </Select>
+            </Col>
+            <Col span="8">
+              直接搜索：
+              <el-autocomplete
+                class="inline-input"
+                size="medium"
+                v-model="likeCityName"
+                placeholder="请输入城市中文或拼音"
+                :fetch-suggestions="querySearch"
+                :trigger-on-focus="false"
+                @select="handleSelect"
+              ></el-autocomplete>
+            </Col>
+            <Col span="4">
+              猜你在：<span class="letter" v-cloak @click="chooseCity(guessCityName, 'hot')">{{guessCityName}}</span>
+            </Col>
+          </Row>
+        </Col>
         <Col span="24">
           热门城市：
           <span class="letter" v-for="(item, i) in hotCityList" :key="i" @click="chooseCity(item, 'hot')">{{item}}</span>
@@ -20,10 +44,10 @@
         </Col>
         <Col span="24" v-for="(item, i) in letterList" :key="i">
           <Row>
-            <Col span="2">
+            <Col span="1">
               <div class="label" :id="item" :ref="item">{{item}}</div>
             </Col>
-            <Col span="22">
+            <Col span="23">
               <span class="content" v-for="(itemIn, indexIn) in listData[item]" :key="indexIn" @click="chooseCity(itemIn, 'default')">{{itemIn.name}}</span>
             </Col>
           </Row>
@@ -36,6 +60,8 @@
 <script>
 import BackToTop from '@/components/BackToTop';
 import cityJson from '@/utils/city.json';
+import provinceCity from '@/utils/provinceCity';
+import { ajax } from 'jquery';
 export default {
   name: 'City',
   components: { BackToTop },
@@ -45,6 +71,13 @@ export default {
       listData: {},
       hotCityList: ['北京', '上海', '广州', '深圳', '天津', '西安', '重庆', '杭州', '南京', '武汉', '成都'],
       isBtnShow: false,
+      guessCityName: '',
+      likeCityName: '',
+      cityJsonTemp: [], // 用于模糊查询的所有城市数据
+      provinceList: [],
+      cityList: [],
+      pModel: '',
+      cModel: '',
     };
   },
   computed: {
@@ -54,7 +87,8 @@ export default {
     },
   },
   created() {
-    this.getCityList(); // TODO:
+    this.getCityList();
+    this.getCityByGuess();
   },
   mounted() {
     window.addEventListener('scroll', this.fixHeader);
@@ -63,20 +97,61 @@ export default {
     window.removeEventListener('scroll', this.fixHeader);
   },
   methods: {
-    getCityList() {
-      this.$axios({
-        method: 'GET',
-        url: '3rdApis', // TODO: 解决第三方api问题
-        // url: 'https://www.ele.me/restapi/shopping/v1/cities',
+    handleChooseProvince(pValue) {
+      let tempCityList = (this.provinceList.filter(pItem => pItem.value === pValue));
+      this.cityList = tempCityList[0].children;
+    },
+    handleSelect(item) {
+      this.chooseCity(item.name, 'hot');
+    },
+    querySearch(queryString, cb) {
+      var results = queryString ? this.cityJsonTemp.filter(this.cityFilter(queryString)) : this.cityJsonTemp;
+      cb(results);
+    },
+    cityFilter(queryString) {
+      return (cityItem) => {
+        return cityItem.value.toLowerCase().indexOf(queryString.toLowerCase()) >= 0;
+      };
+    },
+    getCityByGuess() {
+      ajax({
+        type: 'GET',
+        url: 'https://apis.map.qq.com/ws/location/v1/ip?key=XWEBZ-RQ2LU-OBGVA-4VNAX-4YU62-B2FDP&output=jsonp',
+        dataType: 'jsonp',
         data: {},
-      }).then(res => {
-        this.listData = res.data;
-        this.letterList = [...Object.keys(res.data)];
-      }).catch(error => {
-        console.log(error); // 如果接口报错，就直接从本地取值
-        this.listData = cityJson;
-        this.letterList = [...Object.keys(cityJson)];
+      }).done(res => {
+        if (res.status === 0) {
+          this.guessCityName = res.result.ad_info.city;
+        }
       });
+    },
+    getCityList() {
+      // 省市级联
+      this.provinceList = JSON.parse(JSON.stringify(provinceCity));
+      // 直接搜索
+      this.listData = cityJson;
+      this.letterList = [...Object.keys(cityJson)];
+      this.letterList.forEach((item) => {
+        this.listData[item].forEach((itemIn) => {
+          this.cityJsonTemp.push({
+            ...itemIn,
+            value: `${itemIn.name} ${itemIn.pinyin}`, // 必须要有value属性
+          });
+        });
+      });
+      // this.$axios({
+      //   method: 'GET',
+      //   url: '3rdApis/cities', // TODO: 解决第三方api问题
+      //   // url: 'https://www.ele.me/restapi/shopping/v1/cities',
+      //   data: {},
+      // }).then(res => {
+      //   this.listData = res.data;
+      //   this.letterList = [...Object.keys(res.data)];
+      // }).catch(error => {
+      //   console.log(error); // 如果接口报错，就直接从本地取值
+      //   this.listData = cityJson;
+      //   this.letterList = [...Object.keys(cityJson)];
+      // });
     },
     chooseCity(itemIn, sign) {
       let arr = localStorage['recentCity'] ? JSON.parse(localStorage['recentCity']) : [];

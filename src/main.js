@@ -13,11 +13,18 @@ import { hasPermission } from '@/utils/index';
 import axios from 'axios';
 import REGEXP from '@/utils/regExp';
 
+// element辅助
+import { Autocomplete } from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import './theme/element_index.scss';
+Vue.use(Autocomplete);
+
 Vue.use(router);
 Vue.use(store);
 Vue.use(iView);
 
 Vue.prototype.hasPermission = hasPermission;
+// 根据env获取路径
 const baseURL = process.env.API;
 console.log(baseURL);
 axios.defaults.baseURL = baseURL;
@@ -30,6 +37,7 @@ Vue.config.productionTip = false;
 Vue.prototype.REGEXP = REGEXP;
 
 router.beforeEach((to, from, next) => {
+  iView.LoadingBar.start();
   // to and from are both route objects. must call `next`.
   console.log(to.fullPath);
   let notOpenUrl = ['/train', '/games', 'mall', '/community'];
@@ -61,6 +69,13 @@ router.beforeEach((to, from, next) => {
       name: 'City'
     });
   }
+});
+
+// mode: hash模式下，解决路由跳转，页面会记住滚动位置的问题
+router.afterEach(() => {
+  iView.LoadingBar.finish();
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
 });
 
 /* eslint-disable no-new */

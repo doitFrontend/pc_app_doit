@@ -3,21 +3,29 @@
     <div class="showImg"></div>
     <div class="container">
       <div class="inner">
-        <Row :gutter="16">
+        <!-- <Row :gutter="16">
           <Col :sm="4" :md="4" :lg="2">
-            <div>体育项目</div>
+            <div>体育项目：</div>
           </Col>
           <Col :sm="18" :md="18" :lg="22">
             <div></div>
           </Col>
-        </Row>
-        <Divider />
+        </Row> -->
+        <!-- <Divider /> -->
         <Row :gutter="16">
           <Col :sm="2" :md="2" :lg="2">
-            <div>区域</div>
+            <div style="line-height: 2.6em;">区域：</div>
           </Col>
           <Col :sm="2" :md="22" :lg="22">
-            <div></div>
+            <div>
+              <RadioGroup v-model="button1" type="button">
+                <Radio label="北京"></Radio>
+                <Radio label="上海"></Radio>
+                <Radio label="江苏"></Radio>
+                <Radio label="深圳"></Radio>
+                <Radio label="杭州"></Radio>
+              </RadioGroup>
+            </div>
           </Col>
         </Row>
       </div>
@@ -26,7 +34,7 @@
       <div class="inner">
         <Row>
           <Col :sm="18" :md="19" :lg="19">
-            <Row v-for="(item, i) in MockData.goodLists" :key="i">
+            <Row v-for="(item, i) in goodLists" :key="i">
               <Col span="24">
                 <goods-item @goodItemDetails="toGoodDetails(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.img" :baseRate="10">
                   <span slot="title">{{item.title}}</span>
@@ -39,7 +47,7 @@
           </Col>
           <Col :sm="6" :md="5" :lg="5">
             <h3 style="marginLeft: 1em;">猜你喜欢</h3>
-            <Row v-for="(item, i) in MockData.goodLists" :key="i">
+            <Row v-for="(item, i) in goodLists" :key="i">
               <Col span="24">
                 <goods-item :imgSrc="item.img" :i_height="100" :baseRate="10">
                   <span slot="title">{{item.title}}</span>
@@ -57,57 +65,27 @@
 </template>
 <script>
 import GoodsItem from '@/components/GoodsItem.vue';
-import Mock from 'mockjs';
+import { goodLists } from '@/utils/mockdata';
 export default {
   name: 'Gym',
   components: { GoodsItem },
   data() {
     return {
       goodLists: [],
-      hotGameLists: [],
-      hotSaleLists: [],
       MockData: {},
-      i_width: 220,
+      i_width: 240,
+      button1: '江苏',
     };
   },
   created() {
-    setTimeout(() => {
-      this.MockData = Mock.mock({
-        'goodLists|6': [{
-          'id|+1': 1,
-          'img': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566215007264&di=2795f9a4d030891b83edeb928048237f&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2F61c712f4a4da4e7b13e22de8a1a6a652348ee102.jpg', // 加载的动画 && 加载完没有图片的，给个默认图片
-          'title': '点拓体育中心',
-          'rate': 9.8,
-          'address': '世伦路',
-          'price': 1000,
-        }],
-        'hotGameLists|4': [{
-          'id|+1': 1,
-          'img': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566215007264&di=2795f9a4d030891b83edeb928048237f&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2F61c712f4a4da4e7b13e22de8a1a6a652348ee102.jpg', // 加载的动画 && 加载完没有图片的，给个默认图片
-          'title': '点拓体育中心',
-          'rate': 9.8,
-          'address': '世伦路',
-          'price': 1000,
-        }],
-        'hotSaleLists|6': [{
-          'id|+1': 1,
-          'img': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566215007264&di=2795f9a4d030891b83edeb928048237f&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2F61c712f4a4da4e7b13e22de8a1a6a652348ee102.jpg', // 加载的动画 && 加载完没有图片的，给个默认图片
-          'title': '点拓体育中心',
-          'rate': 9.8,
-          'address': '世伦路',
-          'price': 1000,
-        }]
-      });
-    }, 1000);
+    this.goodLists = goodLists;
   },
   methods: {
     toGoodDetails(item) {
       console.log(item);
       this.$router.push({
         path: `gym/${item.id}`,
-        // query: {
-        //   item,
-        // },
+        query: item,
       });
     },
   },

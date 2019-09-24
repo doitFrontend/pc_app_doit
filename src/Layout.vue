@@ -80,15 +80,24 @@ export default {
       isBtnShow: false,
       is_nav_fixed: false,
       isNone: true, // 默认隐藏
-      location: '',
+      // location: '',
     };
   },
   computed: {
     isSignIn: function() {
       return sessionStorage['username'];
     },
+    location: {
+      get: function() {
+        return localStorage['currentCity'];
+      },
+      set: function(newV) {
+        localStorage['currentCity'] = newV;
+      },
+    },
   },
   mounted() {
+    console.log(location);
     window.addEventListener('scroll', this.fixHeader);
   },
   destroyed() {
@@ -127,9 +136,17 @@ export default {
         vm.location = localStorage['currentCity'];
       });
     } else {
-      next(vm => {
-        vm.location = localStorage['currentCity'];
-      });
+      if (localStorage['currentCity']) {
+        next(vm => {
+          vm.location = localStorage['currentCity'];
+        });
+      } else {
+        next(vm => {
+          vm.$router.push({
+            name: 'City',
+          });
+        });
+      }
     }
   },
 };
@@ -145,7 +162,7 @@ $g_border_radius: 20px;
   .header {
     width: 100%;
     height: 6em;
-    background: #bdbdbd;
+    background: $g_default_color;
     .header_inner {
       height: inherit;
       width: $g_width;
@@ -172,7 +189,10 @@ $g_border_radius: 20px;
           height: inherit;
           .ivu-btn-default {
             color: #fff;
-            background: #bdbdbd;
+            background: $g_default_color;
+            &:hover {
+              border-color: #fff;
+            }
           }
         }
       }

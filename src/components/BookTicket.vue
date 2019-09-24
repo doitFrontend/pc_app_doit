@@ -4,7 +4,7 @@
       <div class="inner">
         <Row :gutter="16">
           <Col :sm="4" :md="4" :lg="4">
-            <div>票类别：</div>
+            <div class="label">票类别：</div>
           </Col>
           <Col :sm="18" :md="18" :lg="18">
             <RadioGroup v-model="default_button" type="button">
@@ -48,7 +48,6 @@
 <script>
 import ButtonGroups from './ButtonGroups';
 import Mock from 'mockjs';
-const Random = Mock.Random;
 export default {
   name: 'BookTicket',
   components: {
@@ -102,10 +101,9 @@ export default {
       'ticketLists|6': [{
         'id|+1': 1,
         'icon': '#icon-youyong',
-        'title': '游泳票',
-        'rate': Random.integer(0, 10),
-        'price': Random.integer(60, 100),
-        'time': '2019-09-14',
+        'title|1': ['游泳票', '器械健身', '羽毛球票', '篮球票'],
+        'price|1': [12, 32, 20, 40, 28],
+        'time|1': ['2019-11-20', '2019-11-23', '2019-11-29'],
         'num': 0,
       }],
     });
@@ -124,6 +122,11 @@ export default {
     .container {
       .inner {
         padding: 0 1em;
+        &:nth-child(1) {
+          .label {
+            text-align: center;
+          }
+        }
         &:nth-child(3) {
           min-height: 500px;
           .item_ticket {
@@ -180,17 +183,17 @@ export default {
       }
     }
   }
-  .ivu-radio-default {
-    margin: 0 0 1em 1em;
-  }
-  .ivu-radio-wrapper {
-    border-radius: 4px !important;
-    border: 1px solid #dcdee2 !important;
-    &::before {
-      content: none;
-    }
-    &::after {
-      content: none;
-    }
-  }
+  // .ivu-radio-default {
+  //   margin: 0 0 1em 1em;
+  // }
+  // .ivu-radio-wrapper {
+  //   border-radius: 4px !important;
+  //   border: 1px solid #dcdee2 !important;
+  //   &::before {
+  //     content: none;
+  //   }
+  //   &::after {
+  //     content: none;
+  //   }
+  // }
 </style>

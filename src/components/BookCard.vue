@@ -4,7 +4,7 @@
       <div class="inner">
         <Row :gutter="16">
           <Col :sm="4" :md="4" :lg="4">
-            <div style="width: 100%;">卡类别：</div>
+            <div class="label">卡类别：</div>
           </Col>
           <Col :sm="18" :md="18" :lg="18">
             <RadioGroup v-model="default_button" type="button">
@@ -49,7 +49,6 @@
 <script>
 import ButtonGroups from './ButtonGroups';
 import Mock from 'mockjs';
-const Random = Mock.Random;
 export default {
   name: 'BookCard',
   components: {
@@ -103,10 +102,9 @@ export default {
       'cardLists|6': [{
         'id|+1': 1,
         'icon': '#icon-youyong',
-        'title': '羽毛球年卡',
-        'rate': Random.integer(0, 10),
-        'price': Random.integer(60, 100),
-        'time': '2022-09-08',
+        'title|1': ['游泳季卡', '器械健身月卡', '羽毛球年卡', '篮球年卡'],
+        'price|1': [120, 320, 200, 400, 280],
+        'time|1': ['2019-11-20', '2019-11-23', '2019-11-29'],
         'num': 0,
       }],
     });
@@ -119,7 +117,12 @@ export default {
   #bookCard {
     .container {
       .inner {
-        padding: 1em;
+        padding: 0 1em;
+        &:nth-child(1) {
+          .label {
+            text-align: center;
+          }
+        }
         &:nth-child(3) {
           min-height: 500px;
           .item_card {
@@ -170,17 +173,17 @@ export default {
       }
     }
   }
-  .ivu-radio-default {
-    margin: 0 0 1em 1em;
-  }
-  .ivu-radio-wrapper {
-    border-radius: 4px !important;
-    border: 1px solid #dcdee2 !important;
-    &::before {
-      content: none;
-    }
-    &::after {
-      content: none;
-    }
-  }
+  // .ivu-radio-default {
+  //   margin: 0 0 1em 1em;
+  // }
+  // .ivu-radio-wrapper {
+  //   border-radius: 4px !important;
+  //   border: 1px solid #dcdee2 !important;
+  //   &::before {
+  //     content: none;
+  //   }
+  //   &::after {
+  //     content: none;
+  //   }
+  // }
 </style>

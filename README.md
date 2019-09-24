@@ -16,10 +16,10 @@ git add . 或者 vscode 操作
 git commit -m "你的提交信息"
 
 # 提交之前拉一次代码
-git pull
+git pull origin dev
 
 # 推送代码 注意：或许会有冲突，手动处理完之后，重复 git add 之后的操作
-git push
+git push origin dev
 
 ```
 

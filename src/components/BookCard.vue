@@ -16,8 +16,8 @@
       </div>
       <Divider />
       <div class="inner">
-        <Row :gutter="16">
-          <Col v-for="(item, index) in MockData.cardLists" :key="index" :sm="24" :md="24" :lg="24">
+        <Row >
+          <Col v-for="(item, index) in MockData.cardLists" :key="index" :sm="8" :md="8" :lg="8" >
             <div class="item_card">
               <div class="card">
                 <div class="piece">
@@ -35,7 +35,10 @@
                   </div>
                 </div>
               </div>
-              <button-groups @countSum="countPriz" :item="item"></button-groups>
+              <div class="price">
+                <div calss="price2">{{item.price}}</div>
+                <button-groups @countSum="countPriz" :item="item"></button-groups>
+              </div>
             </div>
           </Col>
         </Row>
@@ -124,12 +127,11 @@ export default {
             height: inherit;
             padding: 2em;
             margin-bottom: 1em;
-            display: flex;
             &:hover {
               background: #e8eaec;
             }
             .card {
-              width: 300px;
+              width: 100%;
               height: 140px;
               background: $g_default_color;
               display: flex;
@@ -147,8 +149,21 @@ export default {
                 }
               }
             }
-            .ivu-btn-group {
-              margin: auto;
+            .price {
+              width: 100%;
+              margin-top: 10px;
+              display: flex;
+              position: relative;
+              .ivu-btn-group {
+              text-align: right;
+              position: absolute;
+              right: 0;
+              }
+              & > div:nth-child(1) {
+                width: 250px;
+                font-size: 14px;
+                color: #dcdee2;
+              }
             }
           }
         }

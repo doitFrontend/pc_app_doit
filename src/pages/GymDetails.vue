@@ -47,7 +47,7 @@ export default {
         background: lightpink;
         &:nth-child(1) {
           background: #fff;
-          width: 700px;
+          width: 1000px;
         }
         &:nth-child(2) {
           width: 272px;

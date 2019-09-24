@@ -1,14 +1,14 @@
 <template>
   <ButtonGroup shape="circle">
-    <Button :disabled="item.num <= 0" @click="minusNum(item)"><Icon type="ios-remove" size="16" color="#00a1e9" /></Button>
-    <Button type="primary" style="width: 54px;">{{item.num}}</Button>
+    <Button v-show="item.num > 0" @click="minusNum(item)"><Icon type="ios-remove" size="16" color="#00a1e9" /></Button>
+    <Button  v-show="item.num > 0" type="primary" style="width: 28px;">{{item.num}}</Button>
     <transition
       @before-enter="beforeEnter"
       @enter="enter"
       @after-enter="afterEnter">
       <div v-show="isBallShow" class="ball"></div>
     </transition>
-    <Button @click="addNum(item)"><Icon type="ios-add" size="16" color="#00a1e9" /></Button>
+    <Button class="addnum" @click="addNum(item)"><Icon type="ios-add" size="16" color="#00a1e9" /></Button>
   </ButtonGroup>
 </template>
 <script>
@@ -64,5 +64,15 @@ export default {
     top: 8px;
     right: 15px;
     z-index: 100;
+  }
+  .ivu-btn{padding: 0;}
+  .ivu-btn-group:not(.ivu-btn-group-vertical) > .ivu-btn:first-child:not(:last-child),.ivu-btn-group:not(.ivu-btn-group-vertical)>.ivu-btn:last-child:not(:first-child){
+        border-radius: 32px;border-bottom-left-radius: 32px;
+        border-top-left-radius: 32px;width: 22px;height: 22px;margin-left: 10px;margin-right: 10px;
+        &:focus{outline: 0px}
+  }
+  .ivu-btn-group:not(.ivu-btn-group-vertical) .ivu-btn-primary:not(:first-child):not(:last-child){
+    border-radius: 5px;
+    &:focus{outline: 0px}
   }
 </style>

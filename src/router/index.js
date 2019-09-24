@@ -11,6 +11,7 @@ import City from '@/pages/City';
 import Test from '@/pages/Test';
 import Foo from '@/pages/Foo';
 import Bar from '@/pages/Bar';
+import Stage from '@/pages/Stage';
 
 Vue.use(Router);
 
@@ -30,6 +31,10 @@ export default new Router({
       path: '/404',
       name: 'NotFound',
       component: NotFound,
+    },
+    {
+      path: '/stage',
+      component: Stage,
     },
     {
       path: '',

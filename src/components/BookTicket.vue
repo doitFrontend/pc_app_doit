@@ -150,7 +150,7 @@ export default {
                 width: 100%;
                 height: inherit;
                 background: $g_default_color;
-                position: relative;               
+                position: relative;
                 & > div.spot {
                   width: 16px;
                   height: 16px;

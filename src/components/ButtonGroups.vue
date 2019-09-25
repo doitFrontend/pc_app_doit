@@ -8,7 +8,7 @@
       @after-enter="afterEnter">
       <div v-show="isBallShow" class="ball"></div>
     </transition>
-    <Button v-show="!(item.num >0)" @click="addshow(item)" style="width:120px;font-size:18px;border-radius: 32px;color: #fff;background: #f76900">加入购物车</Button>
+    <Button v-show="!(item.num >0)" @click="addshow(item)" style="width:120px;font-size:18px;border-radius: 32px;color: #fff;background: #f76900;margin-right:5px">加入购物车</Button>
     <Button  v-show="item.num > 0"  class="addnum" @click="addNum(item)"><Icon type="md-add" size="24" color="#fff"  style="position: relative;top:-3px"  /></Button>
     </ButtonGroup>
 </template>

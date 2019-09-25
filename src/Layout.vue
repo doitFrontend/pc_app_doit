@@ -157,7 +157,7 @@ $g_border_radius: 20px;
   [v-cloak] {
     display: none;
   }
-  min-width: 1200px;
+  min-width: 1280px;
   font-family: "SourceHanSansCn Normal";
   .header {
     width: 100%;

@@ -4,7 +4,7 @@
       <div class="inner">
         <Row>
           <Col :sm="3" :md="3" :lg="3"  class="leibie">
-            <div class="label">票类别</div>
+            <div class="label">票类别 <span>|</span></div>
           </Col>
           <Col :sm="21" :md="21" :lg="21"  class="leibie2">
             <RadioGroup v-model="default_button" type="button">
@@ -16,18 +16,17 @@
       </div>
       <Divider />
       <div class="inner">
-        <div class="" style="margin:0 70px">
-          <Row :gutter="50">
+        <div class="" style="margin:0 20px">
+          <Row :gutter="16">
           <Col v-for="(item, index) in MockData.ticketLists" :key="index" :sm="8" :md="8" :lg="8">
             <div class="item_ticket">
               <div class="ticket">
                 <div class="piece">
                   <div>
-                    <Icon color="#fff" size="36" type="md-headset" />
+                    <Icon color="#fff" size="28" type="md-headset" />
                     <span>{{item.title}}</span>
                   </div>
-                  <div  style="width:80%;margin:auto;height:175px;border-radius: 5px;background: #fff;margin-top:15px;color:#333;font-size:40px;padding-top:30px;text-align: center;
-    vertical-align: midd">
+                  <div  class="ticket-dtail">
                     <b style="font-size:18px;">￥</b>{{item.price}}.00<br>
                     <div style="font-size: 16px;padding-top:15px">
                       有效期至：{{item.time}}
@@ -127,7 +126,8 @@ export default {
         &:nth-child(1) {
           .label {
             text-align: center;
-            font-size: 18px;
+            font-size: 16px;
+            span{padding-left: 10px;padding-right: 15px}
           }
         }
         &:nth-child(3) {
@@ -145,12 +145,11 @@ export default {
               width: 240px;
               height: 280px;
               margin: auto;
-              background: $g_default_color;
               display: flex;
               & > div.piece{ // 票 左右两块
                 width: 100%;
                 height: inherit;
-                background: url(/static/img/card2.jpg);
+                background: url(../assets/card.png);
                 position: relative;
                 & > div.spot {
                   width: 16px;
@@ -174,10 +173,22 @@ export default {
                   font-size: 24px;font-weight: 200;
                   color: #fff;
                 }
+                .ticket-dtail {
+                width:80%;margin:auto;
+                height:175px;
+                border-radius: 5px;
+                background: #fff;
+                margin-top:15px;
+                color:#333;
+                font-size:40px;
+                padding-top:30px;
+                text-align: center;
+                vertical-align: midd
+                }
               }
             }
               .price {
-              width: 95%;
+              width: 90%;
               margin-top: 30px;
               display: flex;
               position: relative;
@@ -189,9 +200,9 @@ export default {
               & > div:nth-child(1) {
                 width: 250px;
                 font-size: 18px;
-                color: #333;
-                padding-left: 20px;
-                line-height: 28px;
+                color: #ed4014;
+                padding-left: 10px;
+                line-height: 32px;
               }
             }
           }

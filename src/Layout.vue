@@ -158,7 +158,7 @@ $g_border_radius: 20px;
     display: none;
   }
   min-width: 1200px;
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  font-family: "SourceHanSansCn Normal";
   .header {
     width: 100%;
     height: 6em;

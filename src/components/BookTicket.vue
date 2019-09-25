@@ -25,12 +25,13 @@
                   <div>
                     <Icon color="#fff" size="36" type="md-headset" />
                     <span>{{item.title}}</span>
-                  <div  style="width:100%;height:175px;border-radius: 5px;background: #fff;margin-top:20px;color:#333;font-size:40px;padding-top:40px">
+                  </div>
+                  <div  style="width:80%;margin:auto;height:175px;border-radius: 5px;background: #fff;margin-top:15px;color:#333;font-size:40px;padding-top:30px;text-align: center;
+    vertical-align: midd">
                     <b style="font-size:18px;">￥</b>{{item.price}}.00<br>
                     <div style="font-size: 16px;padding-top:15px">
                       有效期至：{{item.time}}
                     </div>
-                  </div>
                   </div>
                 </div>
               </div>
@@ -149,7 +150,7 @@ export default {
               & > div.piece{ // 票 左右两块
                 width: 100%;
                 height: inherit;
-                background: $g_default_color;
+                background: url(/static/img/card2.jpg);
                 position: relative;
                 & > div.spot {
                   width: 16px;
@@ -166,11 +167,11 @@ export default {
                   right: -8px;
                 }
                 & > div:nth-child(1) { // 票内容样式
-                  width: 100%;
-                  height: inherit;
-                  padding: 1.2em;
-                  text-align: center;
-                  font-size: 20px;
+                  width: 100%;text-align: center;
+                  height: 40px;
+                  line-height: 40px;
+                  margin-top: 20px;
+                  font-size: 24px;font-weight: 200;
                   color: #fff;
                 }
               }

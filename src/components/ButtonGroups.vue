@@ -1,6 +1,6 @@
 <template>
   <ButtonGroup shape="circle">
-    <Button class="btn-remove" style="font-weight: 700" v-show="item.num > 0" @click="minusNum(item)"><Icon type="ios-remove" size="24" color="#bebebe"  /></Button>
+    <Button class="btn-remove" style="font-weight: 700" v-show="item.num > 0" @click="minusNum(item)"><Icon type="md-remove" size="24" color="#bebebe" style="position: relative;top:-3px" /></Button>
     <Button  v-show="item.num > 0" type="primary">{{item.num}}</Button>
     <transition
       @before-enter="beforeEnter"
@@ -9,7 +9,7 @@
       <div v-show="isBallShow" class="ball"></div>
     </transition>
     <Button v-show="!(item.num >0)" @click="addshow(item)" style="width:120px;font-size:18px;border-radius: 32px;color: #fff;background: #f76900">加入购物车</Button>
-    <Button  v-show="item.num > 0"  class="addnum" @click="addNum(item)"><Icon type="ios-add" size="24" color="#fff" /></Button>
+    <Button  v-show="item.num > 0"  class="addnum" @click="addNum(item)"><Icon type="md-add" size="24" color="#fff"  style="position: relative;top:-3px"  /></Button>
     </ButtonGroup>
 </template>
 <script>

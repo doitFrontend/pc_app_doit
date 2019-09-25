@@ -3,7 +3,7 @@
       <div class="inner">
         <Carousel v-model="default_value" loop>
           <CarouselItem v-for="i in 3" :key="i">
-              <div class="demo-carousel" style="background: 'red';"></div>
+            <div class="demo-carousel" :style="{backgroundImage: `url(${img})`}"></div>
           </CarouselItem>
         </Carousel>
         <div class="info">
@@ -29,6 +29,7 @@
                   <baidu-map class="bm-view"
                   :center="center"
                   :zoom="zoom">
+                    <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
                   </baidu-map>
               </div>
           </div>
@@ -89,6 +90,7 @@ export default {
       // center: {lng: 0, lat: 0},
       center: '北京',
       zoom: 11,
+      img: 'http://img.doit10019.com/2ba448d7-67ba-4620-b835-b5c5cbca6f09',
     };
   },
   created() {

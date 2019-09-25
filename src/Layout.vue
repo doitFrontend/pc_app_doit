@@ -157,7 +157,7 @@ $g_border_radius: 20px;
   [v-cloak] {
     display: none;
   }
-  min-width: 1280px;
+  min-width: 1200px;
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
   .header {
     width: 100%;

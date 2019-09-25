@@ -1,14 +1,15 @@
 <template>
   <ButtonGroup shape="circle">
-    <Button v-show="item.num > 0" @click="minusNum(item)"><Icon type="ios-remove" size="16" color="#00a1e9" /></Button>
-    <Button  v-show="item.num > 0" type="primary" style="width: 28px;">{{item.num}}</Button>
+    <Button class="btn-remove" style="background: #f7f7f7" v-show="item.num > 0" @click="minusNum(item)"><Icon type="ios-remove" size="24" color="#bebebe"  /></Button>
+    <Button  v-show="item.num > 0" type="primary">{{item.num}}</Button>
     <transition
       @before-enter="beforeEnter"
       @enter="enter"
       @after-enter="afterEnter">
       <div v-show="isBallShow" class="ball"></div>
     </transition>
-    <Button class="addnum" @click="addNum(item)"><Icon type="ios-add" size="16" color="#00a1e9" /></Button>
+    <Button v-show="!(item.num >0)" @click="addshow(item)" style="width:120px;font-size:18px;border-radius: 32px;color: #fff;background: #f76900">加入购物车</Button> 
+    <Button  v-show="item.num > 0"  class="addnum" @click="addNum(item)"><Icon type="ios-add" size="24" color="#fff" /></Button> 
   </ButtonGroup>
 </template>
 <script>
@@ -26,6 +27,9 @@ export default {
   },
   computed: {},
   methods: {
+    addshow(item){
+      item.num++;
+    },
     addNum(item) {
       item.num++;
       this.isBallShow = true;
@@ -66,13 +70,20 @@ export default {
     z-index: 100;
   }
   .ivu-btn{padding: 0;}
-  .ivu-btn-group:not(.ivu-btn-group-vertical) > .ivu-btn:first-child:not(:last-child),.ivu-btn-group:not(.ivu-btn-group-vertical)>.ivu-btn:last-child:not(:first-child){
-        border-radius: 32px;border-bottom-left-radius: 32px;
-        border-top-left-radius: 32px;width: 22px;height: 22px;margin-left: 10px;margin-right: 10px;
+  .ivu-btn-primary{background: #e5e5e5;border: none; width: 40px;height: 28px;color: #333333;font-size: 18px}
+  .ivu-btn-group:not(.ivu-btn-group-vertical) > .ivu-btn:first-child,.ivu-btn-group:not(.ivu-btn-group-vertical)>.ivu-btn:last-child{
+        border-radius: 32px;
+        border-bottom-left-radius: 32px;
+        border-top-left-radius: 32px;
+        width: 28px;
+        height: 28px;
+        margin-left: 10px;
+        margin-right: 10px;
+        background: #f76900;
+        color: #fff;
+        font-size: 18px;
         &:focus{outline: 0px}
   }
-  .ivu-btn-group:not(.ivu-btn-group-vertical) .ivu-btn-primary:not(:first-child):not(:last-child){
-    border-radius: 5px;
-    &:focus{outline: 0px}
-  }
+  /deep/.btn-remove{background: #f7f7f7}
+
 </style>

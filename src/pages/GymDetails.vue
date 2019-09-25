@@ -91,7 +91,7 @@ export default {
         }
         &:nth-child(2) {
           background: #fff;
-          width: 700px;
+          width: 1200px;
         }
         &:nth-child(3) {
           width: 274px;

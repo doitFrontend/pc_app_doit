@@ -12,6 +12,7 @@ import 'animate.css';
 import { hasPermission } from '@/utils/index';
 import axios from 'axios';
 import REGEXP from '@/utils/regExp';
+import BaiduMap from 'vue-baidu-map';
 
 // element辅助
 import { Autocomplete } from 'element-ui';
@@ -22,6 +23,9 @@ Vue.use(Autocomplete);
 Vue.use(router);
 Vue.use(store);
 Vue.use(iView);
+Vue.use(BaiduMap, {
+  ak: 'MfTf0gej32MGmr5pSm7qwVjN1vufeRjT',
+});
 
 Vue.prototype.hasPermission = hasPermission;
 // 根据env获取路径

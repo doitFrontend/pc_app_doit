@@ -2,9 +2,9 @@
   <div id="BookField">
     <div class="fieldType">场地类别：
       <RadioGroup v-model="default_button" type="button" @on-change="changeField">
-        <!-- TODO: 显示待调整 -->
-        <Radio v-for="(item, i) in fieldTypeList" :key="i" :label="`${item.sportItem}-${item.fieldId}`"></Radio>
+        <Radio v-for="(item, i) in fieldTypeList" :key="i" :label="`${item.sportItem}-${item.fieldId}`">{{item.sportItem}}</Radio>
       </RadioGroup>
+      <DatePicker type="date" placeholder="选择日期" style="width: 200px" v-model="date" @click="changeTime"></DatePicker>
     </div>
     <div class="signs">
       <!-- *图例说明：#acce22-上课专属场地-88 lightblue-可选场地-0 已预订场地 已过期 -->
@@ -22,9 +22,9 @@
         <div v-for="(item, index) in tableFieldData" :key="index" class="container">
           <div class="title">{{item.place}}</div>
           <div v-for="(itemIn, indexIn) in item.data" :key="indexIn" class="content"
-          :style="{'background': itemIn.status === 0 ? 'lightblue' : itemIn.status === 2 ? '#ff9000': itemIn.status === 88 ? '#acce22': 'red',
-          'cursor': itemIn.status === 0 ? 'pointer' : 'not-allowed'}"
-          :class="content_style" @click.stop="handleCellClick($event, itemIn)">
+          :style="{'background': itemIn.status === 0 ? 'lightblue' : itemIn.status === 2 ? '#ff9000': itemIn.status === 88 ? '#acce22': '#00a1e9',
+          'cursor': (itemIn.status === 0 || itemIn.status === 1) ? 'pointer' : 'not-allowed'}"
+          @click="handleCellClick($event, item, itemIn)">
             <Tooltip placement="top" :delay="500">
               {{itemIn.money}}
               <div slot="content">
@@ -56,23 +56,14 @@ export default {
           key: 'test',
         },
       ],
-      isActive: false, // 选中样式
       line_timer: null,
       fieldTypeList: [],
       default_button: '',
       timeLineList: [],
+      date: '',
     };
   },
-  computed: {
-    content_style: function() {
-      return {
-        active: this.isActive,
-      };
-    },
-    // timeLineList: function() {
-    //   return this.tableFieldData[0].data || [];
-    // }
-  },
+  computed: {},
   created() {
     this.getFieldTypes();
   },
@@ -88,6 +79,9 @@ export default {
     this.line_timer && clearInterval(this.line_timer);
   },
   methods: {
+    changeTime(currentDate) { // TODO: 根据时间切换场地
+      console.log(currentDate);
+    },
     changeField(temp) {
       let arr = temp.split('-');
       let id = arr[arr.length - 1];
@@ -127,6 +121,7 @@ export default {
       console.log(moment().format('HH:mm'));
       if (this.tableFieldData.length) {
         const SINGAL_CELL_HEIGHT = 40; // 表格单元格的高度，与下面样式同时修改
+        const SINGAL_CELL_WIDTH = 101; // 表格单元格的宽度，与下面样式同时修改
         // 场地开始时间，结束时间
         let startTime = this.tableFieldData[0].data[0].time.split('-')[0];
         let endTime = this.tableFieldData[0].data[this.tableFieldData[0].data.length - 1].time.split('-')[1];
@@ -141,23 +136,32 @@ export default {
         let line_top = (total_count * SINGAL_CELL_HEIGHT * past_mins / total_mins).toFixed(2);
         this.$refs['line'].style.top = `${80 + parseFloat(line_top)}px`; // 表头的高度 需要同时改变
         this.$refs['line'].style.borderTop = '1px solid red';
+        this.$refs['line'].style.width = `${SINGAL_CELL_WIDTH * (this.tableFieldData.length + 1)}px`;
+        // 结束的红线停止在表格底部
+        if (now >= endTime) {
+          this.$refs['line'].style.top = `${80 + (SINGAL_CELL_HEIGHT * this.tableFieldData[0].data.length)}px`; // 时间结束
+        } else if (now <= startTime) {
+          this.$refs['line'].style.top = `80px`; // 时间未开始
+        }
       }
     },
     /**
      * 根据状态判断是否可以点击
-     * 0-空
+     * 0-可预定
+     * 1-预定
      * 2-已经预定
      * 88-上课
      */
-    handleCellClick(event, itemIn) {
-      if (parseInt(itemIn.status)) {
+    handleCellClick(event, item, itemIn) {
+      if (itemIn.status !== 0 && itemIn.status !== 1) {
         event.preventDefault();
-        return;
+      } else {
+        if (itemIn.status) { // TODO: 添加到购物车
+          itemIn.status = 0;
+        } else {
+          itemIn.status = 1;
+        }
       }
-      event.target.classList.toggle('active');
-      console.log(event);
-      console.log(event.target);
-      this.isActive = !this.isActive;
     },
     // 获取所有场地
     getFieldTypes() {
@@ -233,7 +237,7 @@ export default {
       .line {
         border-top: 1px solid red;
         position: absolute;
-        width: 100%; // TODO: 线的宽度设置
+        // left: 0;
       }
       .container {
         border: $border;
@@ -288,8 +292,5 @@ export default {
       background-color: #187;
       color: #fff;
     }
-  }
-  .active {
-    background: $g_default_color !important;
   }
 </style>

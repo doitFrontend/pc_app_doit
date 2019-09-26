@@ -25,6 +25,9 @@
             </div>
           </div>
         </div>
+        <div class="trial">
+          <Button type="default" ghost @click="toTrial">免费试用</Button>
+        </div>
       </div>
     </div>
     <div class="nav_container" :class="{ 'nav_fixed': is_nav_fixed }">
@@ -127,6 +130,10 @@ export default {
       sessionStorage.clear(); // 清除数据
       this.$router.go(0); // 刷新页面 TODO: 有没有局部刷新的方式
     },
+    toTrial() { // 跳转3.0试用
+      // https://dtwx3.doit10019.com:81/dllg
+      window.open('https://dtwx3.doit10019.com:81/dllg', '_blank');
+    },
   },
   beforeRouteEnter(to, from, next) { // 组件路由监听 通过vm进行访问
     // 只有从选择城市进来会改变
@@ -217,6 +224,16 @@ $g_border_radius: 20px;
                 color: $g_default_color;
               }
             }
+          }
+        }
+      }
+      .trial {
+        margin-top: 2em;
+        .ivu-btn-default {
+          color: #fff;
+          background: $g_default_color;
+          &:hover {
+            border-color: #fff;
           }
         }
       }

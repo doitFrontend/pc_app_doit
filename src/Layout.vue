@@ -216,11 +216,12 @@ $g_border_radius: 20px;
           z-index: 100;
           & > div > span > div {
             &:nth-child(n+2) {
-              background: $g_default_color;
-              border-radius: 8px;
-              &:hover {
                 background: #fff;
                 color: $g_default_color;
+              border-radius: 8px;
+              &:hover {
+                color: #fff;
+                background: $g_default_color;
               }
             }
           }

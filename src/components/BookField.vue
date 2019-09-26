@@ -1,9 +1,9 @@
 <template>
   <div id="BookField">
     <div class="fieldType">场地类别：
-      <RadioGroup v-model="default_button" type="button">
-        <!-- <Radio label="所有"></Radio> -->
-        <Radio v-for="(item, i) in fieldTypeList" :key="i" :label="item.sportItem"></Radio>
+      <RadioGroup v-model="default_button" type="button" @on-change="changeField">
+        <!-- TODO: 显示待调整 -->
+        <Radio v-for="(item, i) in fieldTypeList" :key="i" :label="`${item.sportItem}-${item.fieldId}`"></Radio>
       </RadioGroup>
     </div>
     <div class="signs">
@@ -13,27 +13,29 @@
       <div></div>可选场地
       <div></div>已预订场地
     </div>
-    <div class="container">
-      <div class="content time" v-for="(item, i) in timeLineList" :key="i">{{item.time}}</div>
-    </div>
-    <template>
-      <div v-for="(item, index) in tableFieldData" :key="index" class="container">
-        <div class="title">{{item.place}}</div>
-        <div v-for="(itemIn, indexIn) in item.data" :key="indexIn" class="content"
-        :style="{'background': itemIn.status === 0 ? 'lightblue' : itemIn.status === 2 ? '#ff9000': itemIn.status === 88 ? '#acce22': 'red',
-        'cursor': itemIn.status === 0 ? 'pointer' : 'not-allowed'}"
-        :class="content_style" @click.stop="handleCellClick($event, itemIn)">
-          <Tooltip placement="top" :delay="500">
-            {{itemIn.money}}
-            <div slot="content">
-              <p>{{itemIn.status}}</p>
-              <p>{{itemIn.time}}</p>
-            </div>
-          </Tooltip>
-        </div>
-      </div>
+    <div class="table">
       <div class="line" ref="line"></div>
-    </template>
+      <div class="container">
+        <div class="content time" v-for="(item, i) in timeLineList" :key="i">{{item.time}}</div>
+      </div>
+      <template>
+        <div v-for="(item, index) in tableFieldData" :key="index" class="container">
+          <div class="title">{{item.place}}</div>
+          <div v-for="(itemIn, indexIn) in item.data" :key="indexIn" class="content"
+          :style="{'background': itemIn.status === 0 ? 'lightblue' : itemIn.status === 2 ? '#ff9000': itemIn.status === 88 ? '#acce22': 'red',
+          'cursor': itemIn.status === 0 ? 'pointer' : 'not-allowed'}"
+          :class="content_style" @click.stop="handleCellClick($event, itemIn)">
+            <Tooltip placement="top" :delay="500">
+              {{itemIn.money}}
+              <div slot="content">
+                <p>{{itemIn.status}}</p>
+                <p>{{itemIn.time}}</p>
+              </div>
+            </Tooltip>
+          </div>
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 <script>
@@ -72,7 +74,6 @@ export default {
     // }
   },
   created() {
-    this.getFieldTableData();
     this.getFieldTypes();
   },
   mounted() {
@@ -87,16 +88,20 @@ export default {
     this.line_timer && clearInterval(this.line_timer);
   },
   methods: {
-    getFieldTableData() {
+    changeField(temp) {
+      let arr = temp.split('-');
+      let id = arr[arr.length - 1];
+      this.getFieldTableData(id);
+    },
+    getFieldTableData(id) {
       let data = {
-        fieldSaleId: '3d67c980cb9111e984598866394de9ee',
-        operator_id: '2014011166',
+        fieldSaleId: id,
+        operator_id: '9b778c8c1ee711e98e8c000c2983e74a',
         operator_role: 'admin',
-        orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+        orgId: '123456',
         today: moment().format('YYYY-MM-DD'),
         week: moment().format('dddd'),
       };
-      console.log(data);
       this.$axios({
         method: 'POST',
         url: 'fieldSale/listFieldSale.do',
@@ -121,7 +126,7 @@ export default {
     draw_line() {
       console.log(moment().format('HH:mm'));
       if (this.tableFieldData.length) {
-        const SINGAL_CELL_HEIGHT = 40; // 表格单元格的高度
+        const SINGAL_CELL_HEIGHT = 40; // 表格单元格的高度，与下面样式同时修改
         // 场地开始时间，结束时间
         let startTime = this.tableFieldData[0].data[0].time.split('-')[0];
         let endTime = this.tableFieldData[0].data[this.tableFieldData[0].data.length - 1].time.split('-')[1];
@@ -134,7 +139,7 @@ export default {
         // 计算高度
         // 1320 / 40 * 22 = 1173 / x
         let line_top = (total_count * SINGAL_CELL_HEIGHT * past_mins / total_mins).toFixed(2);
-        this.$refs['line'].style.top = `${130 + parseFloat(line_top)}px`;
+        this.$refs['line'].style.top = `${80 + parseFloat(line_top)}px`; // 表头的高度 需要同时改变
         this.$refs['line'].style.borderTop = '1px solid red';
       }
     },
@@ -157,9 +162,9 @@ export default {
     // 获取所有场地
     getFieldTypes() {
       let data = {
-        operator_id: 'c4fb984777d111e986f98cec4bb1848c',
+        operator_id: '"9b778c8c1ee711e98e8c000c2983e74a"',
         operator_role: 'admin',
-        orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+        orgId: '123456',
         fieldSaleStatus: 1,
       };
       this.$axios({
@@ -169,10 +174,14 @@ export default {
       }).then(res => {
         if (res.data.code === 200) {
           this.fieldTypeList = res.data.rows;
-          this.default_button = this.fieldTypeList[0].sportItem;
+          this.default_button = `${this.fieldTypeList[0].sportItem}-${this.fieldTypeList[0].fieldId}`;
+          let temp = this.default_button;
+          return temp;
         } else {
           this.$Message.warning(res.code);
         }
+      }).then((temp) => {
+        this.changeField(temp);
       }).catch(error => {
         console.log(error);
       });
@@ -183,8 +192,8 @@ export default {
 <style lang="scss" scoped>
   $border: 1px solid #fff;
   #BookField {
-    width: 1200px;
     position: relative;
+    height: 100%;
     .fieldType {
       padding: 0 0 1em 1em;
     }
@@ -210,51 +219,62 @@ export default {
         }
       }
     }
-    .container {
-      border: $border;
-      display: inline-block;
-      width: 100px;
-      color: #fff;
-      .title {
-        height: 80px;
-        background: $g_default_color;
-        font-weight: 600;
-        font-size: 16px;
-        text-align: center;
-        line-height: 80px;
+    .table {
+      padding: 0 2em 2em 2em;
+      width: 100%;
+      white-space: nowrap; // 重要 设置水平滚动
+      overflow-x: auto;
+      overflow-y: hidden;
+      position: relative;
+      &:hover {
+        background: #e8eaec;
+        border-radius: 8px;
       }
-      .content {
-        height: 40px;
-        width: (100px - 2px);
-        border-top: $border;
-        font-weight: 600;
-        font-size: 16px;
-        text-align: center;
-        line-height: 40px;
-        &:hover {
-          cursor: pointer;
-          background: #ff6600;
+      .line {
+        border-top: 1px solid red;
+        position: absolute;
+        width: 100%; // TODO: 线的宽度设置
+      }
+      .container {
+        border: $border;
+        display: inline-block;
+        width: 100px;
+        color: #fff;
+        .title {
+          height: 80px;
+          background: $g_default_color;
+          font-weight: 600;
+          font-size: 16px;
+          text-align: center;
+          line-height: 80px;
         }
-        .ivu-tooltip { // tooltip和单元格大小相等
-          width: inherit;
-          height: inherit;
-          div > p {
-            white-space: normal;
+        .content {
+          height: 40px; // 单元格高度。修改的时候，上面计算公式也需要修改
+          width: (100px - 2px);
+          border-top: $border;
+          font-weight: 600;
+          font-size: 16px;
+          text-align: center;
+          line-height: 40px;
+          &:hover {
+            cursor: pointer;
+            background: #ff6600;
+          }
+          .ivu-tooltip { // tooltip和单元格大小相等
+            width: inherit;
+            height: inherit;
+            div > p {
+              white-space: normal;
+            }
+          }
+        }
+        .time {
+          background: $g_default_color;
+          &:hover {
+            background: $g_default_color;
           }
         }
       }
-      .time {
-        background: $g_default_color;
-        &:hover {
-          background: $g_default_color;
-        }
-      }
-    }
-    .line {
-      border-top: 1px solid #fff;
-      position: absolute;
-      top: 130px;
-      width: 100%;
     }
     .ivu-table .demo-table-info-cell-name {
       background-color: #2db7f5;

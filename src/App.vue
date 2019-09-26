@@ -5,6 +5,7 @@
     html, body {
         width: 100%;
         height: 100%;
+        font-family: "SourceHanSansCn Normal";
     }
     #bookTicket .leibie{position: relative;line-height:36px}
     #bookTicket .leibie2{position: relative;left:-20px}

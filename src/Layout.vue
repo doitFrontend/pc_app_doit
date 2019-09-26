@@ -63,7 +63,7 @@
       <div class="inner">
         <h2>联系我们</h2>
         <p>地址：南通市崇川区世伦路世濠花园商铺101号3层</p>
-        <p>400-081-0019</p>
+        <p>联系电话：400-081-0019</p>
       </div>
       <div class="inner">
         <img src="./assets/erweima.jpg" alt="" srcset="">
@@ -100,7 +100,6 @@ export default {
     },
   },
   mounted() {
-    console.log(location);
     window.addEventListener('scroll', this.fixHeader);
   },
   destroyed() {

@@ -66,12 +66,12 @@ router.beforeEach((to, from, next) => {
     next();
   };
   // 判断是否需要选择城市
-  if (localStorage['currentCity']) {
-    next();
-  } else {
+  if (!localStorage['currentCity'] || localStorage['currentCity'] === 'undefined') {
     next({
       name: 'City'
     });
+  } else {
+    next();
   }
 });
 

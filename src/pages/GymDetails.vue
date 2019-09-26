@@ -43,7 +43,6 @@
                 <book-ticket></book-ticket>
               </TabPane>
               <TabPane label="购卡" name="card">
-                暂未开放
                 <book-card></book-card>
               </TabPane>
               <TabPane label="场地预定" name="field" style="overflow-x: auto; height: 820px;">

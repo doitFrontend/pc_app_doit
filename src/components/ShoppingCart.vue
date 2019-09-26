@@ -1,6 +1,10 @@
 <template>
   <div ref="cart" id="cart">
     <!-- <transition-group tag="div"> -->
+      <div  v-if="totalCartPriz.count > 0" class="item" v-for="(item, i) in shoppingCartList" :key="i+item"  :style="{ top: `${-(i+2)*50}px` }">
+        <div>购物车</div>
+        <div>清除物品</div>
+        </div>
       <div v-for="(item, i) in shoppingCartList" v-if="item.num > 0" :key="i+item" :style="{ top: `${-(i+1)*50}px` }" class="item">
         <div>
           {{item.title}}
@@ -59,12 +63,12 @@ export default {
 $box_shadow: inset 2px 2px 8px #eee;
 #cart {
   background: lightblue;
-  width: 280px;
+  width: 278px;
   height: 50px;
   position: fixed;
   bottom: 0;
   // right: 100px;
-  left: calc(calc(100% - 1000px)/2 + 860px);
+  left: calc(calc(100% - 1000px)/2 + 862px);
   z-index: 100;
   box-shadow: $box_shadow;
   .item {

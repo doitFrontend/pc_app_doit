@@ -182,7 +182,7 @@ export default {
         display: flex;
         .sale_left {
           background: #fff;
-          width: 1000px;
+          width: 990px;
         }
         .sale_right {
           width: 280px;

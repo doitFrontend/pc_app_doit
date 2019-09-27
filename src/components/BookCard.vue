@@ -86,14 +86,15 @@ export default {
     },
     countPriz({ item, sign }) {
       if (sign === 'ADD') {
-        this.setToCart(item); // 把item存入shoppingCartList
+        this.setToCart(item);
       } else {
         this.delFromCart(item);
       }
     },
     setToCart(item) {
       console.log(item);
-      console.log(this.$store.state.shoppingCartList);
+      // console.log(this.$store.state.shoppingCartList);
+      this.$store.state.shoppingCartObj.cardCart.push(item);
     },
     delFromCart(item) {},
   },
@@ -108,7 +109,7 @@ export default {
         'num': 0,
       }],
     });
-    this.$store.state.shoppingCartList = [...this.MockData.cardLists];
+    // this.$store.state.shoppingCartObj.cardCart = [...this.MockData.cardLists];
     this.getCardOrTicketTypes(); // 获取票卡类别
   },
 };

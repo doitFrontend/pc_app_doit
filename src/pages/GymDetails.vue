@@ -52,6 +52,7 @@
           </div>
           <div class="sale_right">
             <h2>购买须知</h2>
+            {{$store.state.shoppingCartObj.ticketCart}}
             <ul>
               <li>
                 <p>有效期</p>
@@ -192,7 +193,7 @@ export default {
         display: flex;
         .sale_left {
           background: #fff;
-          width: 990px;
+          width: $g_left_width;
         }
         .sale_right {
           width: 280px;

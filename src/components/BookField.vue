@@ -4,7 +4,7 @@
       <RadioGroup v-model="default_button" type="button" @on-change="changeField">
         <Radio v-for="(item, i) in fieldTypeList" :key="i" :label="`${item.sportItem}-${item.fieldId}`">{{item.sportItem}}</Radio>
       </RadioGroup>
-      <DatePicker type="date" placeholder="选择日期" style="width: 200px" v-model="date" @click="changeTime"></DatePicker>
+      <DatePicker type="date" placeholder="选择日期" style="width: 200px" v-model="currentDate" @on-change="changeTime"></DatePicker>
     </div>
     <div class="signs">
       <!-- *图例说明：#acce22-上课专属场地-88 lightblue-可选场地-0 已预订场地 已过期 -->
@@ -60,7 +60,7 @@ export default {
       fieldTypeList: [],
       default_button: '',
       timeLineList: [],
-      date: '',
+      currentDate: new Date(),
     };
   },
   computed: {},
@@ -79,22 +79,26 @@ export default {
     this.line_timer && clearInterval(this.line_timer);
   },
   methods: {
-    changeTime(currentDate) { // TODO: 根据时间切换场地
-      console.log(currentDate);
+    changeTime(newDate) {
+      if (newDate) {
+        let arr = this.default_button.split('-');
+        let id = arr[arr.length - 1];
+        this.getFieldTableData(id, newDate);
+      }
     },
     changeField(temp) {
       let arr = temp.split('-');
       let id = arr[arr.length - 1];
       this.getFieldTableData(id);
     },
-    getFieldTableData(id) {
+    getFieldTableData(id, date = this.currentDate) {
       let data = {
         fieldSaleId: id,
         operator_id: '9b778c8c1ee711e98e8c000c2983e74a',
         operator_role: 'admin',
         orgId: '123456',
-        today: moment().format('YYYY-MM-DD'),
-        week: moment().format('dddd'),
+        today: moment(date).format('YYYY-MM-DD'),
+        week: moment(date).format('dddd'),
       };
       this.$axios({
         method: 'POST',
@@ -138,9 +142,9 @@ export default {
         this.$refs['line'].style.borderTop = '1px solid red';
         this.$refs['line'].style.width = `${SINGAL_CELL_WIDTH * (this.tableFieldData.length + 1)}px`;
         // 结束的红线停止在表格底部
-        if (now >= endTime) {
+        if (now >= this.formatDate(endTime)) {
           this.$refs['line'].style.top = `${80 + (SINGAL_CELL_HEIGHT * this.tableFieldData[0].data.length)}px`; // 时间结束
-        } else if (now <= startTime) {
+        } else if (now < this.formatDate(startTime)) {
           this.$refs['line'].style.top = `80px`; // 时间未开始
         }
       }
@@ -160,6 +164,9 @@ export default {
           itemIn.status = 0;
         } else {
           itemIn.status = 1;
+          console.log(item);
+          console.log(itemIn);
+          this.$store.state.shoppingCartObj.fieldCart.push({...item, ...itemIn});
         }
       }
     },
@@ -189,6 +196,17 @@ export default {
       }).catch(error => {
         console.log(error);
       });
+    },
+    // 给时间字符串添加加0 '1:00'->'01:00'
+    formatDate(dateStr) {
+      let dateStrArr = dateStr.split(':');
+      let tempArr = dateStrArr.map(element => {
+        if (element.length <= 1) {
+          element = `0${element}`;
+        }
+        return element;
+      });
+      return tempArr.join(':');
     },
   }
 };
@@ -294,4 +312,3 @@ export default {
     }
   }
 </style>
-

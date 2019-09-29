@@ -1,7 +1,7 @@
 <template>
   <div ref="cart" id="cart">
     <!-- <transition-group tag="div"> -->
-      <div  v-if="totalCartPriz.count > 0" class="item" v-for="(item, i) in shoppingCartList" :key="i+item"  :style="{ top: `${-(i+2)*50}px` }">
+      <div  v-if="totalCartPriz.count > 0" class="item"  :style="{ top: `${-(shoppingCartList.length+1)*50}px` }">
         <div>购物车</div>
         <div>清除物品</div>
         </div>

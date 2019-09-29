@@ -95,7 +95,10 @@ export default {
       console.log(item);
       console.log(this.$store.state.shoppingCartList);
     },
-    delFromCart(item) {},
+    delFromCart(item) {
+      console.log(item);
+      console.log(this.$store.state.shoppingCartList);
+    },
   },
   created() {
     this.MockData = Mock.mock({

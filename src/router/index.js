@@ -11,6 +11,13 @@ import City from '@/pages/City';
 import Test from '@/pages/Test';
 import Foo from '@/pages/Foo';
 import Bar from '@/pages/Bar';
+import MyTicket from '@/pages/MyTicket';
+import MyTicketDetail from '@/pages/MyTicketDetail';
+import MyCard from '@/pages/MyCard';
+import MyCardDetail from '@/pages/MyCardDetail';
+import MyReserve from '@/pages/MyReserve';
+import MyReserveDetail from '@/pages/MyReserveDetail';
+import MyOrder from '@/pages/MyOrder';
 
 Vue.use(Router);
 
@@ -43,6 +50,41 @@ export default new Router({
           path: '/home',
           name: 'Home',
           component: Home,
+        },
+        {
+          path: '/MyTicket',
+          name: 'MyTicket',
+          component: MyTicket,
+        },
+        {
+          path: '/MyTicket/:id',
+          name: 'MyTicketDetail',
+          component: MyTicketDetail,
+        },
+        {
+          path: '/MyCard',
+          name: 'MyCard',
+          component: MyCard,
+        },
+        {
+          path: '/MyCard/:id',
+          name: 'MyCardDetail',
+          component: MyCardDetail,
+        },
+        {
+          path: '/MyReserve',
+          name: 'MyReserve',
+          component: MyReserve,
+        },
+        {
+          path: '/MyReserve/:id',
+          name: 'MyReserveDetail',
+          component: MyReserveDetail,
+        },
+        {
+          path: '/MyOrder',
+          name: 'MyOrder',
+          component: MyOrder,
         },
         {
           path: '/gym',

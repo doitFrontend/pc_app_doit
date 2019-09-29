@@ -40,10 +40,15 @@ Vue.config.productionTip = false;
 
 Vue.prototype.REGEXP = REGEXP;
 
+iView.LoadingBar.config({
+  color: '#5cb85c',
+  // failedColor: '#f0ad4e',
+  height: 8,
+});
+
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
   // to and from are both route objects. must call `next`.
-  console.log(to.fullPath);
   let notOpenUrl = ['/train', '/games', 'mall', '/community'];
   if (notOpenUrl.indexOf(to.fullPath) !== -1) {
     next({
@@ -66,12 +71,12 @@ router.beforeEach((to, from, next) => {
     next();
   };
   // 判断是否需要选择城市
-  if (localStorage['currentCity']) {
-    next();
-  } else {
+  if (!localStorage['currentCity'] || localStorage['currentCity'] === 'undefined') {
     next({
       name: 'City'
     });
+  } else {
+    next();
   }
 });
 

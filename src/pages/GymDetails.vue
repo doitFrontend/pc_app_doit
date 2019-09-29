@@ -28,8 +28,10 @@
               <div class="right">
                   <baidu-map class="bm-view"
                   :center="center"
-                  :zoom="zoom">
+                  :zoom="zoom"
+                  @ready="handleReady">
                     <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
+                    <bm-marker :position="center"></bm-marker>
                   </baidu-map>
               </div>
           </div>
@@ -41,16 +43,16 @@
                 <book-ticket></book-ticket>
               </TabPane>
               <TabPane label="购卡" name="card">
-                暂未开放
-                <!-- <book-card></book-card> -->
+                <book-card></book-card>
               </TabPane>
-              <TabPane label="场地预定" name="field" style="overflow-x: auto; height: 820px;">
+              <TabPane label="场地预定" name="field">
                 <book-field></book-field>
               </TabPane>
             </Tabs>
           </div>
           <div class="sale_right">
             <h2>购买须知</h2>
+            {{$store.state.shoppingCartObj.ticketCart}}
             <ul>
               <li>
                 <p>有效期</p>
@@ -87,16 +89,25 @@ export default {
     return {
       gymInfo: {},
       default_value: 0,
-      // center: {lng: 0, lat: 0},
-      center: '北京',
-      zoom: 11,
+      center: {lng: 0, lat: 0},
+      zoom: 17,
       img: 'http://img.doit10019.com/2ba448d7-67ba-4620-b835-b5c5cbca6f09',
     };
   },
   created() {
-    console.log(this.$route);
     this.gymInfo = this.$route.query;
     console.log(this.gymInfo);
+  },
+  methods: {
+    handleReady({BMap}) {
+      let stationGeo = new BMap.Geocoder();
+      stationGeo.getPoint(this.gymInfo.address, (point) => {
+        this.center = {
+          lng: point.lng,
+          lat: point.lat,
+        };
+      });
+    },
   },
 };
 </script>
@@ -182,7 +193,7 @@ export default {
         display: flex;
         .sale_left {
           background: #fff;
-          width: 990px;
+          width: $g_left_width;
         }
         .sale_right {
           width: 280px;

@@ -32,6 +32,7 @@ export default {
     height: 3em;
     background: #515a6e;
     border-radius: 5px;
+    z-index: 200;
     display: flex;
     align-items: center;
     justify-content: center;

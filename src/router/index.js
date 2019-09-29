@@ -8,6 +8,7 @@ import Checkout from '@/pages/Checkout';
 import Login from '@/pages/Login';
 import NotFound from '@/pages/404';
 import City from '@/pages/City';
+import Stage from '@/pages/Stage';
 import Test from '@/pages/Test';
 import Foo from '@/pages/Foo';
 import Bar from '@/pages/Bar';
@@ -34,9 +35,9 @@ export default new Router({
       component: City,
     },
     {
-      path: '/404',
-      name: 'NotFound',
-      component: NotFound,
+      path: '/stage',
+      name: 'Stage',
+      component: Stage,
     },
     {
       path: '',
@@ -125,6 +126,15 @@ export default new Router({
         //   component: Test,
         // },
       ],
+    },
+    {
+      path: '/404',
+      name: 'NotFound',
+      component: NotFound,
+    },
+    {
+      path: '*',
+      redirect: '/404',
     },
   ],
 });

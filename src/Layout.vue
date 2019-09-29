@@ -64,7 +64,7 @@
       <div class="inner">
         <h2>联系我们</h2>
         <p>地址：南通市崇川区世伦路世濠花园商铺101号3层</p>
-        <p>400-081-0019</p>
+        <p>联系电话：400-081-0019</p>
       </div>
       <div class="inner">
         <img src="./assets/erweima.jpg" alt="" srcset="">
@@ -101,7 +101,6 @@ export default {
     },
   },
   mounted() {
-    console.log(location);
     window.addEventListener('scroll', this.fixHeader);
   },
   destroyed() {
@@ -218,11 +217,12 @@ $g_border_radius: 20px;
           z-index: 100;
           & > div > span > div {
             &:nth-child(n+2) {
-              background: $g_default_color;
-              border-radius: 8px;
-              &:hover {
                 background: #fff;
                 color: $g_default_color;
+              border-radius: 8px;
+              &:hover {
+                color: #fff;
+                background: $g_default_color;
               }
             }
           }
@@ -296,7 +296,7 @@ $g_border_radius: 20px;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 20;
+    z-index: 200;
     background: $g_background;
     box-shadow: 0 5px 14px #ccc;
   }

@@ -1,16 +1,16 @@
 <template>
   <ButtonGroup shape="circle">
     <Button class="btn-remove" style="font-weight: 700" v-show="item.num > 0" @click="minusNum(item)"><Icon type="md-remove" size="24" color="#bebebe" style="position: relative;top:-3px" /></Button>
-    <Button  v-show="item.num > 0" type="primary">{{item.num}}</Button>
+    <Button v-show="item.num > 0" type="primary">{{item.num}}</Button>
     <transition
       @before-enter="beforeEnter"
       @enter="enter"
       @after-enter="afterEnter">
       <div v-show="isBallShow" class="ball"></div>
     </transition>
-    <Button v-show="!(item.num >0)" @click="addshow(item)" style="width:120px;font-size:18px;border-radius: 32px;color: #fff;background: #f76900;margin-right:5px">加入购物车</Button>
-    <Button  v-show="item.num > 0"  class="addnum" @click="addNum(item)"><Icon type="md-add" size="24" color="#fff"  style="position: relative;top:-3px"  /></Button>
-    </ButtonGroup>
+    <Button v-if="item.num" class="addnum" @click="addNum(item)"><Icon type="md-add" size="24" color="#fff"  style="position: relative;top:-3px"  /></Button>
+    <Button v-else @click="addNum(item)" style="width:120px;font-size:18px;border-radius: 32px;color: #fff;background: #f76900;margin-right:5px">加入购物车</Button>
+  </ButtonGroup>
 </template>
 <script>
 export default {
@@ -27,9 +27,6 @@ export default {
   },
   computed: {},
   methods: {
-    addshow(item) {
-      item.num++;
-    },
     addNum(item) {
       item.num++;
       this.isBallShow = true;

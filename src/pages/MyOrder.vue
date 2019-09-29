@@ -8,55 +8,129 @@
           </div>
           <div class="personalCenter_right">
             <h2 id="org_name">我的订单</h2>
-            <table class="first_floor">
+            <table>
               <thead>
                 <tr>
-                <th><div>订单号</div></th>
-                <th><div>下单时间</div></th>
-                <th><div>单价</div></th>
-                <th><div>数量</div></th>
-                <th><div>支付金额</div></th>
-                <th><div>订单状态</div></th>
-                <th><div>操作</div></th>
+                  <th><div class="w150">商品类型</div></th>
+                  <th><div  class="w200">订单信息</div></th>
+                  <th><div class="w100">单价</div></th>
+                  <th><div class="w100">金额</div></th>
+                  <th><div class="w100">支付金额</div></th>
+                  <th><div class="w100">订单状态</div></th>
+                  <th><div class="w150">操作</div></th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <table class="second_floor">
-                    <thead>
-                      <tr>
-                        <th><div>订单号：201909275765a4d781</div></th>
-                      <th><div>下单日期：2019-09-27 17:00:40</div></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><div>场地</div></td>
-                        <td>
-                          <div>
-                            <h3>台球-预定（非家属）</h3>
-                          <p>时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
-                          <p>商家：大连理工体育馆</p>
-                          </div>
-                        </td>
-                        <td><div>¥200.00</div></td>
-                        <td><div>×1</div></td>
-                        <td><div>¥200.00</div></td>
-                        <td>
-                          <div>
-                          <div class="gray">未支付</div>
-                          <a>订单详情</a>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="unpaid"><a onclick="pay_order(this)" data-set="201909275765a4d781">立即付款</a><a onclick="cancle_order(this)" data-set="201909275765a4d781">取消订单</a></div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </tr>
-              </tbody>
             </table>
+            <ul class="table-ul clearfix">
+              <li>
+                <table class="table2">
+                  <thead>
+                    <tr>
+                      <th colspan="8">
+                        <dl class="clearfix">
+                          <dt class="pull-left">订单号：<span>201909275765a4d781</span></dt>
+                          <dd class="pull-left">下单日期：<span>2019-09-27 17:00:40</span>
+                          </dd>
+                        </dl>
+                      </th>
+                      </tr>
+                  </thead>
+                  <tbody id="201909275765a4d781">
+                    <tr>
+                      <td class="w150 b-r-1">场地</td>
+                      <td class="w200">
+                        <h3 style="font-size: 14px;font-weight: bold;">台球-预定（非家属）</h3>
+                        <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
+                        <p class="gray">商家：大连理工体育馆</p>
+                      </td>
+                      <td class="w100"><span>¥100.00</span></td>
+                      <td class="w100 b-r-1">
+                        <div>¥100.00×1</div>
+                      </td>
+                      <td class="w100 b-r-1" rowspan="4">
+                        <div>¥0.00</div>
+                      </td>
+                      <td class="w100 b-r-1" rowspan="4">
+                        <div class="gray">未支付</div>
+                        <a onclick="order_detail(this)" data-name=" 大连理工体育馆 " data-status=" 未支付 ">订单详情</a>
+                      </td>
+                      <td class="w150" rowspan="4">
+                        <div class="unpaid">
+                        <a onclick="pay_order(this)" data-set="201909275765a4d781">立即付款</a>
+                        <a onclick="cancle_order(this)" data-set="201909275765a4d781">取消订单</a>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="w150 b-r-1">场地</td>
+                      <td class="w200">
+                        <h3 style="font-size: 14px;font-weight: bold;">台球-预定（非家属）</h3>
+                        <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
+                        <p class="gray">商家：大连理工体育馆</p></td>
+                      <td class="w100"><span>¥100.00</span></td>
+                      <td class="w100 b-r-1"><div>¥100.00×1</div></td>
+                    </tr>
+                    <tr>
+                      <td class="w150 b-r-1">场地</td>
+                      <td class="w200">
+                        <h3 style="font-size: 14px;font-weight: bold;">台球-预定（非家属）</h3>
+                        <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
+                        <p class="gray">商家：大连理工体育馆</p>
+                      </td>
+                      <td class="w100"><span>¥100.00</span></td>
+                      <td class="w100 b-r-1"><div>¥100.00×1</div></td>
+                    </tr>
+                    <tr>
+                      <td class="w150 b-r-1">场地</td>
+                      <td class="w200">
+                        <h3 style="font-size: 14px;font-weight: bold;">台球-预定（非家属）</h3>
+                        <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
+                        <p class="gray">商家：大连理工体育馆</p>
+                      </td>
+                      <td class="w100"><span>¥100.00</span></td>
+                      <td class="w100 b-r-1">
+                        <div>¥100.00×1</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </li>
+              <li>
+                <table class="table2">
+                  <thead>
+                    <tr>
+                      <th colspan="8">
+                        <dl class="clearfix">
+                          <dt class="pull-left">订单号：<span>201909272322a6fb02</span></dt>
+                          <dd class="pull-left">下单日期：<span>2019-09-27 17:00:06</span></dd>
+                        </dl>
+                        </th>
+                    </tr>
+                  </thead>
+                  <tbody id="201909272322a6fb02">
+                    <tr>
+                      <td class="w150 b-r-1">场地</td>
+                      <td class="w200">
+                        <h3 style="font-size: 14px;font-weight: bold;">台球-预定（非家属）</h3>
+                        <p class="gray">时段：2019-09-27 18:00:00~ 2019-09-27 22:00:00</p>
+                        <p class="gray">商家：大连理工体育馆</p>
+                      </td>
+                      <td class="w100"><span>¥400.0</span></td>
+                      <td class="w100 b-r-1"><div>¥400.0×1</div></td>
+                      <td class="w100 b-r-1" rowspan="1"><div>¥0.00</div></td>
+                      <td class="w100 b-r-1" rowspan="1">
+                        <div class="gray">未支付</div>
+                        <a onclick="order_detail(this)" data-name=" 大连理工体育馆 " data-status=" 未支付 " >订单详情</a></td>
+                        <td class="w150" rowspan="1">
+                          <div class="unpaid"><a onclick="pay_order(this)" data-set="201909272322a6fb02">立即付款</a>
+                          <a onclick="cancle_order(this)" data-set="201909272322a6fb02">取消订单</a>
+                          </div>
+                        </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -122,14 +196,33 @@ background-color: $g_background;
             margin-bottom: 10px;
             padding-bottom: 10px;
             }
-            .first_floor, .first_floor tr{width: 100%;}
-            .first_floor tr td div,.first_floor tr th div{
-              width: 100px;
+            table tr {
+              width: 916px;
+            th{
+              line-height: 36px;
+              font-size: 14px;
             }
-            .second_floor,.second_floor tr{width: 100%;}
-            .second_floor tr td div,.second_floor tr th div{
-              width: 100px;
             }
+            .w150 {width: 125px;}
+            .w100 {width: 100px;}
+            .w200 {width: 300px;}
+            .table-ul dl, .table-ul dt, .table-ul dd {
+              height: 42px;
+              background: #f2f9ff;
+              line-height: 42px;
+              font-size: 12px;
+              }
+              .pull-left{float: left;padding-left: 20px}
+            ul li{
+              list-style: none;
+            border-top: 1px solid #ddd;
+            }
+            .b-r-1{border-right: 1px solid #ddd; }
+            .table2 tbody tr {
+              border-top: 1px solid #ddd;
+              margin-bottom: 10px;
+              color: #1a1a1a;
+              }
         }
         .personalCenter_left {
           width: 260px;

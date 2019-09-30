@@ -1,12 +1,32 @@
 <template>
-<div id="personalCenterNav">
-    <ul>
-      <router-link to='/MyOrder'><li>我的订单</li></router-link>
-      <router-link to='/MyTicket'><li>我的票</li></router-link>
-      <router-link to='/MyCard'><li>我的卡</li></router-link>
-      <router-link to='/MyReserve'><li>我的场地</li></router-link>
-    </ul>
-</div>
+    <Menu :theme="theme3" active-name="1">
+        <MenuGroup title="个人中心">
+              <router-link to='/MyOrder'>
+                <MenuItem name="1">
+                  <Icon type="md-document" />
+                我的订单
+                </MenuItem>
+              </router-link>
+              <router-link to='/MyTicket'>
+                <MenuItem name="2">
+                <Icon type="md-chatbubbles" />
+                我的票
+                </MenuItem>
+              </router-link>
+              <router-link to='/MyCard'>
+                <MenuItem name="3">
+                <Icon type="md-chatbubbles" />
+                我的卡
+                </MenuItem>
+              </router-link>
+              <router-link to='/MyReserve'>
+                <MenuItem name="4">
+                <Icon type="md-chatbubbles" />
+                我的场地
+                </MenuItem>
+              </router-link>
+        </MenuGroup>
+    </Menu>
 </template>
 <script>
 export default {
@@ -22,16 +42,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-      h2 {
-        width: 100%;
-      }
-      ul {
-        list-style:none;
-        li {
-          padding: 0.2em 0;
-          line-height:24px;
-          font-size: 16px;
-          color:  #515a6e;
-        }
-      }
+  .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu):after {left: 0;}
+  .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){background: #f0faff}
+  .ivu-menu-vertical .ivu-menu-item-group-title {font-size: 18px !important;font-weight: 700}
+  a{color: #515a6e;}
 </style>

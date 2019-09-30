@@ -19,6 +19,7 @@ import MyCardDetail from '@/pages/MyCardDetail';
 import MyReserve from '@/pages/MyReserve';
 import MyReserveDetail from '@/pages/MyReserveDetail';
 import MyOrder from '@/pages/MyOrder';
+import PersonalCenter from '@/pages/PersonalCenter';
 
 Vue.use(Router);
 
@@ -52,40 +53,82 @@ export default new Router({
           name: 'Home',
           component: Home,
         },
+        // {
+        //   path: '/MyTicket',
+        //   name: 'MyTicket',
+        //   component: MyTicket,
+        // },
+        // {
+        //   path: '/MyTicket/:id',
+        //   name: 'MyTicketDetail',
+        //   component: MyTicketDetail,
+        // },
+        // {
+        //   path: '/MyCard',
+        //   name: 'MyCard',
+        //   component: MyCard,
+        // },
+        // {
+        //   path: '/MyCard/:id',
+        //   name: 'MyCardDetail',
+        //   component: MyCardDetail,
+        // },
+        // {
+        //   path: '/MyReserve',
+        //   name: 'MyReserve',
+        //   component: MyReserve,
+        // },
+        // {
+        //   path: '/MyReserve/:id',
+        //   name: 'MyReserveDetail',
+        //   component: MyReserveDetail,
+        // },
+        // {
+        //   path: '/MyOrder',
+        //   name: 'MyOrder',
+        //   component: MyOrder,
+        // },
         {
-          path: '/MyTicket',
-          name: 'MyTicket',
-          component: MyTicket,
-        },
-        {
-          path: '/MyTicket/:id',
-          name: 'MyTicketDetail',
-          component: MyTicketDetail,
-        },
-        {
-          path: '/MyCard',
-          name: 'MyCard',
-          component: MyCard,
-        },
-        {
-          path: '/MyCard/:id',
-          name: 'MyCardDetail',
-          component: MyCardDetail,
-        },
-        {
-          path: '/MyReserve',
-          name: 'MyReserve',
-          component: MyReserve,
-        },
-        {
-          path: '/MyReserve/:id',
-          name: 'MyReserveDetail',
-          component: MyReserveDetail,
-        },
-        {
-          path: '/MyOrder',
-          name: 'MyOrder',
-          component: MyOrder,
+          path: '/PersonalCenter',
+          name: 'PersonalCenter',
+          component: PersonalCenter,
+          children: [
+            {
+              path: '/MyOrder',
+              name: 'MyOrder',
+              component: MyOrder,
+            },
+            {
+              path: '/MyTicket',
+              name: 'MyTicket',
+              component: MyTicket,
+            },
+            {
+              path: '/MyTicket/:id',
+              name: 'MyTicketDetail',
+              component: MyTicketDetail,
+            },
+            {
+              path: '/MyCard',
+              name: 'MyCard',
+              component: MyCard,
+            },
+            {
+              path: '/MyCard/:id',
+              name: 'MyCardDetail',
+              component: MyCardDetail,
+            },
+            {
+              path: '/MyReserve',
+              name: 'MyReserve',
+              component: MyReserve,
+            },
+            {
+              path: '/MyReserve/:id',
+              name: 'MyReserveDetail',
+              component: MyReserveDetail,
+            },
+          ],
         },
         {
           path: '/gym',

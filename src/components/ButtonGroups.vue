@@ -28,7 +28,6 @@ export default {
   computed: {},
   methods: {
     addNum(item) {
-      // item.num++;
       this.isBallShow = true;
       this.$emit('countSum', { item, sign: 'ADD' });
     },
@@ -36,7 +35,6 @@ export default {
       if (item.num === 0) { // 逻辑里面进一步判断是否可以继续减
         return;
       }
-      // item.num--;
       this.$emit('countSum', { item, sign: 'MINUS' });
     },
     // 点击动画效果

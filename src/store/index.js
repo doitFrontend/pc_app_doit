@@ -49,6 +49,7 @@ const mutations = {
     if (isExist) {
       isExist.num++;
     } else {
+      ticketItem.num = 1;
       state.shoppingCartObj.ticketCart.push(ticketItem);
     }
   },
@@ -58,6 +59,7 @@ const mutations = {
     if (isExist) {
       isExist.num++;
     } else {
+      itemOut.num = 1;
       state.shoppingCartObj.cardCart.push(itemOut);
     }
   },
@@ -78,7 +80,7 @@ const mutations = {
   delTicket(state, ticketItem) {
     let isExist = state.shoppingCartObj.ticketCart.find(item => item.id === ticketItem.id);
     let isExistIndex = state.shoppingCartObj.ticketCart.findIndex(item => item.id === ticketItem.id);
-    if (isExist && isExist.num >= 2) {
+    if (isExist && isExist.num >= 1) {
       isExist.num--;
     } else {
       state.shoppingCartObj.ticketCart.splice(isExistIndex, 1);
@@ -88,7 +90,7 @@ const mutations = {
   delCard(state, itemOut) {
     let isExist = state.shoppingCartObj.cardCart.find(item => item.id === itemOut.id);
     let isExistIndex = state.shoppingCartObj.cardCart.findIndex(item => item.id === itemOut.id);
-    if (isExist && isExist.num >= 2) {
+    if (isExist && isExist.num >= 1) {
       isExist.num--;
     } else {
       state.shoppingCartObj.cardCart.splice(isExistIndex, 1);

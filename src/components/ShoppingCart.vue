@@ -90,7 +90,6 @@ export default {
     },
     cardLength() {
       let count = 0;
-      console.log(this.$store.state.shoppingCartObj.cardCart);
       this.$store.state.shoppingCartObj.cardCart.forEach((item) => {
         if (item.num > 0) {
           count++;

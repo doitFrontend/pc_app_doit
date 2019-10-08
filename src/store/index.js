@@ -61,6 +61,19 @@ const mutations = {
       state.shoppingCartObj.cardCart.push(itemOut);
     }
   },
+  // 添加场地
+  addField(state, fData) {
+    state.shoppingCartObj.fieldCart.push(fData);
+  },
+  // 删除场地
+  delField(state, fData) {
+    let isExistIndex = state.shoppingCartObj.fieldCart.findIndex(item => (item.time === fData.time && item.place === fData.place));
+    state.shoppingCartObj.fieldCart.splice(isExistIndex, 1);
+  },
+  delFieldById(state, fItem) {
+    console.log(fItem); // TODO: 购物车点击删除去除相应的记录 // 过时间的需要灰化
+    // state.shoppingCartObj.fieldCart.splice(index, 1);
+  },
   // 删除票
   delTicket(state, ticketItem) {
     let isExist = state.shoppingCartObj.ticketCart.find(item => item.id === ticketItem.id);

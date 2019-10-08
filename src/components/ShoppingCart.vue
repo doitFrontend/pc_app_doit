@@ -20,7 +20,7 @@
         <div class="ticket" :style="{ bottom: `${(cardLength)*50 + (fieldLength + 1)*50 + (ticketLength)*50 + title_height*2}px`}">票</div>
         <div class="ticketItem"
           :style="{ bottom: `${(tIndex + 1)*50 + (fieldLength)*50 + (cardLength)*50 + title_height*2}px`}"
-          v-for="(tItem, tIndex) in shoppingCartObj.ticketCart" :key="tIndex"
+          v-for="(tItem, tIndex) in shoppingCartObj.ticketCart" :key="`t${tIndex}`"
           v-show="tItem.num > 0">
           <div>
             {{tItem.title}}
@@ -36,7 +36,7 @@
         <div class="card" :style="{ bottom: `${(cardLength)*50 + (fieldLength + 1)*50 + title_height}px`}">卡</div>
         <div class="cardItem"
           :style="{ bottom: `${(cardLength - cIndex)*50 + (fieldLength)*50 + title_height}px`}"
-          v-for="(cItem, cIndex) in shoppingCartObj.cardCart" :key="cIndex"
+          v-for="(cItem, cIndex) in shoppingCartObj.cardCart" :key="`c${cIndex}`"
           v-show="cItem.num > 0">
           <div>
             {{cItem.title}}
@@ -52,7 +52,7 @@
         <div class="field" :style="{ bottom: `${(fieldLength + 1)*50}px`}">场地</div>
         <div class="fieldItem" :style="{ bottom: `${(fieldLength - fIndex)*50}px`}" v-for="(fItem, fIndex) in shoppingCartObj.fieldCart" :key="fIndex">
           {{fItem.place}}-{{fItem.time}}-{{fItem.price}}-{{fItem.status}}
-          <span @click="deleteField(fIndex)">删除</span>
+          <span @click="deleteField(fItem)">删除</span>
         </div>
     <!-- </transition-group> -->
     <div class="item">
@@ -106,8 +106,8 @@ export default {
     },
   },
   methods: {
-    deleteField(index) {
-      this.$store.state.shoppingCartObj.fieldCart.splice(index, 1);
+    deleteField(fItem) {
+      this.$store.commit('delFieldById', fItem);
     },
     handleNum(item, sign) {
       switch (sign) {

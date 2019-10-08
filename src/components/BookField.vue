@@ -157,16 +157,16 @@ export default {
      * 88-上课
      */
     handleCellClick(event, item, itemIn) {
+      let fData = { ...itemIn, place: item.place };
       if (itemIn.status !== 0 && itemIn.status !== 1) {
         event.preventDefault();
       } else {
-        if (itemIn.status) { // TODO: 添加到购物车
+        if (itemIn.status) {
           itemIn.status = 0;
+          this.$store.commit('delField', fData);
         } else {
           itemIn.status = 1;
-          console.log(item);
-          console.log(itemIn);
-          this.$store.state.shoppingCartObj.fieldCart.push({...item, ...itemIn});
+          this.$store.commit('addField', fData);
         }
       }
     },

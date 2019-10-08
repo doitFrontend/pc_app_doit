@@ -18,7 +18,8 @@
       <div class="inner">
         <div class="" style="margin:0 20px">
           <Row :gutter="16">
-            <Col v-for="(item, index) in ticketList" :key="index" :sm="8" :md="8" :lg="8">
+            <div v-if="!ticketList.length">暂无数据</div>
+            <Col v-else v-for="(item, index) in ticketList" :key="index" :sm="8" :md="8" :lg="8">
               <div class="item_ticket">
                 <div class="ticket">
                   <div class="piece">
@@ -40,7 +41,6 @@
                 </div>
               </div>
             </Col>
-            <div v-show="!ticketList.length">暂无数据</div>
           </Row>
         </div>
       </div>

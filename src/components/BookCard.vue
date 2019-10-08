@@ -17,7 +17,8 @@
       <Divider />
       <div class="inner">
         <Row >
-          <Col v-for="(item, index) in cardLists" :key="index" :sm="8" :md="8" :lg="8" >
+          <div v-if="!cardLists.length">暂无数据</div>
+          <Col v-else v-for="(item, index) in cardLists" :key="index" :sm="8" :md="8" :lg="8" >
             <div class="item_card">
               <div class="card">
                 <div class="piece">
@@ -41,7 +42,6 @@
               </div>
             </div>
           </Col>
-          <div v-show="!ticketList.length">暂无数据</div>
         </Row>
       </div>
     </div>

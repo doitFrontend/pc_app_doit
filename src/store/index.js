@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { ticketLists } from '../utils/mockdata';
 
 Vue.use(Vuex);
 
@@ -13,6 +14,9 @@ const state = {
     cardCart: [],
     fieldCart: [],
   },
+  ticketList: [],
+  cardList: [],
+  fieldList: [],
 };
 
 const getters = {
@@ -39,29 +43,64 @@ const mutations = {
     state.num--;
     state.totalPrice = num * item.price;
   },
+  // 添加票
   addTicket(state, ticketItem) {
-    console.log(ticketItem);
-    if (state.shoppingCartObj.ticketCart.length) {
-      // state.shoppingCartObj.ticketCart.forEach(item => {
-      //   if (item.id === ticketItem.id) {
-      //     // item.num++;
-      //   } else {
-      //     state.shoppingCartObj.ticketCart.push(ticketItem);
-      //   }
-      // });
-      // for (let i = 0; i < state.shoppingCartObj.ticketCart.length; i++) {
-      //   const element = state.shoppingCartObj.ticketCart[i];
-      //   if (element.id === ticketItem.id) {
-      //     element.num++;
-      //     break;
-      //   } else {
-      //     state.shoppingCartObj.ticketCart.push(ticketItem);
-      //   }
-      // }
-      // TODO: 根据id进行操作
+    let isExist = state.shoppingCartObj.ticketCart.find(item => item.id === ticketItem.id);
+    if (isExist) {
+      isExist.num++;
     } else {
       state.shoppingCartObj.ticketCart.push(ticketItem);
     }
+  },
+  // 添加卡
+  addCard(state, itemOut) {
+    let isExist = state.shoppingCartObj.cardCart.find(item => item.id === itemOut.id);
+    if (isExist) {
+      isExist.num++;
+    } else {
+      state.shoppingCartObj.cardCart.push(itemOut);
+    }
+  },
+  // 删除票
+  delTicket(state, ticketItem) {
+    let isExist = state.shoppingCartObj.ticketCart.find(item => item.id === ticketItem.id);
+    let isExistIndex = state.shoppingCartObj.ticketCart.findIndex(item => item.id === ticketItem.id);
+    if (isExist && isExist.num >= 2) {
+      isExist.num--;
+    } else {
+      state.shoppingCartObj.ticketCart.splice(isExistIndex, 1);
+    }
+  },
+  // 删除卡
+  delCard(state, itemOut) {
+    let isExist = state.shoppingCartObj.cardCart.find(item => item.id === itemOut.id);
+    let isExistIndex = state.shoppingCartObj.cardCart.findIndex(item => item.id === itemOut.id);
+    if (isExist && isExist.num >= 2) {
+      isExist.num--;
+    } else {
+      state.shoppingCartObj.cardCart.splice(isExistIndex, 1);
+    }
+  },
+  // 获取所有票数据
+  setTicketList(state, data) {
+    state.ticketList = data; // 把异步（actions）中获取的数据赋值给state
+  },
+  // 获取所有卡数据
+  setCardList(state, data) {
+    state.cardList = data; // 把异步（actions）中获取的数据赋值给state
+  }
+};
+
+const actions = {
+  getTicketList(context) {
+    setTimeout(() => {
+      context.commit('setTicketList', ticketLists.ticketLists);
+    }, 500);
+  },
+  getCardList(context) {
+    setTimeout(() => {
+      context.commit('setCardList', ticketLists.cardLists);
+    }, 500);
   },
 };
 
@@ -69,4 +108,5 @@ export default new Vuex.Store({
   state,
   getters,
   mutations,
+  actions,
 });

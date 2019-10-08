@@ -21,7 +21,7 @@
         <div class="ticketItem"
           :style="{ bottom: `${(tIndex + 1)*50 + (fieldLength)*50 + (cardLength)*50 + title_height*2}px`}"
           v-for="(tItem, tIndex) in shoppingCartObj.ticketCart" :key="tIndex"
-          v-if="tItem.num > 0">
+          v-show="tItem.num > 0">
           <div>
             {{tItem.title}}
           </div>
@@ -37,7 +37,7 @@
         <div class="cardItem"
           :style="{ bottom: `${(cardLength - cIndex)*50 + (fieldLength)*50 + title_height}px`}"
           v-for="(cItem, cIndex) in shoppingCartObj.cardCart" :key="cIndex"
-          v-if="cItem.num > 0">
+          v-show="cItem.num > 0">
           <div>
             {{cItem.title}}
           </div>

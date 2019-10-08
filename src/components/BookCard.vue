@@ -17,7 +17,7 @@
       <Divider />
       <div class="inner">
         <Row >
-          <Col v-for="(item, index) in MockData.cardLists" :key="index" :sm="8" :md="8" :lg="8" >
+          <Col v-for="(item, index) in cardLists" :key="index" :sm="8" :md="8" :lg="8" >
             <div class="item_card">
               <div class="card">
                 <div class="piece">
@@ -41,6 +41,7 @@
               </div>
             </div>
           </Col>
+          <div v-show="!ticketList.length">暂无数据</div>
         </Row>
       </div>
     </div>
@@ -48,7 +49,6 @@
 </template>
 <script>
 import ButtonGroups from './ButtonGroups';
-import Mock from 'mockjs';
 export default {
   name: 'BookCard',
   components: {
@@ -92,24 +92,19 @@ export default {
       }
     },
     setToCart(item) {
-      console.log(item);
-      // console.log(this.$store.state.shoppingCartList);
-      this.$store.state.shoppingCartObj.cardCart.push(item);
+      this.$store.commit('addCard', item);
     },
-    delFromCart(item) {},
+    delFromCart(item) {
+      this.$store.commit('delCard', item);
+    },
   },
-  created() {
-    this.MockData = Mock.mock({
-      'cardLists|6': [{
-        'id|+1': 1,
-        'icon': '#icon-youyong',
-        'title|1': ['游泳季卡', '器械健身月卡', '羽毛球年卡', '篮球年卡'],
-        'price|1': [120, 320, 200, 400, 280],
-        'time|1': ['2019-11-20', '2019-11-23', '2019-11-29'],
-        'num': 0,
-      }],
-    });
-    // this.$store.state.shoppingCartObj.cardCart = [...this.MockData.cardLists];
+  computed: {
+    cardLists() {
+      return this.$store.state.cardList;
+    },
+  },
+  mounted() {
+    this.$store.dispatch('getCardList');
     this.getCardOrTicketTypes(); // 获取票卡类别
   },
 };

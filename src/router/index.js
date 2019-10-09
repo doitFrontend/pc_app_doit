@@ -94,37 +94,41 @@ export default new Router({
           component: PersonalCenter,
           children: [
             {
-              path: '/MyOrder',
+              path: '/',
+              redirect: 'MyOrder',
+            },
+            {
+              path: '/PersonalCenter/MyOrder',
               name: 'MyOrder',
               component: MyOrder,
             },
             {
-              path: '/MyTicket',
+              path: '/PersonalCenter/MyTicket',
               name: 'MyTicket',
               component: MyTicket,
             },
             {
-              path: '/MyTicket/:id',
+              path: '/PersonalCenter/MyTicket/:id',
               name: 'MyTicketDetail',
               component: MyTicketDetail,
             },
             {
-              path: '/MyCard',
+              path: '/PersonalCenter/MyCard',
               name: 'MyCard',
               component: MyCard,
             },
             {
-              path: '/MyCard/:id',
+              path: '/PersonalCenter/MyCard/:id',
               name: 'MyCardDetail',
               component: MyCardDetail,
             },
             {
-              path: '/MyReserve',
+              path: '/PersonalCenter/MyReserve',
               name: 'MyReserve',
               component: MyReserve,
             },
             {
-              path: '/MyReserve/:id',
+              path: '/PersonalCenter/MyReserve/:id',
               name: 'MyReserveDetail',
               component: MyReserveDetail,
             },

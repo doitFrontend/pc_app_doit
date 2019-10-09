@@ -1,25 +1,25 @@
 <template>
     <Menu :theme="theme3" active-name="1">
         <MenuGroup title="个人中心">
-              <router-link to='/MyOrder'>
+              <router-link to='/PersonalCenter/MyOrder'>
                 <MenuItem name="1">
                   <Icon type="md-document" />
                 我的订单
                 </MenuItem>
               </router-link>
-              <router-link to='/MyTicket'>
+              <router-link to='/PersonalCenter/MyTicket'>
                 <MenuItem name="2">
                 <Icon type="md-chatbubbles" />
                 我的票
                 </MenuItem>
               </router-link>
-              <router-link to='/MyCard'>
+              <router-link to='/PersonalCenter/MyCard'>
                 <MenuItem name="3">
                 <Icon type="md-chatbubbles" />
                 我的卡
                 </MenuItem>
               </router-link>
-              <router-link to='/MyReserve'>
+              <router-link to='/PersonalCenter/MyReserve'>
                 <MenuItem name="4">
                 <Icon type="md-chatbubbles" />
                 我的场地

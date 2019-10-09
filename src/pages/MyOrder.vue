@@ -1,7 +1,7 @@
 <template>
 <div id="MyOrder">
   <h2 id="org_name">我的订单</h2>
-  <table>
+  <table style="background:rgba(243,243,243,1);margin-bottom:20px;">
     <thead>
       <tr>
         <th><div class="w150">商品类型</div></th>
@@ -30,9 +30,9 @@
         </thead>
         <tbody id="201909275765a4d781">
           <tr>
-            <td class="w150 b-r-1">场地</td>
+            <td class="w150 b-r-1"> <h3>场地</h3></td>
             <td class="w200">
-              <h3 style="">台球-预定（非家属）</h3>
+              <h3>台球-预定（非家属）</h3>
               <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
               <p class="gray">商家：大连理工体育馆</p>
             </td>
@@ -47,15 +47,15 @@
               <div class="gray">未支付</div>
               <a onclick="order_detail(this)" data-name=" 大连理工体育馆 " data-status=" 未支付 ">订单详情</a>
             </td>
-            <td class="w100" rowspan="4">
+            <td class="w100 b-r-1" rowspan="4">
               <div class="unpaid">
-              <a onclick="pay_order(this)" data-set="201909275765a4d781">立即付款</a></br>
-              <a onclick="cancle_order(this)" data-set="201909275765a4d781">取消订单</a>
+              <a onclick="pay_order(this)" data-set="201909275765a4d781" style="">立即付款</a>
+              <a onclick="cancle_order(this)" data-set="201909275765a4d781" style="color:rgba(68,68,68,1);">取消订单</a>
               </div>
             </td>
           </tr>
           <tr>
-            <td class="w150 b-r-1">场地</td>
+            <td class="w150 b-r-1"><h3>场地</h3></td>
             <td class="w200">
               <h3>台球-预定（非家属）</h3>
               <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
@@ -64,7 +64,7 @@
             <td class="w150 b-r-1"><div>¥100.00×1</div></td>
           </tr>
           <tr>
-            <td class="w150 b-r-1">场地</td>
+            <td class="w150 b-r-1"><h3>场地</h3></td>
             <td class="w200">
               <h3>台球-预定（非家属）</h3>
               <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
@@ -74,7 +74,7 @@
             <td class="w150 b-r-1"><div>¥100.00×1</div></td>
           </tr>
           <tr>
-            <td class="w150 b-r-1">场地</td>
+            <td class="w150 b-r-1"><h3>场地</h3></td>
             <td class="w200">
               <h3>台球-预定（非家属）</h3>
               <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
@@ -102,7 +102,7 @@
         </thead>
         <tbody id="201909272322a6fb02">
           <tr>
-            <td class="w150 b-r-1">场地</td>
+            <td class="w150 b-r-1"><h3>场地</h3></td>
             <td class="w200">
               <h3>台球-预定（非家属）</h3>
               <p class="gray">时段：2019-09-27 18:00:00~ 2019-09-27 22:00:00</p>
@@ -114,10 +114,10 @@
             <td class="w100 b-r-1" rowspan="1">
               <div class="gray">未支付</div>
               <a onclick="order_detail(this)" data-name=" 大连理工体育馆 " data-status=" 未支付 " >订单详情</a></td>
-              <td class="w100" rowspan="1">
+              <td class="w100 b-r-1" rowspan="1">
                 <div class="unpaid">
-                  <a onclick="pay_order(this)" data-set="201909272322a6fb02">立即付款</a></br>
-                  <a onclick="cancle_order(this)" data-set="201909272322a6fb02">取消订单</a>
+                  <a onclick="pay_order(this)" data-set="201909272322a6fb02">立即付款</a>
+                  <a onclick="cancle_order(this)" data-set="201909272322a6fb02" style="color:rgba(68,68,68,1);">取消订单</a>
                 </div>
               </td>
           </tr>
@@ -163,6 +163,7 @@ export default {
 #MyOrder {
 height: 100%;
 background-color: #fff;
+font-family:Microsoft YaHei;
   h2 {
     text-align: left;
     font-size: 18px;
@@ -171,47 +172,81 @@ background-color: #fff;
     line-height: 30px;
     margin-bottom: 10px;
     padding-bottom: 10px;
+    font-weight: bold;
   }
   table {border-collapse:collapse;}
     table tr {
       width: 916px;
       th{
-        line-height: 36px;
+        line-height: 50px;
         font-size: 14px;
-        border-bottom: 1px solid #ddd;
+        font-weight: 400;
+
       }
+      h3{
+        margin-top:10px;
+        font-size: 14px;
+        font-weight: normal;
+        color:rgba(51,51,51,1);
+        font-family: MicrosoftYaHei;
+        letter-spacing: 1px;
+        font-size:14px;
+        }
     }
     .w150 {width: 125px;}
     .w100 {width: 100px;}
     .w200 {width: 300px;}
-    h3{margin-top:10px;font-size: 14px;font-weight: normal;color: #333333;font-family: MicrosoftYaHei;letter-spacing: 1px;}
-    .table-ul dl{
-      height: 42px;
-      background: #f2f9ff;
-      line-height: 42px;
+    .table-ul{
+      border-bottom: 1px solid #ddd;
+      dl{
+      height: 40px;
+      background: rgba(242,244,245,1);
+      line-height: 40px;
       font-size: 14px;
-      font-weight: normal;
+      font-weight: 400;
       dt,dd {
         float: left;padding-left: 20px
       }
     }
-    .table-ul li{
+    li{
       list-style: none;
-      font-size: 12px;
-      .table2 tbody tr {
-      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+      color:rgba(153,153,153,1);
+      .table2{
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+      tr th{border-top: 1px solid #ddd;}
+      tbody tr {
+      border-top: 1px solid #ddd;
       margin-bottom: 10px;
       line-height: 24px;
       height: 24px;
-      color: #1a1a1a;
+      color:rgba(68,68,68,1);
       .gray {
         color: #999999;
         }
       p:last-child{
         margin-bottom: 10px;
         }
+        a{display: block;margin-top: 10px;color:rgba(0,161,233,1);}
+        .unpaid{
+          text-align: center;
+          a:last-child{color:rgba(0,161,233,1);}
+          a:first-child{
+            display:block;
+            width:78px;
+            height:26px;
+            background:rgba(0,161,233,1);
+            border-radius:4px;
+            color:rgba(255,255,255,1);
+            margin: auto;
+            }
+
+        }
+      }
       }
 
+    }
     }
     .b-r-1{border-right: 1px solid #ddd;}
     ul.pagination {

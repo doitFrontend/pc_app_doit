@@ -18,6 +18,7 @@ import BaiduMap from 'vue-baidu-map';
 import { Autocomplete } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './theme/element_index.scss';
+import './assets/iconfont/iconfont.css';
 Vue.use(Autocomplete);
 
 Vue.use(router);

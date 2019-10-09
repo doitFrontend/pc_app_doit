@@ -16,9 +16,21 @@
           <div class="company">
             <h4>合作网站账号登录</h4>
           </div>
+          <div class="inputlogo">
+            <div class="inputlog">
+              <Icon size="24" color="#999" custom="icon iconfont icon-shouji" />
+            </div>
+            <div class="inputlog">
+              <Icon size="24" color="#999" custom="icon iconfont icon-mima1" />
+            </div>
+          </div>
           <div class="logo">
-            <div class="log"></div>
-            <div class="log"></div>
+            <div class="log">
+              <Icon size="40" color="rgb(4, 172, 238)" custom="icon iconfont icon-qq" />
+            </div>
+            <div class="log">
+              <Icon size="38" color="rgb(10, 183, 14)" custom="iconfont icon-weixin" />
+            </div>
           </div>
         </div>
     </div>
@@ -29,7 +41,7 @@ export default {
   data() {
     return {
       text: '发送验证码',
-      default_scondes: 30,
+      default_scondes: 60,
       timer: null,
       phoneNum: '',
       idCode: '',
@@ -169,7 +181,7 @@ $input_padding_left_right: 30px;
             color: #999;
             padding: 14px;
             &:hover {
-                cursor: default;
+                cursor: pointer;
             }
         }
         .common {
@@ -178,7 +190,7 @@ $input_padding_left_right: 30px;
             color: $g_default_color;
             padding: 14px;
             &:hover {
-              cursor: default;
+              cursor: pointer;
             }
         }
         .forgetcode {
@@ -203,6 +215,7 @@ $input_padding_left_right: 30px;
               top: -13px;
               background: #fff;
               padding: 2px 10px;
+              font-weight: 500;
             }
         }
         .logo {
@@ -213,13 +226,21 @@ $input_padding_left_right: 30px;
           display: flex;
           justify-content: center;
           .log {
-            width: 40px;
-            &:nth-child(1) {
-              background: lightcoral;
-            }
             &:nth-child(2) {
-              background: lightcoral;
               margin-left: 30px;
+            }
+          }
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        .inputlogo {
+          position: absolute;
+          top: 108px;
+          left: 40px;
+          .inputlog {
+            &:nth-child(2) {
+              margin-top: 40px;
             }
           }
         }

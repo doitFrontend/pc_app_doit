@@ -18,29 +18,30 @@
       <div class="inner">
         <div class="" style="margin:0 20px">
           <Row :gutter="16">
-          <Col v-for="(item, index) in MockData.ticketLists" :key="index" :sm="8" :md="8" :lg="8">
-            <div class="item_ticket">
-              <div class="ticket">
-                <div class="piece">
-                  <div>
-                    <Icon color="#fff" size="28" type="md-headset" />
-                    <span>{{item.title}}</span>
-                  </div>
-                  <div  class="ticket-dtail">
-                    <b style="font-size:18px;">￥</b>{{item.price}}.00<br>
-                    <div style="font-size: 16px;padding-top:15px">
-                      有效期至：{{item.time}}
+            <div v-if="!ticketList.length">暂无数据</div>
+            <Col v-else v-for="(item, index) in ticketList" :key="index" :sm="8" :md="8" :lg="8">
+              <div class="item_ticket">
+                <div class="ticket">
+                  <div class="piece">
+                    <div>
+                      <Icon color="#fff" size="28" type="md-headset" />
+                      <span>{{item.title}}</span>
+                    </div>
+                    <div  class="ticket-dtail">
+                      <b style="font-size:18px;">￥</b>{{item.price}}.00<br>
+                      <div style="font-size: 16px;padding-top:15px">
+                        有效期至：{{item.time}}
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div class="price">
+                  <div calss="price2">￥{{item.price}}.00</div>
+                  <button-groups @countSum="countPriz" :item="item"></button-groups>
+                </div>
               </div>
-              <div class="price">
-                <div calss="price2">￥{{item.price}}.00</div>
-                <button-groups @countSum="countPriz" :item="item"></button-groups>
-              </div>
-            </div>
-          </Col>
-        </Row>
+            </Col>
+          </Row>
         </div>
       </div>
     </div>
@@ -48,7 +49,7 @@
 </template>
 <script>
 import ButtonGroups from './ButtonGroups';
-import Mock from 'mockjs';
+// import Mock from 'mockjs';
 export default {
   name: 'BookTicket',
   components: {
@@ -92,28 +93,19 @@ export default {
       }
     },
     setToCart(item) {
-      console.log(item);
-      // console.log(this.$store.state.shoppingCartList); // TODO:
-      // this.$store.state.shoppingCartObj.ticketCart.push(item);
       this.$store.commit('addTicket', item);
     },
     delFromCart(item) {
-      console.log(item);
-      console.log(this.$store.state.shoppingCartList);
+      this.$store.commit('delTicket', item);
     },
   },
-  created() {
-    this.MockData = Mock.mock({
-      'ticketLists|6': [{
-        'id|+1': 1,
-        'icon': '#icon-youyong',
-        'title|1': ['游泳票', '器械健身', '羽毛球票', '篮球票'],
-        'price|1': [12, 32, 20, 40, 28],
-        'time|1': ['2019-11-20', '2019-11-23', '2019-11-29'],
-        'num': 0,
-      }],
-    });
-    // this.$store.state.shoppingCartObj.ticketCart = [...this.MockData.ticketLists];
+  computed: {
+    ticketList() {
+      return this.$store.state.ticketList;
+    }
+  },
+  mounted() {
+    this.$store.dispatch('getTicketList');
     this.getCardOrTicketTypes(); // 获取票卡类别
   },
 };

@@ -2,10 +2,36 @@
     <div id="login">
         <div class="login" style="visibility: hidden;"></div>
         <div class="login">
-            <input type="text" v-model="phoneNum" placeholder="手机号">
-            <input type="text" v-model="idCode" placeholder="验证码">
-            <input type="button" value="登录" @click="signIn">
-            <div @click="sendIDCode">{{text}}</div>
+          <div class="header">
+            <div :style="isCountLog ? activeStyle : ''" @click="changeLog('count')">账号登录</div>
+            <div :style="!isCountLog ? activeStyle : ''" @click="changeLog('code')">手机动态码登录</div>
+          </div>
+          <input type="text" v-model="phoneNum" placeholder="请输入手机号">
+          <input v-if="!isCountLog" type="text" v-model="idCode" placeholder="请输入动态码">
+          <input v-else type="text" v-model="idCode" placeholder="请输入密码">
+          <input type="button" value="登录" @click="signIn">
+          <div v-if="!isCountLog" class="rcode" @click="sendIDCode">{{text}}</div>
+          <div class="common forgetcode">忘记密码</div>
+          <div class="common registry">免费注册</div>
+          <div class="company">
+            <h4>合作网站账号登录</h4>
+          </div>
+          <div class="inputlogo">
+            <div class="inputlog">
+              <Icon size="24" color="#999" custom="icon iconfont icon-shouji" />
+            </div>
+            <div class="inputlog">
+              <Icon size="24" color="#999" custom="icon iconfont icon-mima1" />
+            </div>
+          </div>
+          <div class="logo">
+            <div class="log">
+              <Icon size="40" color="rgb(4, 172, 238)" custom="icon iconfont icon-qq" />
+            </div>
+            <div class="log">
+              <Icon size="38" color="rgb(10, 183, 14)" custom="iconfont icon-weixin" />
+            </div>
+          </div>
         </div>
     </div>
 </template>
@@ -15,10 +41,15 @@ export default {
   data() {
     return {
       text: '发送验证码',
-      default_scondes: 30,
+      default_scondes: 60,
       timer: null,
       phoneNum: '',
       idCode: '',
+      isCountLog: true,
+      activeStyle: {
+        color: '#00a1e9',
+        borderBottom: '1px solid #00a1e9',
+      }
     };
   },
   computed: {
@@ -66,12 +97,22 @@ export default {
         path: url
       });
     },
+    changeLog(sign) {
+      switch (sign) {
+        case 'code':
+          this.isCountLog = false;
+          break;
+        default:
+          this.isCountLog = true;
+          break;
+      }
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
-$input_padding_up_down: 3em;
-$input_padding_left_right: 1em;
+$input_padding_up_down: 0;
+$input_padding_left_right: 30px;
 #login {
     background: url('../assets/swim.jpg') no-repeat;
     background-size: cover;
@@ -80,27 +121,49 @@ $input_padding_left_right: 1em;
     justify-content: space-around;
     align-items: center;
     .login {
-        width: 400px;
-        background: rgb(145, 168, 182);
-        opacity: 0.8;
+        height: 480px;
+        width: 390px;
+        background: #fff;
+        opacity: 0.9;
         padding: $input_padding_up_down $input_padding_left_right $input_padding_up_down $input_padding_left_right;
         border-radius: 4px;
         position: relative;
+        .header {
+          display: flex;
+          div {
+            font-size: 16px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            &:hover {
+              cursor: pointer;
+            }
+            &:nth-child(1) {
+              flex-grow: 1.9;
+            }
+            &:nth-child(2) {
+              flex-grow: 1;
+            }
+          }
+        }
         input {
             display: block;
-            width: 100%;
-            height: 34px; // 16 + 8 * 2 + 1 * 2
+            width: 330px;
+            height: 46px;
             font-size: 16px;
-            padding: 8px 0 8px 8px;
-            background: #fff;
+            padding: 14px 0 14px 45px;
+            background: #EFEFEF;
             border: 1px solid lightblue;
             border-radius: 4px;
             outline: none;
             &:nth-child(2) {
-                margin-top: 1em;
+                margin-top: 36px;
             }
             &:nth-child(3) {
-                margin-top: 2em;
+                margin-top: 20px;
+            }
+            &:nth-child(4) {
+                margin-top: 64px;
                 padding: 0;
                 background: $g_default_color;
                 border: none;
@@ -108,18 +171,78 @@ $input_padding_left_right: 1em;
                 cursor: pointer;
             }
             &::-webkit-input-placeholder {
-                color: #000;
+                color: #999;
             }
         }
-        div {
+        .rcode {
             position: absolute;
-            top: $input_padding_up_down;
+            top: 162px;
             right: $input_padding_left_right;
-            color: grey;
-            padding: 8px;
+            color: #999;
+            padding: 14px;
             &:hover {
-                cursor: default;
+                cursor: pointer;
             }
+        }
+        .common {
+            position: absolute;
+            right: $input_padding_left_right;
+            color: $g_default_color;
+            padding: 14px;
+            &:hover {
+              cursor: pointer;
+            }
+        }
+        .forgetcode {
+          top: 216px;
+        }
+        .registry  {
+          top: 326px;
+        }
+        .company {
+            position: absolute;
+            top: 380px;
+            right: $input_padding_left_right;
+            color: #000;
+            width: calc(100% - 60px);
+            font-size: 14px;
+            padding: 14px;
+            border-top: 1px solid #999;
+            display: flex;
+            justify-content: center;
+            h4 {
+              position: absolute;
+              top: -13px;
+              background: #fff;
+              padding: 2px 10px;
+              font-weight: 500;
+            }
+        }
+        .logo {
+          position: absolute;
+          top: 418px;
+          height: 40px;
+          width: calc(100% - 60px);
+          display: flex;
+          justify-content: center;
+          .log {
+            &:nth-child(2) {
+              margin-left: 30px;
+            }
+          }
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        .inputlogo {
+          position: absolute;
+          top: 108px;
+          left: 40px;
+          .inputlog {
+            &:nth-child(2) {
+              margin-top: 40px;
+            }
+          }
         }
     }
 }

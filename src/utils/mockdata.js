@@ -1,3 +1,5 @@
+import Mock from 'mockjs';
+
 const goodLists = [
   {
     id: 1,
@@ -147,68 +149,24 @@ const hotSaleLists = [
   },
 ];
 
-const ticketLists = [
-  {
-    id: 1,
-    img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569046888130&di=90d8eaa6657cc07c03ab24d1c44162d3&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fq_70%2Cc_zoom%2Cw_640%2Fupload%2F20160822%2F765923058c7d466bba29a3675bc62b62_th.jpeg', // 加载的动画 && 加载完没有图片的，给个默认图片
-    title: '篮球',
-    type: '正常日期',
-    time: 198,
-    timeSlotStr: '00:00-23:00',
-    price: 70,
-    endtime: '2019-09-14 12:42:40',
-  },
-  {
-    id: 2,
-    img: 'https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/lbsugc/pic/item/fd039245d688d43fba26238f761ed21b0ef43b3b.jpg',
-    title: '足球',
-    type: '正常日期',
-    time: 61,
-    timeSlotStr: '00:00-23:00',
-    price: 35,
-    endtime: '2019-09-14 12:42:40',
-  },
-  {
-    id: 3,
-    img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569055600115&di=331ee831f78ad1d7a40adba4591af8c1&imgtype=0&src=http%3A%2F%2Fimg.nga.178.com%2Fattachments%2Fmon_201903%2F04%2FdeQ5-di3hZ14T1kSgo-7n.jpg',
-    title: '器材健身',
-    type: '正常日期',
-    time: 120,
-    timeSlotStr: '00:00-23:00',
-    price: 85,
-    endtime: '2019-09-14 12:42:40',
-  },
-  {
-    id: 4,
-    img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569055524632&di=e09b3db1a06bf5d11e6bc7653cc402cc&imgtype=0&src=http%3A%2F%2Fimg.tukexw.com%2Fimg%2Fc38d1c8669d26930.jpg',
-    title: '器材健身',
-    type: '正常日期',
-    time: 221,
-    timeSlotStr: '00:00-23:00',
-    price: 35,
-    endtime: '2019-09-14 12:42:40',
-  },
-  {
-    id: 5,
-    img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569055764637&di=bace26a811c6ae7082012c037e863b08&imgtype=0&src=http%3A%2F%2F11871172.s21i-11.faiusr.com%2F2%2FABUIABACGAAgi42VwQUoipDV-AcwkAM4igI.jpg',
-    title: '游泳',
-    type: '正常日期',
-    time: 61,
-    timeSlotStr: '00:00-23:00',
-    price: 55,
-    endtime: '2019-09-14 12:42:40',
-  },
-  {
-    id: 6,
-    img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569650130&di=25073292d0b3e46f2d2ebc32132bc79c&imgtype=jpg&er=1&src=http%3A%2F%2Fhns5j.com%2FUpload%2F2007-6%2F2007062608500586694.jpg', // 加载的动画 && 加载完没有图片的，给个默认图片
-    title: '排球',
-    type: '正常日期',
-    time: 145,
-    timeSlotStr: '00:00-23:00',
-    price: 95,
-    endtime: '2019-09-14 12:42:40',
-  },
-];
+const ticketLists = Mock.mock({
+  'ticketLists|6': [{
+    'id|+1': 1,
+    'icon': '#icon-youyong',
+    'title|1': ['游泳票', '器械健身', '羽毛球票', '篮球票'],
+    'price|1': [12, 32, 20, 40, 28],
+    'time|1': ['2019-11-20', '2019-11-23', '2019-11-29'],
+    'num': 0,
+  }],
+  'cardLists|6': [{
+    'id|+1': 1,
+    'icon': '#icon-youyong',
+    'title|1': ['游泳卡', '器械健身卡', '羽毛球卡', '篮球卡'],
+    'price|1': [12, 32, 20, 40, 28],
+    'time|1': ['2019-11-20', '2019-11-23', '2019-11-29'],
+    'num': 0,
+  }],
+});
 
 export {
   goodLists,

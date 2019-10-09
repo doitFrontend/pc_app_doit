@@ -55,12 +55,13 @@ export default {
 height: 100%;
   h2 {
     text-align: left;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     border-bottom: 1px  solid #ddd;
     line-height: 30px;
     margin-bottom: 10px;
     padding-bottom: 10px;
+    font-weight: bold;
     }
   .ticket{
     color: #fff;

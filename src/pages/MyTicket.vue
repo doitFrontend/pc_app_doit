@@ -1,26 +1,22 @@
 <template>
 <div id="MyTicket">
-  <h2 id="org_name">我的票</h2>
-  <div>
-    <Row>
-      <Col span="8" v-for="(item, i) in ticketLists" :key="i">
-        <div class="ticket" @click="toTicketDetails(item)" >
-          <Row style="padding:15px" >
-            <Col span="13" class="ticket-l">
-            <i data-v-1bdd6705="" class="ivu-icon ivu-icon-md-headset" style="font-size: 24px; color: rgb(255, 255, 255);"></i>
-            <p>{{item.title}}</p>
-            <p>{{item.endtime}}</p>
-            </Col>
-            <Col span="11">
-            <ul><li>￥{{item.price}}</li><li class="key">限时{{item.time}}分钟</li><li class="key">{{item.timeSlotStr}}</li></ul>
-            </Col>
-          </Row>
-          <div class="sale-cycle-left"></div>
-          <div class="sale-cycle-right"></div>
-        </div>
-      </Col>
-    </Row>
-  </div>
+            <h2 id="org_name">我的卡</h2>
+            <div>
+              <Row>
+                <Col span="8" v-for="(item, i) in ticketLists" :key="i">
+                  <div class="ticket" @click="toTicketDetails(item)">
+                    <div>
+                      <p><i class="ivu-icon ivu-icon-md-headset"></i>{{item.title}}票</p>
+                    </div>
+                    <ul>
+                      <li><i>￥</i>{{item.price }}<i>.00</i></li>
+                      <li>有效期至：{{item.endtime}}</li>
+                    </ul>
+                    <p>大连理工大学</p>
+                  </div>
+                </Col>
+              </Row>
+            </div>
 </div>
 </template>
 <script>
@@ -51,59 +47,64 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-#MyTicket {
-  background: #fff;
+#MyTicket{
+height: 100%;
+font-size: 12px;
+font-family: MicrosoftYaHei;
   h2 {
-  text-align: left;
-  font-size: 18px;
-  font-weight: 500;
-  border-bottom: 1px  solid #ddd;
-  line-height: 30px;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  }
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px  solid #ddd;
+    line-height: 30px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    }
   .ticket{
-    color: #fff;
+    color:rgba(255,255,255,1);
     background-color: rgb(91, 155, 213);
+    background: url('../assets/myticket.png') no-repeat;
     width: 100%;
-    height: 106px;
+    height: 130px;
     width: 260px;
+    background-size:260px 130px;
     margin: 0 auto;
     position: relative;
     margin: 20px auto;
+    border-radius: 5px;
+    padding: 10PX;
     line-height: 20px;
     &:hover{cursor: pointer;}
-    .ticket-l{border-right: dashed 1px #fff;height:76px;}
-    .sale-cycle-left {
-      position: absolute;
-      top: 50%;
-      left: -5px;
-      z-index: 100;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: #fff;
-      margin-top: -5px;
-    }
-    .sale-cycle-right {
-      position: absolute;
-      top: 50%;
-      right: -5px;
-      z-index: 100;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: #fff;
-      margin-top: -5px;
+    >div{
+      text-align: left;
+      p{
+        font-size: 14px;
+        font-weight: 500;
+        i{padding-right: 10PX;}
+        }
     }
     ul {
       list-style:none;
-      li:last-child  {
-        border-top: dashed 1px #fff;
-        padding-top: 5px;
-        margin-top: 5px;
-        margin-left: 5px
+      margin-top: 10px;
+      line-height: 20px;
+      text-align: left;
+      li:first-child{
+        font-size: 20px;
+        font-weight: bold;
+        i{font-size: 16px;
+        font-style: normal;
+        font-weight: normal;
+        }
       }
+      li:last-child{margin-top:5px; opacity: 0.7;}
+    }
+    >p{
+      font-size: 14px;
+      color:#fff;
+      font-weight: normal;
+      margin-top: 17px;
+      opacity: 0.8;
     }
   }
 }

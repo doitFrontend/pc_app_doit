@@ -11,22 +11,22 @@
             <template>
               <Menu :theme="theme3" active-name="1">
                 <MenuGroup title="">
-              <router-link to='MyOrder'>
+              <router-link to='/PersonalCenter/MyOrder'>
                 <MenuItem name="1">
                 我的订单
                 </MenuItem>
               </router-link>
-              <router-link to='MyTicket'>
+              <router-link to='/PersonalCenter/MyTicket'>
                 <MenuItem name="2">
                 我的票
                 </MenuItem>
               </router-link>
-              <router-link to='MyCard'>
+              <router-link to='/PersonalCenter/MyCard'>
                 <MenuItem name="3">
                 我的卡
                 </MenuItem>
               </router-link>
-              <router-link to='MyReserve'>
+              <router-link to='/PersonalCenter/MyReserve'>
                 <MenuItem name="4">
                 我的场地
                 </MenuItem>
@@ -90,9 +90,8 @@ background-color: $g_background;
         .personalCenter_right {
           background: #fff;
           width: 1000px;
-          border: 1px solid #ddd;
           text-align: center;
-          padding:20px;
+          padding:25px;
           margin-left: 20px;
         }
         .personalCenter_left {
@@ -101,6 +100,7 @@ background-color: $g_background;
           /deep/ .ivu-menu-vertical .ivu-menu-item-group-title{height: 10px !important;}
           /deep/ .ivu-menu-vertical{width: 200px !important;}
           /deep/ .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu):after {left: 0;}
+          /deep/ .ivu-menu-light.ivu-menu-vertical:after {height: 0px !important;}
           .personal_information{
             margin-top: 30px;
             text-align: center;

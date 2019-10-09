@@ -1,5 +1,6 @@
 <template>
   <div id="BookField">
+    <!-- TODO: 场地事件必须加上选择的时间 -->
     <div class="fieldType">场地类别：
       <RadioGroup v-model="default_button" type="button" @on-change="changeField">
         <Radio v-for="(item, i) in fieldTypeList" :key="i" :label="`${item.sportItem}-${item.fieldId}`">{{item.sportItem}}</Radio>
@@ -134,6 +135,7 @@ export default {
       let now = moment().format('HH:mm');
       this.tableFieldData.forEach(item => {
         item.data.forEach(itemIn => {
+          // TODO: 除了比较时间还要比较日期
           if (this.formatDate(itemIn.time.split('-')[1]) <= this.formatDate(now) && (itemIn.status !== 88 && itemIn.status !== 2)) {
             itemIn.status = 100;
           }

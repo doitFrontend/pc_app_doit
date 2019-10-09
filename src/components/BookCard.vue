@@ -18,7 +18,7 @@
       <div class="inner">
         <Row >
           <div v-if="!cardLists.length">暂无数据</div>
-          <Col v-else v-for="(item, index) in cardLists" :key="index" :sm="8" :md="8" :lg="8" >
+          <Col v-else v-for="item in cardLists" :key="item.sportId" :sm="8" :md="8" :lg="8" >
             <div class="item_card">
               <div class="card">
                 <div class="piece">

@@ -45,7 +45,7 @@ const mutations = {
   },
   // 添加票
   addTicket(state, ticketItem) {
-    let isExist = state.shoppingCartObj.ticketCart.find(item => item.id === ticketItem.id);
+    let isExist = state.shoppingCartObj.ticketCart.find(item => item.sportId === ticketItem.sportId);
     if (isExist) {
       isExist.num++;
     } else {
@@ -55,7 +55,7 @@ const mutations = {
   },
   // 添加卡
   addCard(state, itemOut) {
-    let isExist = state.shoppingCartObj.cardCart.find(item => item.id === itemOut.id);
+    let isExist = state.shoppingCartObj.cardCart.find(item => item.sportId === itemOut.sportId);
     if (isExist) {
       isExist.num++;
     } else {
@@ -78,8 +78,8 @@ const mutations = {
   },
   // 删除票
   delTicket(state, ticketItem) {
-    let isExist = state.shoppingCartObj.ticketCart.find(item => item.id === ticketItem.id);
-    let isExistIndex = state.shoppingCartObj.ticketCart.findIndex(item => item.id === ticketItem.id);
+    let isExist = state.shoppingCartObj.ticketCart.find(item => item.sportId === ticketItem.sportId);
+    let isExistIndex = state.shoppingCartObj.ticketCart.findIndex(item => item.sportId === ticketItem.sportId);
     if (isExist && isExist.num >= 1) {
       isExist.num--;
     } else {
@@ -88,8 +88,8 @@ const mutations = {
   },
   // 删除卡
   delCard(state, itemOut) {
-    let isExist = state.shoppingCartObj.cardCart.find(item => item.id === itemOut.id);
-    let isExistIndex = state.shoppingCartObj.cardCart.findIndex(item => item.id === itemOut.id);
+    let isExist = state.shoppingCartObj.cardCart.find(item => item.sportId === itemOut.sportId);
+    let isExistIndex = state.shoppingCartObj.cardCart.findIndex(item => item.sportId === itemOut.sportId);
     if (isExist && isExist.num >= 1) {
       isExist.num--;
     } else {
@@ -114,7 +114,7 @@ const actions = {
       intendedFor: '在职教职工',
       operator_id: '2014011166',
       operator_role: 'admin',
-      orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+      orgId: localStorage.getItem('orgId'),
       timeSolt: '',
       type: 'pw',
     };
@@ -139,7 +139,7 @@ const actions = {
       intendedFor: '在职教职工',
       operator_id: '2014011166',
       operator_role: 'admin',
-      orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+      orgId: localStorage.getItem('orgId'),
       timeSolt: '',
       type: 'kw',
     };

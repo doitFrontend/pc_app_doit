@@ -1,9 +1,30 @@
 <template>
   <div ref="cart" id="cart">
-
+    <div style="background: lightpink;">
+      <div v-if="ticketCart.length" class="title">票</div>
+      <!-- {{shoppingCartObj.ticketCart}} -->
+      <div v-for="(item, index) in ticketCart" :key="index">
+        {{item.time}}-{{item.typeName}}-{{item.num}}-{{item.price}}
+      </div>
+    </div>
+    <div>
+      <div v-if="cardCart.length" class="title">卡</div>
+      <!-- {{shoppingCartObj.cardCart}} -->
+      <div v-for="(item, index) in cardCart" :key="index">
+        {{item.endTime}}-{{item.typeName}}-{{item.num}}-{{item.price}}
+      </div>
+    </div>
+    <div style="background: lightblue;">
+      <div v-if="shoppingCartObj.fieldCart.length" class="title">场地</div>
+      <!-- {{shoppingCartObj.fieldCart}} -->
+      <div v-for="(item, index) in shoppingCartObj.fieldCart" :key="index">
+        {{item.time}}-{{item.place}}-{{item.price}}
+      </div>
+    </div>
   </div>
 </template>
 <script>
+// TODO: 场地灰化必须在当前事件之前
 export default {
   name: 'ShoppingCart',
   data() {
@@ -13,8 +34,14 @@ export default {
   },
   computed: {
     shoppingCartObj() {
-      // return this.$store.getters.realShoppingCart;
+      console.log(this.$store.state.shoppingCartObj.fieldCart);
       return this.$store.state.shoppingCartObj;
+    },
+    ticketCart() {
+      return this.shoppingCartObj.ticketCart.filter(item => item.num >= 1);
+    },
+    cardCart() {
+      return this.shoppingCartObj.cardCart.filter(item => item.num >= 1);
     },
     ticketLength() {
       let count = 0;
@@ -65,15 +92,19 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-$box_shadow: inset 2px 2px 8px #eee;
+// $box_shadow: inset 2px 2px 8px #eee;
 #cart {
   width: 278px;
   height: 50px;
+  padding-bottom: 50px;
   position: fixed;
   bottom: 0;
   left: calc(calc(100% - #{$g_width})/2 + #{$g_left_width} + 1em);
   z-index: 100;
-  box-shadow: $box_shadow;
+  background: #f60;
+  display: flex;
+  flex-direction: column-reverse;
+  // box-shadow: $box_shadow;
   & > div.ticket, div.card, div.field {
     background: lightblue;
     height: inherit;
@@ -88,7 +119,7 @@ $box_shadow: inset 2px 2px 8px #eee;
     width: inherit;
     position: absolute;
     background: #f7f7f7;
-    box-shadow: $box_shadow;
+    // box-shadow: $box_shadow;
     padding: 0 0.5em 0 0.5em;
     display: flex;
     justify-content: space-between;
@@ -127,7 +158,7 @@ $box_shadow: inset 2px 2px 8px #eee;
     width: inherit;
     position: absolute;
     background: #f7f7f7;
-    box-shadow: $box_shadow;
+    // box-shadow: $box_shadow;
     padding: 0 0.5em 0 0.5em;
     display: flex;
     justify-content: space-between;

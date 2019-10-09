@@ -95,7 +95,7 @@ export default {
   },
   created() {
     this.gymInfo = this.$route.query;
-    console.log(this.gymInfo);
+    localStorage.setItem('orgId', this.gymInfo.orgId); // orgId存入, 供vuex中acitons使用
   },
   methods: {
     handleReady({BMap}) {

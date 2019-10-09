@@ -19,7 +19,7 @@
         <div class="" style="margin:0 20px">
           <Row :gutter="16">
             <div v-if="!ticketList.length">暂无数据</div>
-            <Col v-else v-for="(item, index) in ticketList" :key="index" :sm="8" :md="8" :lg="8">
+            <Col v-else v-for="item in ticketList" :key="item.sportId" :sm="8" :md="8" :lg="8">
               <div class="item_ticket">
                 <div class="ticket">
                   <div class="piece">

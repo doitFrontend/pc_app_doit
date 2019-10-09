@@ -36,11 +36,11 @@
           <Col :sm="18" :md="19" :lg="19">
             <Row v-for="(item, i) in goodLists" :key="i">
               <Col span="24">
-                <goods-item @goodItemDetails="toGoodDetails(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.img" :baseRate="10">
-                  <span slot="title">{{item.title}}</span>
-                  <span slot="rate">{{item.rate}}条评价</span>
-                  <span slot="address">{{item.address}}</span>
-                  <span slot="price">人均消费￥{{item.price}}</span>
+                <goods-item @goodItemDetails="toGoodDetails(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.orgImages" :baseRate="10">
+                  <span slot="title">{{item.orgName}}</span>
+                  <span slot="rate">201 条评价</span>
+                  <span slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</span>
+                  <span slot="price">人均消费￥ 100 起</span>
                 </goods-item>
               </Col>
             </Row>
@@ -49,11 +49,11 @@
             <h3 style="marginLeft: 1em;">猜你喜欢</h3>
             <Row v-for="(item, i) in goodLists" :key="i">
               <Col span="24">
-                <goods-item :imgSrc="item.img" :i_height="100" :baseRate="10">
-                  <span slot="title">{{item.title}}</span>
-                  <span slot="rate">{{item.rate}}条评价</span>
-                  <span slot="address">{{item.address}}</span>
-                  <span slot="price">人均消费￥{{item.price}}</span>
+                <goods-item :imgSrc="item.orgImages" :i_height="100" :baseRate="10">
+                  <span slot="title">{{item.orgName}}</span>
+                  <span slot="rate">201 条评价</span>
+                  <span slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</span>
+                  <span slot="price">人均消费￥ 100 起</span>
                 </goods-item>
               </Col>
             </Row>
@@ -65,7 +65,6 @@
 </template>
 <script>
 import GoodsItem from '@/components/GoodsItem.vue';
-import { goodLists } from '@/utils/mockdata';
 export default {
   name: 'Gym',
   components: { GoodsItem },
@@ -78,14 +77,34 @@ export default {
     };
   },
   created() {
-    this.goodLists = goodLists;
+    this.fetchData();
   },
   methods: {
     toGoodDetails(item) {
-      console.log(item);
       this.$router.push({
-        path: `gym/${item.id}`,
+        path: `gym/${item.orgId}`,
         query: item,
+      });
+    },
+    // 获取场馆信息
+    fetchData() {
+      let data = {
+        orgId: '123456',
+        city_likeDouble: localStorage.getItem('currentCity'),
+        county: '',
+      };
+      this.$axios({
+        method: 'POST',
+        url: 'listApiOrg.do',
+        data: data,
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.goodLists = res.data.rows;
+        } else {
+          this.$Message.warning(res.code);
+        }
+      }).catch(error => {
+        console.log(error);
       });
     },
   },

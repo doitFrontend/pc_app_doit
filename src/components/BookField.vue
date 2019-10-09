@@ -13,7 +13,8 @@
       <div></div>可选场地
       <div></div>已预订场地
     </div>
-    <div class="table">
+    <div v-if="!fieldTypeList.length">暂无数据</div>
+    <div v-else class="table">
       <div class="line" ref="line"></div>
       <div class="container">
         <div class="content time" v-for="(item, i) in timeLineList" :key="i">{{item.time}}</div>
@@ -44,6 +45,11 @@ import moment from 'moment';
 moment.locale('zh-cn'); // 局部设置moment语言
 export default {
   name: 'BookField',
+  props: {
+    orgId: {
+      type: String,
+    },
+  },
   data() {
     return {
       tableFieldData: [],
@@ -97,7 +103,7 @@ export default {
         fieldSaleId: id,
         operator_id: '2014011166',
         operator_role: 'admin',
-        orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+        orgId: this.orgId,
         today: moment(date).format('YYYY-MM-DD'),
         week: moment(date).format('dddd'),
       };
@@ -189,7 +195,7 @@ export default {
       let data = {
         operator_id: '2014011166',
         operator_role: 'admin',
-        orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+        orgId: this.orgId,
         fieldSaleStatus: 1,
       };
       this.$axios({
@@ -199,14 +205,17 @@ export default {
       }).then(res => {
         if (res.data.code === 200) {
           this.fieldTypeList = res.data.rows;
-          this.default_button = `${this.fieldTypeList[0].sportItem}-${this.fieldTypeList[0].fieldId}`;
-          let temp = this.default_button;
+          let temp = null;
+          if (this.fieldTypeList.length) {
+            this.default_button = `${this.fieldTypeList[0].sportItem}-${this.fieldTypeList[0].fieldId}`;
+            temp = this.default_button;
+          }
           return temp;
         } else {
           this.$Message.warning(res.code);
         }
       }).then((temp) => {
-        this.changeField(temp);
+        temp && this.changeField(temp);
       }).catch(error => {
         console.log(error);
       });

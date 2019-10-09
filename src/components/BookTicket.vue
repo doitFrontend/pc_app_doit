@@ -55,6 +55,11 @@ export default {
   components: {
     ButtonGroups,
   },
+  props: {
+    orgId: {
+      type: String,
+    }
+  },
   data() {
     return {
       MockData: {},
@@ -66,9 +71,7 @@ export default {
     // 获取票卡所有的类别
     getCardOrTicketTypes() {
       let data = {
-        operator_id: 'c4fb984777d111e986f98cec4bb1848c',
-        operator_role: 'admin',
-        orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+        orgId: this.orgId,
         type: 'pw',
       };
       this.$axios({

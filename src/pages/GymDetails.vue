@@ -3,25 +3,25 @@
       <div class="inner">
         <Carousel v-model="default_value" loop>
           <CarouselItem v-for="i in 3" :key="i">
-            <div class="demo-carousel" :style="{backgroundImage: `url(${img})`}"></div>
+            <div class="demo-carousel" :style="{backgroundImage: `url(${gymInfo.orgImages})`}"></div>
           </CarouselItem>
         </Carousel>
         <div class="info">
-          <div class="title">{{gymInfo.title}}</div>
+          <div class="title">{{gymInfo.orgName}}</div>
           <div class="inside">
               <div class="left">
                 <div class="moreInfo">
                   <Row>
                     <Col span="4"><div class="label">场馆介绍：</div></Col>
-                    <Col span="20">{{gymInfo.intro}}</Col>
+                    <Col span="20">{{gymInfo.orgName}}</Col>
                     <Col span="4"><div class="label">场馆地址：</div></Col>
-                    <Col span="20">{{gymInfo.address}}</Col>
+                    <Col span="20">{{gymInfo.city}}{{gymInfo.county}}{{gymInfo.adressDetail}}</Col>
                     <Col span="4"><div class="label">场馆电话：</div></Col>
-                    <Col span="20">{{gymInfo.phone}}</Col>
+                    <Col span="20">13915263362</Col>
                     <Col span="4"><div class="label">评分：</div></Col>
-                    <Col span="20">{{gymInfo.rate}}分</Col>
+                    <Col span="20">9.7分</Col>
                     <Col span="4"><div class="label">评论：</div></Col>
-                    <Col span="20">{{gymInfo.comment}}条</Col>
+                    <Col span="20">201条</Col>
                   </Row>
                 </div>
               </div>
@@ -40,13 +40,13 @@
           <div class="sale_left">
             <Tabs value="ticket" type="card">
               <TabPane label="购票" name="ticket">
-                <book-ticket></book-ticket>
+                <book-ticket :orgId="gymInfo.orgId"></book-ticket>
               </TabPane>
               <TabPane label="购卡" name="card">
-                <book-card></book-card>
+                <book-card :orgId="gymInfo.orgId"></book-card>
               </TabPane>
               <TabPane label="场地预定" name="field">
-                <book-field></book-field>
+                <book-field :orgId="gymInfo.orgId"></book-field>
               </TabPane>
             </Tabs>
           </div>
@@ -100,7 +100,7 @@ export default {
   methods: {
     handleReady({BMap}) {
       let stationGeo = new BMap.Geocoder();
-      stationGeo.getPoint(this.gymInfo.address, (point) => {
+      stationGeo.getPoint(`${this.gymInfo.city}${this.gymInfo.county}${this.gymInfo.adressDetail}`, (point) => {
         this.center = {
           lng: point.lng,
           lat: point.lat,

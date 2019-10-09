@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { ticketLists } from '../utils/mockdata';
+import $axios from 'axios';
 
 Vue.use(Vuex);
 
@@ -73,7 +73,7 @@ const mutations = {
     state.shoppingCartObj.fieldCart.splice(isExistIndex, 1);
   },
   delFieldById(state, fItem) {
-    console.log(fItem); // TODO: 购物车点击删除去除相应的记录 // 过时间的需要灰化
+    console.log(fItem); // TODO: 购物车点击删除去除相应的记录
     // state.shoppingCartObj.fieldCart.splice(index, 1);
   },
   // 删除票
@@ -108,14 +108,54 @@ const mutations = {
 
 const actions = {
   getTicketList(context) {
-    setTimeout(() => {
-      context.commit('setTicketList', ticketLists.ticketLists);
-    }, 500);
+    let data = {
+      deliveryTerminal: '门户端',
+      gamesNum: '',
+      intendedFor: '在职教职工',
+      operator_id: '2014011166',
+      operator_role: 'admin',
+      orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+      timeSolt: '',
+      type: 'pw',
+    };
+    $axios({
+      method: 'POST',
+      url: 'listApiTicketSale.do',
+      data: data,
+    }).then(res => {
+      if (res.data.code === 200) {
+        context.commit('setTicketList', res.data.data);
+      } else {
+        this.$Message.warning(res.code);
+      }
+    }).catch(error => {
+      console.log(error);
+    });
   },
   getCardList(context) {
-    setTimeout(() => {
-      context.commit('setCardList', ticketLists.cardLists);
-    }, 500);
+    let data = {
+      deliveryTerminal: '门户端',
+      gamesNum: '',
+      intendedFor: '在职教职工',
+      operator_id: '2014011166',
+      operator_role: 'admin',
+      orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+      timeSolt: '',
+      type: 'kw',
+    };
+    $axios({
+      method: 'POST',
+      url: 'listApicardSale.do',
+      data: data,
+    }).then(res => {
+      if (res.data.code === 200) {
+        context.commit('setCardList', res.data.data);
+      } else {
+        this.$Message.warning(res.code);
+      }
+    }).catch(error => {
+      console.log(error);
+    });
   },
 };
 

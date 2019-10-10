@@ -26,10 +26,14 @@ const getters = {
   totalCartPriz: (state) => {
     let p = 0;
     let count = 0;
-    state.shoppingCartList.forEach(element => {
-      p += element.price * element.num;
-      count += element.num;
+    let keys = Object.keys(state.shoppingCartObj);
+    keys.forEach(type => {
+      state.shoppingCartObj[type].forEach(item => {
+        p += item.price * item.num;
+        count += item.num;
+      });
     });
+    p = p.toFixed(2);
     return {p, count};
   },
 };
@@ -72,9 +76,9 @@ const mutations = {
     let isExistIndex = state.shoppingCartObj.fieldCart.findIndex(item => (item.time === fData.time && item.place === fData.place));
     state.shoppingCartObj.fieldCart.splice(isExistIndex, 1);
   },
-  delFieldById(state, fItem) {
-    console.log(fItem); // TODO: 购物车点击删除去除相应的记录
-    // state.shoppingCartObj.fieldCart.splice(index, 1);
+  delFieldById(state, index) {
+    // console.log(fItem); // TODO: 购物车点击删除去除相应的记录
+    state.shoppingCartObj.fieldCart.splice(index, 1);
   },
   // 删除票
   delTicket(state, ticketItem) {

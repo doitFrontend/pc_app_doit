@@ -26,7 +26,7 @@ export default {
   .backTop {
     position: fixed;
     right: 2em;
-    bottom: 2em;
+    bottom: 60px;
     font-size: 12px; // 用em单位必须标明font-size大小
     width: 3em;
     height: 3em;

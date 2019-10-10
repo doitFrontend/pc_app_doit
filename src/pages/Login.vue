@@ -11,6 +11,7 @@
           <input v-else type="text" v-model="idCode" placeholder="请输入密码">
           <input type="button" value="登录" @click="signIn">
           <div v-if="!isCountLog" class="rcode" @click="sendIDCode">{{text}}</div>
+          <div v-if="!isCountLog && isFloat" class="rcode" style="opacity: 0">遮罩</div>
           <div class="common forgetcode">忘记密码</div>
           <div class="common registry">免费注册</div>
           <div class="company">
@@ -49,7 +50,8 @@ export default {
       activeStyle: {
         color: '#00a1e9',
         borderBottom: '1px solid #00a1e9',
-      }
+      },
+      isFloat: false,
     };
   },
   computed: {
@@ -61,13 +63,13 @@ export default {
     this.timer && clearInterval(this.timer);
   },
   methods: {
-    // TODO: 定时器多次点击变快
     sendIDCode() {
       if (this.isClickAble) {
         this.timer = setInterval(() => {
           if (this.default_scondes === 0) {
+            this.isFloat = false;
             this.text = '发送验证码';
-            this.default_scondes = 30; // 重置定时器
+            this.default_scondes = 60; // 重置定时器 ton
             clearInterval(this.timer);
           } else {
             this.countDown();
@@ -81,6 +83,7 @@ export default {
       }
     },
     countDown() {
+      this.isFloat = true;
       this.default_scondes--;
       this.text = `已发送(${this.default_scondes}s)`;
     },
@@ -104,8 +107,16 @@ export default {
           break;
         default:
           this.isCountLog = true;
+          this.resetStatus();
           break;
       }
+    },
+    // tab 切换时 重置状态
+    resetStatus() {
+      clearInterval(this.timer);
+      this.isFloat = false;
+      this.default_scondes = 60;
+      this.text = '发送验证码';
     },
   },
 };

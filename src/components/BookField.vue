@@ -10,7 +10,7 @@
     <div class="signs">
       <!-- *图例说明：#acce22-上课专属场地-88 lightblue-可选场地-0 已预订场地 已过期 -->
       *图例说明：
-      <div></div>上课专属场地
+      <div></div>上课专属场地{{shoppingCartObj}}
       <div></div>可选场地
       <div></div>已预订场地
     </div>
@@ -71,8 +71,14 @@ export default {
       currentDate: new Date(),
     };
   },
-  computed: {},
+  computed: {
+    shoppingCartObj() {
+      console.log(this.$store.state.shoppingCartObj.fieldCart);
+      return this.$store.state.shoppingCartObj;
+    },
+  },
   created() {
+    console.log(this.$store.state.shoppingCartObj.fieldCart); // TODO: 购物车有场地需要进行渲染
     this.getFieldTypes();
   },
   mounted() {
@@ -87,6 +93,9 @@ export default {
     this.line_timer && clearInterval(this.line_timer);
   },
   methods: {
+    test() {
+      console.log('test');
+    },
     changeTime(newDate) {
       if (newDate) {
         let arr = this.default_button.split('-');
@@ -116,6 +125,11 @@ export default {
         if (res.data.code === 200) {
           if (res.data.data.length) {
             this.tableFieldData = res.data.data;
+            this.tableFieldData.forEach(element => {
+              element.data.forEach(elementIn => {
+                elementIn.setCustomTimeMe = moment(date).format('YYYY-MM-DD'); // 给每张票加上日期属性，提供购物车使用
+              });
+            });
             this.timeLineList = res.data.data[0].data;
             this.disableFieldCell();
           } else {
@@ -125,22 +139,34 @@ export default {
           this.$Message.warning(res.code);
         }
       }).then(() => {
+        this.reRenderData(); // 渲染购物车的已选场地
         this.draw_line();
       }).catch(error => {
         console.log(error);
       });
     },
     // 过期场地置灰要把有状态的排除在外
+    // 除了比较时间还要比较日期
     disableFieldCell() {
       let now = moment().format('HH:mm');
-      this.tableFieldData.forEach(item => {
-        item.data.forEach(itemIn => {
-          // TODO: 除了比较时间还要比较日期
-          if (this.formatDate(itemIn.time.split('-')[1]) <= this.formatDate(now) && (itemIn.status !== 88 && itemIn.status !== 2)) {
-            itemIn.status = 100;
-          }
+      moment(this.currentDate).format('YYYY-MM-DD');
+      if (moment(this.currentDate).format('YYYY-MM-DD') === moment(Date()).format('YYYY-MM-DD')) {
+        this.tableFieldData.forEach(item => {
+          item.data.forEach(itemIn => {
+            if (this.formatDate(itemIn.time.split('-')[1]) <= this.formatDate(now) && (itemIn.status !== 88 && itemIn.status !== 2)) {
+              itemIn.status = 100;
+            }
+          });
         });
-      });
+      } else if (moment(this.currentDate).format('YYYY-MM-DD') < moment(Date()).format('YYYY-MM-DD')) {
+        this.tableFieldData.forEach(item => {
+          item.data.forEach(itemIn => {
+            if (itemIn.status !== 88 && itemIn.status !== 2) {
+              itemIn.status = 100;
+            }
+          });
+        });
+      }
     },
     draw_line() {
       console.log(moment().format('HH:mm'));
@@ -221,6 +247,24 @@ export default {
       }).catch(error => {
         console.log(error);
       });
+    },
+    // 给购物车里的场地重新渲染
+    reRenderData() {
+      let fieldCart = this.$store.state.shoppingCartObj.fieldCart;
+      if (moment(this.currentDate).format('YYYY-MM-DD') >= moment(Date()).format('YYYY-MM-DD') && fieldCart.length) {
+        let newFieldCart = fieldCart.filter(item => item.setCustomTimeMe === moment(this.currentDate).format('YYYY-MM-DD'));
+        newFieldCart.forEach(newFItem => {
+          this.tableFieldData.forEach(tFItem => {
+            if (tFItem.place === newFItem.place) {
+              tFItem.data.forEach(tFItemIn => {
+                if (tFItemIn.time === newFItem.time) {
+                  tFItemIn.status = 1;
+                }
+              });
+            }
+          });
+        });
+      }
     },
     // 给时间字符串添加加0 '1:00'->'01:00'
     formatDate(dateStr) {

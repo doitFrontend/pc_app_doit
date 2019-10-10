@@ -51,7 +51,6 @@
   </div>
 </template>
 <script>
-// TODO: 场地灰化必须在当前事件之前
 export default {
   name: 'ShoppingCart',
   computed: {

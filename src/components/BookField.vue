@@ -1,6 +1,6 @@
 <template>
   <div id="BookField">
-    <!-- TODO: 场地事件必须加上选择的时间 -->
+    <div style="display: none;">{{fieldCart}}</div>
     <div class="fieldType">场地类别：
       <RadioGroup v-model="default_button" type="button" @on-change="changeField">
         <Radio v-for="(item, i) in fieldTypeList" :key="i" :label="`${item.sportItem}-${item.fieldId}`">{{item.sportItem}}</Radio>
@@ -10,7 +10,7 @@
     <div class="signs">
       <!-- *图例说明：#acce22-上课专属场地-88 lightblue-可选场地-0 已预订场地 已过期 -->
       *图例说明：
-      <div></div>上课专属场地{{shoppingCartObj}}
+      <div></div>上课专属场地
       <div></div>可选场地
       <div></div>已预订场地
     </div>
@@ -72,13 +72,12 @@ export default {
     };
   },
   computed: {
-    shoppingCartObj() {
-      console.log(this.$store.state.shoppingCartObj.fieldCart);
-      return this.$store.state.shoppingCartObj;
+    fieldCart() { // TODO: 必须触发场地?
+      this.getFieldTypes();
+      return this.$store.state.shoppingCartObj.fieldCart;
     },
   },
   created() {
-    console.log(this.$store.state.shoppingCartObj.fieldCart); // TODO: 购物车有场地需要进行渲染
     this.getFieldTypes();
   },
   mounted() {
@@ -93,9 +92,6 @@ export default {
     this.line_timer && clearInterval(this.line_timer);
   },
   methods: {
-    test() {
-      console.log('test');
-    },
     changeTime(newDate) {
       if (newDate) {
         let arr = this.default_button.split('-');
@@ -150,7 +146,7 @@ export default {
     disableFieldCell() {
       let now = moment().format('HH:mm');
       moment(this.currentDate).format('YYYY-MM-DD');
-      if (moment(this.currentDate).format('YYYY-MM-DD') === moment(Date()).format('YYYY-MM-DD')) {
+      if (moment(this.currentDate).format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
         this.tableFieldData.forEach(item => {
           item.data.forEach(itemIn => {
             if (this.formatDate(itemIn.time.split('-')[1]) <= this.formatDate(now) && (itemIn.status !== 88 && itemIn.status !== 2)) {
@@ -158,7 +154,7 @@ export default {
             }
           });
         });
-      } else if (moment(this.currentDate).format('YYYY-MM-DD') < moment(Date()).format('YYYY-MM-DD')) {
+      } else if (moment(this.currentDate).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD')) {
         this.tableFieldData.forEach(item => {
           item.data.forEach(itemIn => {
             if (itemIn.status !== 88 && itemIn.status !== 2) {
@@ -251,7 +247,7 @@ export default {
     // 给购物车里的场地重新渲染
     reRenderData() {
       let fieldCart = this.$store.state.shoppingCartObj.fieldCart;
-      if (moment(this.currentDate).format('YYYY-MM-DD') >= moment(Date()).format('YYYY-MM-DD') && fieldCart.length) {
+      if (moment(this.currentDate).format('YYYY-MM-DD') >= moment().format('YYYY-MM-DD') && fieldCart.length) {
         let newFieldCart = fieldCart.filter(item => item.setCustomTimeMe === moment(this.currentDate).format('YYYY-MM-DD'));
         newFieldCart.forEach(newFItem => {
           this.tableFieldData.forEach(tFItem => {

@@ -1,5 +1,6 @@
 <template>
   <div id="BookField">
+    <!-- TODO: 场地事件必须加上选择的时间 -->
     <div class="fieldType">场地类别：
       <RadioGroup v-model="default_button" type="button" @on-change="changeField">
         <Radio v-for="(item, i) in fieldTypeList" :key="i" :label="`${item.sportItem}-${item.fieldId}`">{{item.sportItem}}</Radio>
@@ -13,7 +14,8 @@
       <div></div>可选场地
       <div></div>已预订场地
     </div>
-    <div class="table">
+    <div v-if="!fieldTypeList.length">暂无数据</div>
+    <div v-else class="table">
       <div class="line" ref="line"></div>
       <div class="container">
         <div class="content time" v-for="(item, i) in timeLineList" :key="i">{{item.time}}</div>
@@ -22,11 +24,12 @@
         <div v-for="(item, index) in tableFieldData" :key="index" class="container">
           <div class="title">{{item.place}}</div>
           <div v-for="(itemIn, indexIn) in item.data" :key="indexIn" class="content"
-          :style="{'background': itemIn.status === 0 ? 'lightblue' : itemIn.status === 2 ? '#ff9000': itemIn.status === 88 ? '#acce22': '#00a1e9',
-          'cursor': (itemIn.status === 0 || itemIn.status === 1) ? 'pointer' : 'not-allowed'}"
+          :style="{'background': (itemIn.status === 2 || itemIn.status === 88) ? '#ff9000': itemIn.status === 100 ? '#bebebe' : itemIn.status === 0 ? 'lightblue': '#00a1e9',
+          'cursor': (itemIn.status === 0 || itemIn.status === 1) ? 'pointer' : 'not-allowed',
+          'color': (itemIn.status === 1) ? '#fff' : ''}"
           @click="handleCellClick($event, item, itemIn)">
             <Tooltip placement="top" :delay="500">
-              {{itemIn.money}}
+              ￥{{itemIn.money}}
               <div slot="content">
                 <p>{{itemIn.status}}</p>
                 <p>{{itemIn.time}}</p>
@@ -43,6 +46,11 @@ import moment from 'moment';
 moment.locale('zh-cn'); // 局部设置moment语言
 export default {
   name: 'BookField',
+  props: {
+    orgId: {
+      type: String,
+    },
+  },
   data() {
     return {
       tableFieldData: [],
@@ -94,9 +102,9 @@ export default {
     getFieldTableData(id, date = this.currentDate) {
       let data = {
         fieldSaleId: id,
-        operator_id: '9b778c8c1ee711e98e8c000c2983e74a',
+        operator_id: '2014011166',
         operator_role: 'admin',
-        orgId: '123456',
+        orgId: this.orgId,
         today: moment(date).format('YYYY-MM-DD'),
         week: moment(date).format('dddd'),
       };
@@ -109,6 +117,7 @@ export default {
           if (res.data.data.length) {
             this.tableFieldData = res.data.data;
             this.timeLineList = res.data.data[0].data;
+            this.disableFieldCell();
           } else {
             // todo 无数据页面展示
           }
@@ -121,10 +130,23 @@ export default {
         console.log(error);
       });
     },
+    // 过期场地置灰要把有状态的排除在外
+    disableFieldCell() {
+      let now = moment().format('HH:mm');
+      this.tableFieldData.forEach(item => {
+        item.data.forEach(itemIn => {
+          // TODO: 除了比较时间还要比较日期
+          if (this.formatDate(itemIn.time.split('-')[1]) <= this.formatDate(now) && (itemIn.status !== 88 && itemIn.status !== 2)) {
+            itemIn.status = 100;
+          }
+        });
+      });
+    },
     draw_line() {
       console.log(moment().format('HH:mm'));
+      this.disableFieldCell();
       if (this.tableFieldData.length) {
-        const SINGAL_CELL_HEIGHT = 40; // 表格单元格的高度，与下面样式同时修改
+        const SINGAL_CELL_HEIGHT = 45; // 表格单元格的高度 + margin的高度，与下面样式同时修改
         const SINGAL_CELL_WIDTH = 101; // 表格单元格的宽度，与下面样式同时修改
         // 场地开始时间，结束时间
         let startTime = this.tableFieldData[0].data[0].time.split('-')[0];
@@ -138,14 +160,14 @@ export default {
         // 计算高度
         // 1320 / 40 * 22 = 1173 / x
         let line_top = (total_count * SINGAL_CELL_HEIGHT * past_mins / total_mins).toFixed(2);
-        this.$refs['line'].style.top = `${80 + parseFloat(line_top)}px`; // 表头的高度 需要同时改变
+        this.$refs['line'].style.top = `${50 + parseFloat(line_top)}px`; // 表头的高度 需要同时改变
         this.$refs['line'].style.borderTop = '1px solid red';
         this.$refs['line'].style.width = `${SINGAL_CELL_WIDTH * (this.tableFieldData.length + 1)}px`;
         // 结束的红线停止在表格底部
         if (now >= this.formatDate(endTime)) {
-          this.$refs['line'].style.top = `${80 + (SINGAL_CELL_HEIGHT * this.tableFieldData[0].data.length)}px`; // 时间结束
+          this.$refs['line'].style.top = `${50 + (SINGAL_CELL_HEIGHT * this.tableFieldData[0].data.length)}px`; // 时间结束
         } else if (now < this.formatDate(startTime)) {
-          this.$refs['line'].style.top = `80px`; // 时间未开始
+          this.$refs['line'].style.top = `50px`; // 时间未开始
         }
       }
     },
@@ -173,9 +195,9 @@ export default {
     // 获取所有场地
     getFieldTypes() {
       let data = {
-        operator_id: '"9b778c8c1ee711e98e8c000c2983e74a"',
+        operator_id: '2014011166',
         operator_role: 'admin',
-        orgId: '123456',
+        orgId: this.orgId,
         fieldSaleStatus: 1,
       };
       this.$axios({
@@ -185,14 +207,17 @@ export default {
       }).then(res => {
         if (res.data.code === 200) {
           this.fieldTypeList = res.data.rows;
-          this.default_button = `${this.fieldTypeList[0].sportItem}-${this.fieldTypeList[0].fieldId}`;
-          let temp = this.default_button;
+          let temp = null;
+          if (this.fieldTypeList.length) {
+            this.default_button = `${this.fieldTypeList[0].sportItem}-${this.fieldTypeList[0].fieldId}`;
+            temp = this.default_button;
+          }
           return temp;
         } else {
           this.$Message.warning(res.code);
         }
       }).then((temp) => {
-        this.changeField(temp);
+        temp && this.changeField(temp);
       }).catch(error => {
         console.log(error);
       });
@@ -242,42 +267,39 @@ export default {
       }
     }
     .table {
-      padding: 0 2em 2em 2em;
+      padding: 0 2em 2em 0;
+      margin-left: 1em;
       width: 100%;
       white-space: nowrap; // 重要 设置水平滚动
       overflow-x: auto;
       overflow-y: hidden;
       position: relative;
-      &:hover {
-        background: #e8eaec;
-        border-radius: 8px;
-      }
+      background: #EDF1F2;
+      border-radius: 8px;
       .line {
         border-top: 1px solid red;
         position: absolute;
         // left: 0;
       }
       .container {
-        border: $border;
         display: inline-block;
         width: 100px;
-        color: #fff;
+        color: #333;
+        font-size: 14px;
         .title {
-          height: 80px;
-          background: $g_default_color;
+          height: 50px;
           font-weight: 600;
-          font-size: 16px;
           text-align: center;
-          line-height: 80px;
+          line-height: 50px;
         }
         .content {
           height: 40px; // 单元格高度。修改的时候，上面计算公式也需要修改
-          width: (100px - 2px);
-          border-top: $border;
+          width: 96px;
           font-weight: 600;
-          font-size: 16px;
           text-align: center;
           line-height: 40px;
+          border-radius: 10px;
+          margin: 5px;
           &:hover {
             cursor: pointer;
             background: #ff6600;
@@ -291,9 +313,9 @@ export default {
           }
         }
         .time {
-          background: $g_default_color;
           &:hover {
             background: $g_default_color;
+            color: #fff;
           }
         }
       }

@@ -18,7 +18,7 @@
       <div class="inner">
         <Row >
           <div v-if="!cardLists.length">暂无数据</div>
-          <Col v-else v-for="(item, index) in cardLists" :key="index" :sm="8" :md="8" :lg="8" >
+          <Col v-else v-for="item in cardLists" :key="item.sportId" :sm="8" :md="8" :lg="8" >
             <div class="item_card">
               <div class="card">
                 <div class="piece">
@@ -54,6 +54,11 @@ export default {
   components: {
     ButtonGroups,
   },
+  props: {
+    orgId: {
+      type: String,
+    }
+  },
   data() {
     return {
       MockData: {},
@@ -65,9 +70,7 @@ export default {
     // 获取票卡所有的类别
     getCardOrTicketTypes() {
       let data = {
-        operator_id: 'c4fb984777d111e986f98cec4bb1848c',
-        operator_role: 'admin',
-        orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+        orgId: this.orgId,
         type: 'kw',
       };
       this.$axios({

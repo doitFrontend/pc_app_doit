@@ -9,7 +9,7 @@
         <div class="div1"><span>票价格：</span><p>￥60.00</p></div>
         <div class="div1"><span>使用项目：</span><p>器械健身</p></div>
         <div class="div1"><span>有效期：</span><p>2019-09-12 19:25:32</p></div>
-        <div class="div1" style="height:200px;"><span>二维码：</span><p>222222222222222222222222222222222222222222222222222222222222222</p></div>
+        <div class="div1" style="height:200px;"><span>二维码：</span><p><canvas id="canvas"></canvas></p></div>
       </div>
       </Col>
       <Col span="12">
@@ -26,16 +26,39 @@
 </template>
 <script>
 import PersonalCenterNav from '@/components/PersonalCenterNav.vue';
+import QRCode from 'qrcode';
 export default {
   name: 'MyCardDetail',
   components: { PersonalCenterNav },
   data() {
     return {
+      timer: null,
     };
   },
   created() {
+    // let d = document.getElementById('canvas');
+    // console.log(d);
+  },
+  mounted() {
+    let d = document.getElementById('canvas');
+    console.log(d);
+    this.timer = setInterval(() => {
+      this.qrcode();
+    }, 1000);
+  },
+  destroyed() {
+    clearInterval(this.timer);
   },
   methods: {
+    qrcode() {
+      let canvas = document.getElementById('canvas');
+      QRCode.toCanvas(canvas, 'sample text' + Date(), function(error) {
+        if (error) {
+          console.error(error);
+        }
+        console.log('success!');
+      });
+    },
   },
 };
 </script>

@@ -19,6 +19,7 @@ import MyCardDetail from '@/pages/MyCardDetail';
 import MyReserve from '@/pages/MyReserve';
 import MyReserveDetail from '@/pages/MyReserveDetail';
 import MyOrder from '@/pages/MyOrder';
+import MyOrderDetail from '@/pages/MyOrderDetail';
 import PersonalCenter from '@/pages/PersonalCenter';
 
 Vue.use(Router);
@@ -101,6 +102,11 @@ export default new Router({
               path: '/PersonalCenter/MyOrder',
               name: 'MyOrder',
               component: MyOrder,
+            },
+            {
+              path: '/PersonalCenter/MyOrder/:id',
+              name: 'MyOrderDetail',
+              component: MyOrderDetail,
             },
             {
               path: '/PersonalCenter/MyTicket',

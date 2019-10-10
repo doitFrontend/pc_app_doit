@@ -45,7 +45,7 @@
             </td>
             <td class="w100 b-r-1" rowspan="4">
               <div class="gray">未支付</div>
-              <a onclick="order_detail(this)" data-name=" 大连理工体育馆 " data-status=" 未支付 ">订单详情</a>
+              <a onclick="order_detail(this)" data-name=" 大连理工体育馆 " data-status=" 未支付 " @click="toMyOrderDetails(item)">订单详情</a>
             </td>
             <td class="w100 b-r-1" rowspan="4">
               <div class="unpaid">
@@ -113,7 +113,7 @@
             <td class="w100 b-r-1" rowspan="1"><div>¥0.00</div></td>
             <td class="w100 b-r-1" rowspan="1">
               <div class="gray">未支付</div>
-              <a onclick="order_detail(this)" data-name=" 大连理工体育馆 " data-status=" 未支付 " >订单详情</a></td>
+              <a onclick="order_detail(this)" data-name=" 大连理工体育馆 " data-status=" 未支付 " @click="toMyOrderDetails(item)">订单详情</a></td>
               <td class="w100 b-r-1" rowspan="1">
                 <div class="unpaid">
                   <a onclick="pay_order(this)" data-set="201909272322a6fb02">立即付款</a>
@@ -152,7 +152,7 @@ export default {
     toTicketDetails(item) {
       console.log(item);
       this.$router.push({
-        path: `MyTicket/${item.id}`,
+        path: `MyOrder/${item.id}`,
         query: item,
       });
     },

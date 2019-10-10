@@ -32,7 +32,7 @@ export default {
     };
   },
   created() {
-    this.ticketLists = ticketLists;
+    this.ticketLists = ticketLists.ticketLists;
     console.log(this.ticketLists);
   },
   methods: {

@@ -1,20 +1,23 @@
 <template>
-<div id="MyReserveDetail">
-  <h2 id="org_name">场地详情</h2>
+<div id="MyOrderDetail">
+  <h2 id="org_name">票详情</h2>
   <div class="ticket_detail">
     <Row>
       <Col span="12">
       <div class="" style="border-top: 1px  solid #ddd;border-left: 1px  solid #ddd;">
-        <div class="div1"><span>场馆名称：</span><p>健身器材票（非家属）</p></div>
-        <div class="div1"><span>场地名称：</span><p>1-半1场馆</p></div>
-        <div class="div1" style="height:200px;"><span>有效期：</span><p>2019-09-12 19:25:32~2019-09-12 19:25:32</p></div>
+        <div class="div1"><span>票名称：</span><p>健身器材票（非家属）</p></div>
+        <div class="div1"><span>票价格：</span><p>￥60.00</p></div>
+        <div class="div1"><span>使用项目：</span><p>器械健身</p></div>
+        <div class="div1"><span>有效期：</span><p>2019-09-12 19:25:32</p></div>
+        <div class="div1" style="height:200px;"><span>二维码：</span><p><canvas id="canvas"></canvas></p></div>
       </div>
       </Col>
       <Col span="12">
       <div style="border-top: 1px  solid #ddd;">
-        <div class="div1"><span>场地价格：</span><p>￥60.00</p></div>
+        <div class="div1"><span>商家名称：</span><p>大连理工大学</p></div>
+        <div class="div1"><span>使用人群：</span><p>不区分人群</p></div>
+        <div class="div1"><span>使用时段：</span><p>00:00-23:00</p></div>
         <div class="div1"><span>使用状态：</span><p>未使用</p></div>
-        <div class="div1" style="height:200px;"><span>二维码：</span><p><canvas id="canvas"></canvas></p></div>
         </div>
       </Col>
     </Row>
@@ -25,7 +28,7 @@
 import PersonalCenterNav from '@/components/PersonalCenterNav.vue';
 import QRCode from 'qrcode';
 export default {
-  name: 'MyCardDetail',
+  name: 'MyOrderDetail',
   components: { PersonalCenterNav },
   data() {
     return {
@@ -60,7 +63,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-#MyReserveDetail {
+#MyOrderDetail {
 height: 100%;
 background-color: #fff;
 font-size: 14px;

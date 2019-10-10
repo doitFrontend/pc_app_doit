@@ -18,7 +18,7 @@
         <div class="div1"><span>剩余额度：</span><p>￥186.00</p></div>
         <div class="div1"><span>使用人群：</span><p>不区分人群</p></div>
         <div class="div1"><span>使用时段：</span><p>00:00-23:00</p></div>
-        <div class="div1" style="height:200px;"><span>二维码：</span><p>2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</p></div>
+        <div class="div1" style="height:200px;"><span>二维码：</span><p><canvas id="canvas"></canvas></p></div>
       </div>
       </Col>
     </Row>
@@ -27,6 +27,7 @@
 </template>
 <script>
 import PersonalCenterNav from '@/components/PersonalCenterNav.vue';
+import QRCode from 'qrcode';
 export default {
   name: 'MyCardDetail',
   components: { PersonalCenterNav },
@@ -36,7 +37,26 @@ export default {
   },
   created() {
   },
+  mounted() {
+    let d = document.getElementById('canvas');
+    console.log(d);
+    this.timer = setInterval(() => {
+      this.qrcode();
+    }, 1000);
+  },
+  destroyed() {
+    clearInterval(this.timer);
+  },
   methods: {
+    qrcode() {
+      let canvas = document.getElementById('canvas');
+      QRCode.toCanvas(canvas, 'sample text' + Date(), function(error) {
+        if (error) {
+          console.error(error);
+        }
+        console.log('success!');
+      });
+    },
   },
 };
 </script>

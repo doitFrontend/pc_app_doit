@@ -1,6 +1,6 @@
 <template>
 <div id="MyTicket">
-            <h2 id="org_name">我的卡</h2>
+            <h2 id="org_name">我的票</h2>
             <div>
               <Row>
                 <Col span="8" v-for="(item, i) in ticketLists" :key="i">
@@ -32,7 +32,7 @@ export default {
     };
   },
   created() {
-    this.ticketLists = ticketLists;
+    this.ticketLists = ticketLists.ticketLists;
     console.log(this.ticketLists);
   },
   methods: {

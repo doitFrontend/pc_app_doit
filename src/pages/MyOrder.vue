@@ -15,7 +15,7 @@
     </thead>
   </table>
   <ul class="table-ul clearfix">
-    <li>
+    <li v-for="(item, i) in ticketLists" :key="i">
       <table class="table2">
         <thead>
           <tr>
@@ -45,7 +45,7 @@
             </td>
             <td class="w100 b-r-1" rowspan="4">
               <div class="gray">未支付</div>
-              <a onclick="order_detail(this)" data-name=" 大连理工体育馆 " data-status=" 未支付 " @click="toMyOrderDetails(item)">订单详情</a>
+              <a data-name=" 大连理工体育馆 " data-status=" 未支付 " @click="toOrderDetails(item)">订单详情</a>
             </td>
             <td class="w100 b-r-1" rowspan="4">
               <div class="unpaid">
@@ -88,47 +88,12 @@
         </tbody>
       </table>
     </li>
-    <li>
-      <table class="table2">
-        <thead>
-          <tr>
-            <th colspan="8">
-              <dl class="clearfix">
-                <dt class="pull-left">订单号：<span>201909272322a6fb02</span></dt>
-                <dd class="pull-left">下单日期：<span>2019-09-27 17:00:06</span></dd>
-              </dl>
-              </th>
-          </tr>
-        </thead>
-        <tbody id="201909272322a6fb02">
-          <tr>
-            <td class="w150 b-r-1"><h3>场地</h3></td>
-            <td class="w200">
-              <h3>台球-预定（非家属）</h3>
-              <p class="gray">时段：2019-09-27 18:00:00~ 2019-09-27 22:00:00</p>
-              <p class="gray">商家：大连理工体育馆</p>
-            </td>
-            <td class="w100"><span>¥400.0</span></td>
-            <td class="w150 b-r-1"><div>¥400.0×1</div></td>
-            <td class="w100 b-r-1" rowspan="1"><div>¥0.00</div></td>
-            <td class="w100 b-r-1" rowspan="1">
-              <div class="gray">未支付</div>
-              <a onclick="order_detail(this)" data-name=" 大连理工体育馆 " data-status=" 未支付 " @click="toMyOrderDetails(item)">订单详情</a></td>
-              <td class="w100 b-r-1" rowspan="1">
-                <div class="unpaid">
-                  <a onclick="pay_order(this)" data-set="201909272322a6fb02">立即付款</a>
-                  <a onclick="cancle_order(this)" data-set="201909272322a6fb02" style="color:rgba(68,68,68,1);">取消订单</a>
-                </div>
-              </td>
-          </tr>
-        </tbody>
-      </table>
-    </li>
   </ul>
   <div class="pull-right" style="float:right;margin-top:20px;">
     <template>
       <Page :total="1000"  show-elevator />
     </template>
+    <div>aaaaa</div>
   </div>
 </div>
 </template>
@@ -145,11 +110,11 @@ export default {
     };
   },
   created() {
-    this.ticketLists = ticketLists;
+    this.ticketLists = ticketLists.ticketLists;
     console.log(this.ticketLists);
   },
   methods: {
-    toTicketDetails(item) {
+    toOrderDetails(item) {
       console.log(item);
       this.$router.push({
         path: `MyOrder/${item.id}`,
@@ -195,7 +160,7 @@ font-family:Microsoft YaHei;
     }
     .w150 {width: 125px;}
     .w100 {width: 100px;}
-    .w200 {width: 300px;}
+    .w200 {width: 300px;text-align: left;padding-left: 20px;}
     .table-ul{
       border-bottom: 1px solid #ddd;
       dl{
@@ -242,8 +207,8 @@ font-family:Microsoft YaHei;
             margin: auto;
             }
 
+          }
         }
-      }
       }
 
     }

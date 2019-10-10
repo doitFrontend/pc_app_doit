@@ -105,14 +105,14 @@ background-color: $g_background;
             margin-top: 30px;
             text-align: center;
             .personal_photo{
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             border-radius: 50px;
             background-color: #f3f3f3;
             margin: 0 auto;
             }
             .personal_name{
-              font-size: 14px;
+              font-size: 16px;
               line-height: 40px;
             }
           }
@@ -123,7 +123,7 @@ background-color: $g_background;
             a{
               color: #515a6e;
               li {
-                padding: 10px 30px;
+                padding: 15px 30px;
                 font-size: 16px;
               }
             }

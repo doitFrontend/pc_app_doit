@@ -6,8 +6,8 @@
       <Col span="12">
       <div class="" style="border-top: 1px  solid #ddd;border-left: 1px  solid #ddd;">
         <div class="div1"><span>场馆名称：</span><p>健身器材票（非家属）</p></div>
-        <div class="div1"><span>场地名称：</span><p>1-半1场馆</p></div>
-        <div class="div1" style="height:200px;"><span>有效期：</span><p>2019-09-12 19:25:32~2019-09-12 19:25:32</p></div>
+        <div class="div1"><span>场地名称：</span><p>1号场-半1</p></div>
+        <div class="div1" style="height:200px;"><span>使用时段</span><p>2019-09-12 19:25:32~2019-09-12 19:25:32</p></div>
       </div>
       </Col>
       <Col span="12">

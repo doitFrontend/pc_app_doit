@@ -2,11 +2,11 @@
   <div id="bookCard">
     <div class="container">
       <div class="inner">
-        <Row :gutter="16">
-          <Col :sm="4" :md="4" :lg="4">
-            <div class="label">卡类别：</div>
+        <Row>
+          <Col :sm="3" :md="3" :lg="3"  class="leibie">
+            <div class="label">票类别 <span>|</span></div>
           </Col>
-          <Col :sm="18" :md="18" :lg="18">
+          <Col :sm="21" :md="21" :lg="21"  class="leibie2">
             <RadioGroup v-model="default_button" type="button">
               <Radio label="所有"></Radio>
               <Radio v-for="(item, i) in ticketOrCardTypeList" :key="i" :label="item"></Radio>
@@ -16,41 +16,42 @@
       </div>
       <Divider />
       <div class="inner">
-        <Row >
-          <div v-if="!cardLists.length">暂无数据</div>
-          <Col v-else v-for="item in cardLists" :key="item.sportId" :sm="8" :md="8" :lg="8" >
-            <div class="item_card">
-              <div class="card">
-                <div class="piece">
-                  <div>
-                    <Icon color="#fff" size="36" type="md-headset" />
-                    <div>{{item.title}}</div>
-                  </div>
-                </div>
-                <div class="piece">
-                  <div>
-                    ￥{{item.price}}<br>
-                    <div style="font-size: 16px;">
-                      有效期至：{{item.time}}
+        <div class="" style="margin:0 20px">
+          <Row :gutter="16">
+            <div v-if="!cardLists.length">暂无数据</div>
+            <Col v-else v-for="item in cardLists" :key="item.sportId" :sm="8" :md="8" :lg="8">
+              <div class="item_ticket">
+                <div class="ticket">
+                  <div class="piece">
+                    <div>
+                      <Icon color="#fff" size="28" type="md-headset" />
+                      <span>222{{item.title}}</span>
+                    </div>
+                    <div  class="ticket-dtail">
+                      <b style="font-size:18px;">￥</b>{{item.price}}.00<br>
+                      <div style="font-size: 16px;padding-top:10px">
+                        面额：{{item.frequency1}}
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div class="price">
+                  <div calss="price2">￥{{item.price}}.00</div>
+                  <button-groups @countSum="countPriz" :item="item"></button-groups>
+                </div>
               </div>
-              <div class="price">
-                <div calss="price2">{{item.price}}</div>
-                <button-groups @countSum="countPriz" :item="item"></button-groups>
-              </div>
-            </div>
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
 import ButtonGroups from './ButtonGroups';
+// import Mock from 'mockjs';
 export default {
-  name: 'BookCard',
+  name: 'bookCard',
   components: {
     ButtonGroups,
   },
@@ -104,7 +105,7 @@ export default {
   computed: {
     cardLists() {
       return this.$store.state.cardList;
-    },
+    }
   },
   mounted() {
     this.$store.dispatch('getCardList');
@@ -113,6 +114,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+  @mixin div_commen {
+    padding: 0.5em 1em 0.5em 1em;
+    margin: 1em 1em 0 0;
+    cursor: pointer;
+  }
   #bookCard {
     .container {
       .inner {
@@ -120,40 +126,69 @@ export default {
         &:nth-child(1) {
           .label {
             text-align: center;
+            font-size: 16px;
+            span{padding-left: 10px;padding-right: 15px}
           }
         }
         &:nth-child(3) {
           min-height: 500px;
-          .item_card {
+          .item_ticket {
             width: 100%;
             height: inherit;
             padding: 2em;
-            margin-bottom: 1em;
+            margin-bottom: 30px;
             &:hover {
               background: #e8eaec;
             }
-            .card {
-              width: 100%;
-              height: 140px;
-              background: $g_default_color;
+            .ticket {
+              width: 240px;
+              height: 280px;
+              margin: auto;
               display: flex;
-              border-radius: 10px;
               & > div.piece{ // 票 左右两块
-                width: 50%;
+                width: 100%;
+                height: inherit;
+                background: url(../assets/card.png) no-repeat;
                 position: relative;
+                & > div.spot {
+                  width: 16px;
+                  height: 16px;
+                  background: #fff;
+                  border-radius: 50%;
+                  position: absolute;
+                  top: calc( 50% - (16px/2) );
+                }
+                .spot_left {
+                  left: -8px;
+                }
+                .spot_right {
+                  right: -8px;
+                }
                 & > div:nth-child(1) { // 票内容样式
-                  width: 100%;
-                  height: inherit;
-                  padding: 1.2em;
-                  text-align: center;
-                  font-size: 20px;
+                  width: 100%;text-align: center;
+                  height: 40px;
+                  line-height: 40px;
+                  margin-top: 20px;
+                  font-size: 24px;font-weight: 200;
                   color: #fff;
+                }
+                .ticket-dtail {
+                width:80%;margin:auto;
+                background: #fff;
+                height:175px;
+                border-radius: 5px;
+                margin-top:15px;
+                color:#333;
+                font-size:40px;
+                padding-top:30px;
+                text-align: center;
+                vertical-align: midd
                 }
               }
             }
-            .price {
-              width: 100%;
-              margin-top: 10px;
+              .price {
+              width: 90%;
+              margin-top: 30px;
               display: flex;
               position: relative;
               .ivu-btn-group {
@@ -163,8 +198,10 @@ export default {
               }
               & > div:nth-child(1) {
                 width: 250px;
-                font-size: 14px;
-                color: #dcdee2;
+                font-size: 18px;
+                color: #ed4014;
+                padding-left: 10px;
+                line-height: 32px;
               }
             }
           }

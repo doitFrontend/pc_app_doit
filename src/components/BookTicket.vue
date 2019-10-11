@@ -29,8 +29,8 @@
                     </div>
                     <div  class="ticket-dtail">
                       <b style="font-size:18px;">￥</b>{{item.price}}.00<br>
-                      <div style="font-size: 16px;padding-top:15px">
-                        有效期至：{{item.time}}
+                      <div style="font-size: 16px;padding-top:10px">
+                        限时：{{item.time}}</br>{{item.timeSlotStr}}
                       </div>
                     </div>
                   </div>
@@ -137,7 +137,6 @@ export default {
             height: inherit;
             padding: 2em;
             margin-bottom: 30px;
-            margin-top: 30px;
             &:hover {
               background: #e8eaec;
             }
@@ -149,7 +148,7 @@ export default {
               & > div.piece{ // 票 左右两块
                 width: 100%;
                 height: inherit;
-                background: url(../assets/card.png);
+                background: url(../assets/ticket.png) no-repeat;
                 position: relative;
                 & > div.spot {
                   width: 16px;
@@ -177,7 +176,6 @@ export default {
                 width:80%;margin:auto;
                 height:175px;
                 border-radius: 5px;
-                background: #fff;
                 margin-top:15px;
                 color:#333;
                 font-size:40px;

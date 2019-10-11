@@ -1,18 +1,30 @@
 <template>
   <div id="BookField">
     <div style="display: none;">{{fieldCart}}</div>
-    <div class="fieldType">场地类别：
-      <RadioGroup v-model="default_button" type="button" @on-change="changeField">
-        <Radio v-for="(item, i) in fieldTypeList" :key="i" :label="`${item.sportItem}-${item.fieldId}`">{{item.sportItem}}</Radio>
-      </RadioGroup>
-      <DatePicker type="date" placeholder="选择日期" style="width: 200px" v-model="currentDate" @on-change="changeTime"></DatePicker>
+    <div class="fieldType">
+      <Row>
+        <Col :sm="3" :md="3" :lg="3"  class="leibie">
+          <div class="label">场地类别 <span>|</span></div>
+        </Col>
+        <Col :sm="21" :md="21" :lg="21"  class="leibie2">
+          <RadioGroup v-model="default_button" type="button" @on-change="changeField">
+            <Radio v-for="(item, i) in fieldTypeList" :key="i" :label="`${item.sportItem}-${item.fieldId}`">{{item.sportItem}}</Radio>
+          </RadioGroup>
+        </Col>
+      </Row>
     </div>
-    <div class="signs">
-      <!-- *图例说明：#acce22-上课专属场地-88 lightblue-可选场地-0 已预订场地 已过期 -->
-      *图例说明：
-      <div></div>上课专属场地
-      <div></div>可选场地
-      <div></div>已预订场地
+    <Divider />
+    <div style="display: flex;padding-left:25px;font-size:14px;line-height:24px;">
+      <div  style="width: 100px">预约日期：</div><DatePicker type="date" placeholder="选择日期" style="width: 200px" v-model="currentDate" @on-change="changeTime"></DatePicker>
+        <div class="signs">
+          <!-- *图例说明：#acce22-上课专属场地-88 lightblue-可选场地-0 已预订场地 已过期 -->
+          <div><span style="color: #f76900;">*</span>&nbsp;图例说明：</div>
+          <div><span></span>可选场地</div>
+          <div><span></span>已选场地</div>
+          <div><span></span>已预订场地</div>
+          <div><span></span>已过时段</div>
+          <div><span></span>上课专属</div>
+        </div>
     </div>
     <div v-if="!fieldTypeList.length">暂无数据</div>
     <div v-else class="table">
@@ -24,7 +36,7 @@
         <div v-for="(item, index) in tableFieldData" :key="index" class="container">
           <div class="title">{{item.place}}</div>
           <div v-for="(itemIn, indexIn) in item.data" :key="indexIn" class="content"
-          :style="{'background': (itemIn.status === 2 || itemIn.status === 88) ? '#ff9000': itemIn.status === 100 ? '#bebebe' : itemIn.status === 0 ? 'lightblue': '#00a1e9',
+          :style="{'background': (itemIn.status === 2 || itemIn.status === 88) ? '#ff9000': itemIn.status === 100 ? '#bebebe' : itemIn.status === 0 ? '#fff': '#00a1e9',
           'cursor': (itemIn.status === 0 || itemIn.status === 1) ? 'pointer' : 'not-allowed',
           'color': (itemIn.status === 1) ? '#fff' : ''}"
           @click="handleCellClick($event, item, itemIn)">
@@ -39,6 +51,7 @@
         </div>
       </template>
     </div>
+    <div style="height:25px;"></div>
   </div>
 </template>
 <script>
@@ -282,34 +295,56 @@ export default {
     position: relative;
     height: 100%;
     .fieldType {
-      padding: 0 0 1em 1em;
+      .label {
+        text-align: center;
+        font-size: 16px;
+        line-height: 24px;
+        padding-top: 5px;
+        span{padding-left: 10px;padding-right: 15px}
+      }
     }
     .signs {
       width: 100%;
-      height: 50px;
-      padding: 0 0 1em 1em;
-      & > div {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        border-radius: 4px;
+      height: 30px;
+      padding: 0 25px;
+      text-align: right;
+      display: inline-block;
+      & > div{
+        padding-right: 10px;display: inline-block;
+        span{
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          border-radius: 4px;
+          margin-right: 5px;
+          position: relative;
+          top: 2px;
+      }
+      &:nth-child(2) span{
+          background: #fff;
+          border: 1px solid #d6d6d6;
+      }
+      &:nth-child(3) span{
+        background: rgb(0, 161, 233);
+      }
+      &:nth-child(4) span{
+        background: #ffad30;
+      }
+      &:nth-child(5) span{
+        background: rgb(190, 190, 190);
+      }
+      &:nth-child(6) span{
+        background:rgba(172,206,34,1);
+      }
         // justify-content: center;
         align-items: center;
-        &:nth-child(1) {
-          background: #acce22;
-        }
-        &:nth-child(2) {
-          background: lightblue;
-        }
-        &:nth-child(3) {
-          background: #ffad30;
-        }
       }
     }
     .table {
-      padding: 0 2em 2em 0;
-      margin-left: 1em;
-      width: 100%;
+      margin: 25px;
+      width:-webkit-calc(100% - 50px);
+      width:-moz-calc(100% - 50px);
+      width:calc(100% - 50px);
       white-space: nowrap; // 重要 设置水平滚动
       overflow-x: auto;
       overflow-y: hidden;
@@ -327,15 +362,14 @@ export default {
         color: #333;
         font-size: 14px;
         .title {
+          padding-top: 5px;
           height: 50px;
-          font-weight: 600;
           text-align: center;
           line-height: 50px;
         }
         .content {
           height: 40px; // 单元格高度。修改的时候，上面计算公式也需要修改
           width: 96px;
-          font-weight: 600;
           text-align: center;
           line-height: 40px;
           border-radius: 10px;
@@ -344,7 +378,7 @@ export default {
             cursor: pointer;
             background: #ff6600;
           }
-          .ivu-tooltip { // tooltip和单元格大小相等
+          .ivu-tooltip { // tooltip和单元格大小相等C
             width: inherit;
             height: inherit;
             div > p {

@@ -257,7 +257,7 @@ $g_border_radius: 20px;
         font-weight: 500;
         font-size: 18px;
         margin: 1em auto;
-        padding: 6px 16px 0 18px;
+        padding: 4px 16px 0 18px;
         border-radius: $g_border_radius;
         cursor: pointer;
         &:hover {

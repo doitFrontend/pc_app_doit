@@ -77,7 +77,6 @@ const mutations = {
     state.shoppingCartObj.fieldCart.splice(isExistIndex, 1);
   },
   delFieldById(state, index) {
-    // console.log(fItem); // TODO: 购物车点击删除去除相应的记录
     state.shoppingCartObj.fieldCart.splice(index, 1);
   },
   // 删除票

@@ -51,7 +51,7 @@
         </div>
       </template>
     </div>
-    <div style="height:25px;"></div>
+    <div style="height:1px;"></div>
   </div>
 </template>
 <script>
@@ -310,7 +310,7 @@ export default {
       text-align: right;
       display: inline-block;
       & > div{
-        padding-right: 10px;display: inline-block;
+        padding-left: 10px;display: inline-block;
         span{
           display: inline-block;
           width: 16px;

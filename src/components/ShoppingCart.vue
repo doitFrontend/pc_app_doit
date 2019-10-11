@@ -7,7 +7,8 @@
         </Badge>
       </div>
       <div class="money">{{totalCartPriz.p}}</div>
-      <div @click="toCheckout">去结算</div>
+      <div v-if="totalCartPriz.count" @click="toCheckout">去结算</div>
+      <div v-else style="background: #999; cursor: default;" @click="toCheckout">请添加商品</div>
     </div>
     <!-- ticket -->
     <div class="ticket">
@@ -94,10 +95,17 @@ export default {
       }
     },
     toCheckout() {
-      this.$router.push({
-        name: 'Checkout',
-        params: {},
-      });
+      if (this.totalCartPriz.count) {
+        this.$router.push({
+          name: 'Checkout',
+          params: {},
+        });
+      } else {
+        this.$Message.warning({
+          content: '请先添加商品',
+          duration: 3,
+        });
+      }
     },
   },
 };
@@ -164,6 +172,7 @@ export default {
       background: #F76900;
       text-align: center;
       color: #fff;
+      min-width: 100px;
       &:hover {
         cursor: pointer;
       }

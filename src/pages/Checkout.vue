@@ -52,7 +52,7 @@
                         </Row>
                         <Row class="content" v-for="(item, index) in fieldOrder" :key="index">
                             <Col span="7">{{item.place}}</Col>
-                            <Col span="12">{{item.setCustomTimeMe}}{{item.time}}</Col>
+                            <Col span="12">{{item.setCustomTimeMe}} {{item.time}}</Col>
                             <Col span="2">{{item.num}}</Col>
                             <Col span="3">￥{{item.money}}</Col>
                         </Row>
@@ -63,7 +63,7 @@
                 <div class="left"></div>
                 <div class="right">
                     <span>合计</span>
-                    <span>{{money}}</span>
+                    <span>{{totalCartPriz.p}}</span>
                     <span @click="toPayment">确认下单</span>
                 </div>
             </div>
@@ -72,11 +72,6 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      money: 99.00, // TODO: 计算订单总价
-    };
-  },
   computed: {
     ticketOrder() {
       return this.$store.state.shoppingCartObj.ticketCart;
@@ -87,13 +82,16 @@ export default {
     fieldOrder() {
       return this.$store.state.shoppingCartObj.fieldCart;
     },
+    totalCartPriz() {
+      return this.$store.getters.totalCartPriz;
+    },
   },
   methods: {
     toPayment() {
       this.$router.push({
         name: 'Payment',
         params: {
-          money: this.money,
+          money: this.totalCartPriz.p,
         },
       });
     },

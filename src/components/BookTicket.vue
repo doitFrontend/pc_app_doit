@@ -28,7 +28,7 @@
                       <span>{{item.title}}</span>
                     </div>
                     <div  class="ticket-dtail">
-                      <b style="font-size:18px;">￥</b>{{item.price}}.00<br>
+                      <b style="font-size:18px;">￥</b>{{item.price | toFixed}}<br>
                       <div style="font-size: 16px;padding-top:10px">
                         限时：{{item.time}}</br>{{item.timeSlotStr}}
                       </div>
@@ -101,6 +101,11 @@ export default {
     delFromCart(item) {
       this.$store.commit('delTicket', item);
     },
+  },
+  filters: {
+    toFixed(value) {
+      return value.toFixed(2);
+    }
   },
   computed: {
     ticketList() {

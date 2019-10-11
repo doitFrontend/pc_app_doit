@@ -129,7 +129,7 @@ export default {
       height: 100%;
       width: $g_width;
       margin: auto;
-      padding: 1em;
+      padding: 15px;
       background: #fff;
       border-radius: 4px;
       h2 {

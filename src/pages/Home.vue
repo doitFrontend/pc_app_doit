@@ -3,7 +3,7 @@
     <div class="showImg"></div>
     <div class="container">
       <div class="inner">
-        <h2>附近场馆<Button @click="toGym" size="small">更多</Button></h2>
+        <h2>附近场馆&nbsp;&nbsp;<Button @click="toGym" size="small">更多</Button></h2>
         <Row>
           <Col :sm="12" :md="12" :lg="8" v-for="(item, i) in goodLists" :key="i">
             <goods-item :imgSrc="item.orgImages" :baseRate="10" @goodItemDetails="gotoGymDetail(item)">
@@ -18,8 +18,9 @@
     </div>
     <div class="container">
       <div class="inner">
-        <h2>超值课程<Button size="small">更多</Button></h2>
-        <Row>
+        <h2>超值课程&nbsp;&nbsp;<Button size="small">更多</Button></h2>
+        <div style="margin:10px;">
+          <Row>
           <Col :sm="15" :md="15" :lg="15">
             <div></div>
           </Col>
@@ -28,11 +29,12 @@
             <div></div>
           </Col>
         </Row>
+        </div>
       </div>
     </div>
     <div class="container">
       <div class="inner">
-        <h2>热门赛事<Button size="small">更多</Button></h2>
+        <h2>热门赛事&nbsp;&nbsp;<Button size="small">更多</Button></h2>
         <Row>
           <Col :sm="12" :md="12" :lg="6" v-for="(item, i) in hotGameLists" :key="i">
             <goods-item :imgSrc="item.img" :baseRate="10" :o_height="410" :i_height="310">
@@ -46,21 +48,22 @@
     </div>
     <div class="container">
       <div class="inner">
-        <h2>特惠热卖<Button size="small">更多</Button></h2>
-        <Row>
-          <Col :sm="12" :md="12" :lg="6">
-            <div class="sale">
-
-            </div>
-          </Col>
-          <Col :sm="12" :md="12" :lg="6" v-for="(item, i) in hotSaleLists" :key="i">
-            <goods-item :imgSrc="item.img" :baseRate="10">
-              <span slot="title" style="font-size: 16px;">{{item.title}}</span>
-              <span slot="rate">{{item.rate}}</span>
-              <span slot="price">商品价格<span style="color: #ffac2d">￥{{item.price}}</span></span>
-            </goods-item>
-          </Col>
-        </Row>
+        <h2>特惠热卖&nbsp;&nbsp;<Button size="small">更多</Button></h2>
+        <div style="margin:10px;">
+          <Row>
+            <Col :sm="12" :md="12" :lg="6">
+              <div class="sale">
+              </div>
+            </Col>
+            <Col :sm="12" :md="12" :lg="6" v-for="(item, i) in hotSaleLists" :key="i">
+              <goods-item :imgSrc="item.img" :baseRate="10">
+                <span slot="title" style="font-size: 16px;">{{item.title}}</span>
+                <span slot="rate">{{item.rate}}</span>
+                <span slot="price">商品价格<span style="color: #ffac2d">￥{{item.price}}</span></span>
+              </goods-item>
+            </Col>
+          </Row>
+        </div>
       </div>
     </div>
   </div>
@@ -139,11 +142,11 @@ export default {
       height: 100%;
       width: $g_width;
       margin: auto;
-      padding: 1em;
+      padding: 15px;
       background: #fff;
       border-radius: 4px;
       h2 {
-        padding-left: 0.5em;
+        padding: 10px;
       }
       div.sale {
         height: ($o_default_height + 8px) * 2;
@@ -165,7 +168,6 @@ export default {
               height: inherit;
               background: url('../assets/temp/goswim.png') no-repeat;
               background-size: contain;
-              background-position: center;
             }
           }
           &:nth-child(2) {

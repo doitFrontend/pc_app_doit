@@ -5,6 +5,7 @@ import Home from '@/pages/Home';
 import Gym from '@/pages/Gym';
 import GymDetails from '@/pages/GymDetails';
 import Checkout from '@/pages/Checkout';
+import Payment from '@/pages/Payment';
 import Login from '@/pages/Login';
 import NotFound from '@/pages/404';
 import City from '@/pages/City';
@@ -154,6 +155,14 @@ export default new Router({
           path: '/checkout',
           name: 'Checkout',
           component: Checkout,
+          meta: {
+            isLogin: true,
+          },
+        },
+        {
+          path: '/payment',
+          name: 'Payment',
+          component: Payment,
           meta: {
             isLogin: true,
           },

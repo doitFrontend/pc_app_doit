@@ -3,7 +3,8 @@
             <h2 id="org_name">我的票</h2>
             <div>
               <Row>
-                <Col span="8" v-for="(item, i) in ticketLists" :key="i">
+                <div v-if="!myTicketForPortal.length">暂无数据</div>
+                <Col span="8" v-for="(item, i) in myTicketForPortal" :key="i">
                   <div class="ticket" @click="toTicketDetails(item)">
                     <div>
                       <p><i class="ivu-icon ivu-icon-md-headset"></i>{{item.title}}票</p>
@@ -25,10 +26,16 @@ import { ticketLists } from '@/utils/mockdata';
 export default {
   name: 'MyTicket',
   components: { PersonalCenterNav },
+  props: {
+    orgId: {
+      type: String,
+    }
+  },
   data() {
     return {
       ticketLists: [],
       MockData: {},
+      myTicketForPortal: [],
     };
   },
   created() {
@@ -36,6 +43,26 @@ export default {
     console.log(this.ticketLists);
   },
   methods: {
+    // 获取票卡所有的类别
+    getMyTicketForPortal() {
+      let data = {
+        orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+        memberId: '2014011166',
+      };
+      this.$axios({
+        method: 'POST',
+        url: 'card/myTicketForPortal.do',
+        data: data,
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.myTicketForPortal = res.data.rows;
+        } else {
+          this.$Message.warning(res.code);
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+    },
     toTicketDetails(item) {
       console.log(item);
       this.$router.push({
@@ -43,6 +70,9 @@ export default {
         query: item,
       });
     },
+  },
+  mounted() {
+    this.getMyTicketForPortal(); // 获取票卡类别
   },
 };
 </script>

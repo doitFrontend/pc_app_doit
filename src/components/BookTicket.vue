@@ -28,7 +28,7 @@
                       <span>{{item.title}}</span>
                     </div>
                     <div  class="ticket-dtail">
-                      <b style="font-size:18px;">￥</b>{{item.price | toFixed}}<br>
+                      <b style="font-size:18px;">￥</b>{{item.price | toFixed(2)}}<br>
                       <div style="font-size: 16px;padding-top:10px">
                         限时：{{item.time}}</br>{{item.timeSlotStr}}
                       </div>

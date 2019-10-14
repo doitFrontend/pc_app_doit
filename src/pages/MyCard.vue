@@ -9,11 +9,11 @@
                       <p><i class="ivu-icon ivu-icon-md-headset"></i>{{item.cardTypeName}}</p>
                     </div>
                     <ul>
-                      <li v-if="!item.cardType=='时间'">余额：{{item.leftmoney }}分钟</li>
-                      <li v-if="!item.cardType=='次'">余额：{{item.leftmoney }}次</li>
-                      <li v-if="!item.cardType=='金额'">余额：{{item.leftmoney }}元</li>
-                      <li v-if="!item.cardType=='点'">余额：{{item.leftmoney }}点</li>
-                      <li v-if="!item.cardType=='小时'">余额：{{item.leftmoney }}小时</li>
+                      <li v-if="item.cardType=='时间'">余额：{{item.leftmoney }}分钟</li>
+                      <li v-if="item.cardType=='次'">余额：{{item.leftmoney }}次</li>
+                      <li v-if="item.cardType=='金额'">余额：{{item.leftmoney }}元</li>
+                      <li v-if="item.cardType=='点'">余额：{{item.leftmoney }}点</li>
+                      <li v-if="item.cardType=='小时'">余额：{{item.leftmoney }}小时</li>
                       <li>有效期至：{{item.endtime}}</li>
                     </ul>
                     <p>大连理工大学</p>

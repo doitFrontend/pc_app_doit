@@ -58,7 +58,7 @@ router.beforeEach((to, from, next) => {
   }
   // 判断该路由是否需要登陆
   if (to.matched.some(res => res.meta.isLogin)) {
-    if (sessionStorage['username']) {
+    if (localStorage['username']) {
       next();
     } else {
       next({

@@ -8,8 +8,8 @@
           </div>
           <input type="text" v-model="phoneNum" placeholder="请输入手机号">
           <input v-if="!isCountLog" type="text" v-model="idCode" placeholder="请输入动态码">
-          <input v-else type="text" v-model="idCode" placeholder="请输入密码">
-          <input type="button" value="登录" @click="signIn">
+          <input v-else type="text" v-model="password" placeholder="请输入密码">
+          <input type="button" value="登录" @click.enter="signIn">
           <div v-if="!isCountLog" class="rcode" @click="sendIDCode">{{text}}</div>
           <div v-if="!isCountLog && isFloat" class="rcode" style="opacity: 0">遮罩</div>
           <div class="common forgetcode">忘记密码</div>
@@ -37,6 +37,7 @@
     </div>
 </template>
 <script>
+import Qs from 'qs';
 export default {
   name: 'Login',
   data() {
@@ -45,6 +46,7 @@ export default {
       default_scondes: 60,
       timer: null,
       phoneNum: '',
+      password: '',
       idCode: '',
       isCountLog: true,
       activeStyle: {
@@ -88,7 +90,13 @@ export default {
       this.text = `已发送(${this.default_scondes}s)`;
     },
     signIn() {
-      sessionStorage.setItem('username', this.phoneNum);
+      let isLegal = this.checkData();
+      if (isLegal) {
+        this.login();
+      }
+    },
+    moreTodo(res) {
+      localStorage.setItem('username', res.data.username);
       let temp_url = decodeURIComponent(this.$router.currentRoute.fullPath); // /login?redirect=/checkout
       let url = '';
       if (temp_url.indexOf('?') !== -1) { // 到支付页面 // 登录成功后，跳转刚刚购买的页面
@@ -99,6 +107,59 @@ export default {
       this.$router.push({
         path: url
       });
+    },
+    login() {
+      let data = {
+        username: this.phoneNum,
+        password: this.password,
+        orgId: '0be0cef1d45f11e984598866394de9ee',
+      };
+      this.$axios({
+        method: 'POST',
+        url: 'login.do',
+        data: data,
+        transformRequest: [function(data) {
+          return Qs.stringify(data);
+        }], // 重要
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.moreTodo(res);
+        } else {
+          this.$Message.warning(res.code);
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+    },
+    checkData() {
+      let sign = false;
+      if (!this.phoneNum) {
+        this.$Message.warning({
+          content: '请输入手机号码',
+          duration: 3,
+        });
+        return;
+      }
+      if (this.isCountLog) {
+        if (!this.password) {
+          this.$Message.warning({
+            content: '请输入密码',
+            duration: 3,
+          });
+          return;
+        }
+        sign = true;
+      } else {
+        if (!this.idCode) {
+          this.$Message.warning({
+            content: '请输入验证码',
+            duration: 3,
+          });
+          return;
+        }
+        sign = true;
+      }
+      return sign;
     },
     changeLog(sign) {
       switch (sign) {

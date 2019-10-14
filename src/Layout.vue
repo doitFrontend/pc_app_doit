@@ -92,7 +92,7 @@ export default {
   },
   computed: {
     isSignIn: function() {
-      return sessionStorage['username'];
+      return localStorage['username'];
     },
     location: {
       get: function() {
@@ -130,7 +130,7 @@ export default {
       this.isNone = true;
     },
     signOut() {
-      sessionStorage.clear(); // 清除数据
+      localStorage.clear(); // 清除数据
       this.$router.go(0); // 刷新页面 TODO: 有没有局部刷新的方式
     },
     toTrial() { // 跳转3.0试用

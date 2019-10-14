@@ -61,12 +61,18 @@ router.beforeEach((to, from, next) => {
     if (localStorage['username']) {
       next();
     } else {
-      next({
-        path: '/login',
-        query: {
-          redirect: to.fullPath,
-        },
-      });
+      setTimeout(() => {
+        iView.Message.warning({
+          content: '请先登录',
+          duration: 5,
+        });
+        next({
+          path: '/login',
+          query: {
+            redirect: to.fullPath,
+          },
+        });
+      }, 0);
     };
   } else {
     next();

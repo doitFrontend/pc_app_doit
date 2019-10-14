@@ -93,6 +93,9 @@ export default new Router({
         {
           path: '/PersonalCenter',
           component: PersonalCenter,
+          meta: {
+            isLogin: true,
+          },
           children: [
             {
               path: '/',

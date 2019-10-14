@@ -62,6 +62,7 @@ import BackToTop from '@/components/BackToTop';
 import cityJson from '@/utils/city.json';
 import provinceCity from '@/utils/provinceCity';
 import { ajax } from 'jquery';
+import { GET_LOCATION_URL } from '../utils/urlManage';
 export default {
   name: 'City',
   components: { BackToTop },
@@ -116,7 +117,7 @@ export default {
     getCityByGuess() {
       ajax({
         type: 'GET',
-        url: 'https://apis.map.qq.com/ws/location/v1/ip?key=XWEBZ-RQ2LU-OBGVA-4VNAX-4YU62-B2FDP&output=jsonp',
+        url: GET_LOCATION_URL,
         dataType: 'jsonp',
         data: {},
       }).done(res => {

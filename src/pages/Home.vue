@@ -3,7 +3,7 @@
     <div class="showImg"></div>
     <div class="container">
       <div class="inner">
-        <h2>附近场馆&nbsp;&nbsp;<Button @click="toGym" size="small">更多</Button></h2>
+        <h2>附近场馆&nbsp;&nbsp;<Button @click="toGym" size="small">更多>></Button></h2>
         <Row>
           <Col :sm="12" :md="12" :lg="8" v-for="(item, i) in goodLists" :key="i">
             <goods-item :imgSrc="item.orgImages" :baseRate="10" @goodItemDetails="gotoGymDetail(item)">
@@ -18,13 +18,13 @@
     </div>
     <div class="container">
       <div class="inner">
-        <h2>超值课程&nbsp;&nbsp;<Button size="small">更多</Button></h2>
+        <h2>超值课程&nbsp;&nbsp;<Button size="small">更多>></Button></h2>
         <div style="margin:10px;">
           <Row>
-          <Col :sm="15" :md="15" :lg="15">
+          <Col :sm="18" :md="18" :lg="18">
             <div></div>
           </Col>
-          <Col :sm="9" :md="9" :lg="9">
+          <Col :sm="6" :md="6" :lg="6">
             <div></div>
             <div></div>
           </Col>
@@ -34,7 +34,7 @@
     </div>
     <div class="container">
       <div class="inner">
-        <h2>热门赛事&nbsp;&nbsp;<Button size="small">更多</Button></h2>
+        <h2>热门赛事&nbsp;&nbsp;<Button size="small">更多>></Button></h2>
         <Row>
           <Col :sm="12" :md="12" :lg="6" v-for="(item, i) in hotGameLists" :key="i">
             <goods-item :imgSrc="item.img" :baseRate="10" :o_height="410" :i_height="310">
@@ -48,7 +48,7 @@
     </div>
     <div class="container">
       <div class="inner">
-        <h2>特惠热卖&nbsp;&nbsp;<Button size="small">更多</Button></h2>
+        <h2>特惠热卖&nbsp;&nbsp;<Button size="small">更多>></Button></h2>
         <div style="margin:10px;">
           <Row>
             <Col :sm="12" :md="12" :lg="6">
@@ -158,7 +158,6 @@ export default {
       padding-top: 6em;
     }
     &:nth-child(3) {
-      // padding-top: 6em;
       .ivu-row {
         height: 300px;
         .ivu-col {

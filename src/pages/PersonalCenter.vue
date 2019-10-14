@@ -9,7 +9,7 @@
               <div class="personal_name">一条寻水的鱼</div>
             </div>
             <template>
-              <Menu :theme="theme3" active-name="1">
+              <Menu active-name="1">
                 <MenuGroup title="">
               <router-link to='/PersonalCenter/MyOrder'>
                 <MenuItem name="1">

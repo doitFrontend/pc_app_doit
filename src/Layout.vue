@@ -33,11 +33,13 @@
     <div class="nav_container" :class="{ 'nav_fixed': is_nav_fixed }">
       <div class="nav">
           <router-link tag="div" to="/home">首页</router-link>
-          <router-link tag="div" to="/gym">票务</router-link>
+          <router-link tag="div" to="/bookTicket">票务</router-link>
+          <router-link tag="div" to="/bookCard">卡务</router-link>
+          <router-link tag="div" to="/bookField">场地</router-link>
           <router-link tag="div" to="/train">培训</router-link>
           <router-link tag="div" to="/games">赛事</router-link>
-          <router-link tag="div" to="/mall">商城</router-link>
-          <router-link tag="div" to="/community">社区</router-link>
+          <!-- <router-link tag="div" to="/mall">商城</router-link> -->
+          <!-- <router-link tag="div" to="/community">社区</router-link> -->
           <router-link tag="div" to="/PersonalCenter">个人</router-link>
           <input type="text" /><Icon size="24" type="ios-search-outline" />
       </div>
@@ -76,6 +78,7 @@
 <script>
 import Login from '@/pages/Login';
 import BackToTop from '@/components/BackToTop';
+import { TO_TRIAL_URL } from './utils/urlManage';
 export default {
   name: 'Layout',
   components: { Login, BackToTop },
@@ -131,8 +134,7 @@ export default {
       this.$router.go(0); // 刷新页面 TODO: 有没有局部刷新的方式
     },
     toTrial() { // 跳转3.0试用
-      // https://dtwx3.doit10019.com:81/dllg
-      window.open('https://dtwx3.doit10019.com:81/dllg', '_blank');
+      window.open(TO_TRIAL_URL, '_blank');
     },
   },
   beforeRouteEnter(to, from, next) { // 组件路由监听 通过vm进行访问
@@ -246,7 +248,6 @@ $g_border_radius: 20px;
     .nav {
       height: 6em;
       margin: auto;
-      // margin-top: 6em;
       width: $g_width;
       position: relative;
       div {
@@ -301,11 +302,8 @@ $g_border_radius: 20px;
     box-shadow: 0 5px 14px #ccc;
   }
   .footer {
-    // position: absolute;
-    // bottom: 0;
-    // left: calc( (100% - 1000px)/2 );
     width: $g_width;
-    padding: 6em 1em;
+    padding: 3em 1em 1em 1em;
     margin: auto;
     display: flex;
     align-items: flex-start;

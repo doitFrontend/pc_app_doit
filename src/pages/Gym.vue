@@ -88,6 +88,7 @@ export default {
       MockData: {},
       i_width: 240,
       button1: '江苏',
+      default_button: '北京',
     };
   },
   created() {

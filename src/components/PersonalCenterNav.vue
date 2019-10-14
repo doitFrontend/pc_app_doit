@@ -1,5 +1,5 @@
 <template>
-    <Menu :theme="theme3" active-name="1">
+    <Menu active-name="1">
         <MenuGroup title="个人中心">
               <router-link to='/PersonalCenter/MyOrder'>
                 <MenuItem name="1">

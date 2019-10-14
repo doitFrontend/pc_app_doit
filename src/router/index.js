@@ -92,7 +92,6 @@ export default new Router({
         // },
         {
           path: '/PersonalCenter',
-          name: 'PersonalCenter',
           component: PersonalCenter,
           children: [
             {
@@ -145,6 +144,17 @@ export default new Router({
           path: '/gym',
           name: 'Gym',
           component: Gym,
+          alias: '/bookTicket',
+        },
+        {
+          path: '/gym1',
+          component: Gym,
+          alias: '/bookCard',
+        },
+        {
+          path: '/gym2',
+          component: Gym,
+          alias: '/bookField',
         },
         {
           path: '/gym/:id',

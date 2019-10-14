@@ -4,10 +4,10 @@
       <div class="inner">
         <Row>
           <Col :sm="3" :md="3" :lg="3"  class="leibie">
-            <div class="label">票类别 <span>|</span></div>
+            <div class="label">卡类别 <span>|</span></div>
           </Col>
           <Col :sm="21" :md="21" :lg="21"  class="leibie2">
-            <RadioGroup v-model="default_button" type="button">
+            <RadioGroup v-model="default_button" type="button" @on-change="changeCardType">
               <Radio label="所有"></Radio>
               <Radio v-for="(item, i) in ticketOrCardTypeList" :key="i" :label="item"></Radio>
             </RadioGroup>
@@ -18,19 +18,21 @@
       <div class="inner">
         <div class="" style="margin:0 20px">
           <Row :gutter="16">
-            <div v-if="!cardLists.length">暂无数据</div>
-            <Col v-else v-for="item in cardLists" :key="item.sportId" :sm="8" :md="8" :lg="8">
+            <!-- TODO: 缺省页 -->
+            <div v-if="!tempCardLists.length">暂无此类型卡</div>
+            <Col v-else v-for="item in tempCardLists" :key="item.sportId" :sm="8" :md="8" :lg="8">
               <div class="item_ticket">
                 <div class="ticket">
                   <div class="piece">
                     <div>
-                      <Icon color="#fff" size="28" type="md-headset" />
-                      <span>222{{item.title}}</span>
+                      <!-- <Icon color="#fff" size="28" type="md-headset" /> -->
+                      <Icon color="#fff" size="28" :custom="`iconfont ${item.icon.split('#')[1]}`" />
+                      <span>{{item.typeName}}</span>
                     </div>
                     <div  class="ticket-dtail">
                       <b style="font-size:18px;">￥</b>{{item.price}}.00<br>
                       <div style="font-size: 16px;padding-top:10px">
-                        面额：{{item.frequency1}}
+                        {{item.frequency1}}卡
                       </div>
                     </div>
                   </div>
@@ -65,6 +67,7 @@ export default {
       MockData: {},
       ticketOrCardTypeList: [],
       default_button: '所有',
+      tempCardLists: [],
     };
   },
   methods: {
@@ -88,6 +91,14 @@ export default {
         console.log(error);
       });
     },
+    // 切换卡类别
+    changeCardType(label) {
+      if (label !== '所有') {
+        this.tempCardLists = this.cardLists.filter(item => JSON.parse(item.dictionaries)[18] === label);
+      } else {
+        this.tempCardLists = this.cardLists;
+      }
+    },
     countPriz({ item, sign }) {
       if (sign === 'ADD') {
         this.setToCart(item);
@@ -110,6 +121,11 @@ export default {
   mounted() {
     this.$store.dispatch('getCardList');
     this.getCardOrTicketTypes(); // 获取票卡类别
+    // 数据依赖于computed里的数据，computed数据来源于store，
+    // 没有延迟的时候就是默认值，不是预期效果 TODO:
+    setTimeout(() => {
+      this.tempCardLists = this.cardLists;
+    }, 500);
   },
 };
 </script>

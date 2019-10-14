@@ -23,7 +23,7 @@
           <div><span></span>已选场地</div>
           <div><span></span>已预订场地</div>
           <div><span></span>已过时段</div>
-          <div><span></span>上课专属</div>
+          <!-- <div><span></span>上课专属</div> -->
         </div>
     </div>
     <div v-if="!fieldTypeList.length">暂无数据</div>

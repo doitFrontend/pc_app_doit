@@ -7,7 +7,7 @@
             <div class="label">票类别 <span>|</span></div>
           </Col>
           <Col :sm="21" :md="21" :lg="21"  class="leibie2">
-            <RadioGroup v-model="default_button" type="button">
+            <RadioGroup v-model="default_button" type="button" @on-change="changeTicketType">
               <Radio label="所有"></Radio>
               <Radio v-for="(item, i) in ticketOrCardTypeList" :key="i" :label="item"></Radio>
             </RadioGroup>
@@ -18,14 +18,16 @@
       <div class="inner">
         <div class="" style="margin:0 20px">
           <Row :gutter="16">
-            <div v-if="!ticketList.length">暂无数据</div>
-            <Col v-else v-for="item in ticketList" :key="item.sportId" :sm="8" :md="8" :lg="8">
+            <!-- TODO: 缺省页 -->
+            <div v-if="!tempTicketList.length">暂无此类型票</div>
+            <Col v-else v-for="item in tempTicketList" :key="item.sportId" :sm="8" :md="8" :lg="8">
               <div class="item_ticket">
                 <div class="ticket">
                   <div class="piece">
                     <div>
-                      <Icon color="#fff" size="28" type="md-headset" />
-                      <span>{{item.title}}</span>
+                      <!-- <Icon color="#fff" size="28" type="md-headset" /> -->
+                      <Icon color="#fff" size="28" :custom="`iconfont ${item.icon.split('#')[1]}`" />
+                      <span>{{item.typeName}}</span>
                     </div>
                     <div  class="ticket-dtail">
                       <b style="font-size:18px;">￥</b>{{item.price | toFixed(2)}}<br>
@@ -65,6 +67,7 @@ export default {
       MockData: {},
       ticketOrCardTypeList: [],
       default_button: '所有',
+      tempTicketList: [],
     };
   },
   methods: {
@@ -88,6 +91,14 @@ export default {
         console.log(error);
       });
     },
+    // 切换票类别
+    changeTicketType(label) {
+      if (label !== '所有') {
+        this.tempTicketList = this.ticketList.filter(item => item.sportItem === label);
+      } else {
+        this.tempTicketList = this.ticketList;
+      }
+    },
     countPriz({ item, sign }) {
       if (sign === 'ADD') {
         this.setToCart(item);
@@ -108,13 +119,21 @@ export default {
     }
   },
   computed: {
-    ticketList() {
-      return this.$store.state.ticketList;
-    }
+    ticketList: {
+      get: function() {
+        return this.$store.state.ticketList;
+      },
+    },
   },
   mounted() {
     this.$store.dispatch('getTicketList');
     this.getCardOrTicketTypes(); // 获取票卡类别
+    // 数据依赖于computed里的数据，computed数据来源于store，
+    // 没有延迟的时候就是默认值，不是预期效果 TODO:
+    setTimeout(() => {
+      this.tempTicketList = this.ticketList;
+      console.log(this.ticketList);
+    }, 500);
   },
 };
 </script>

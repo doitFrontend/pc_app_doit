@@ -114,9 +114,6 @@ const actions = {
     let data = {
       deliveryTerminal: '门户端',
       gamesNum: '',
-      intendedFor: '在职教职工',
-      operator_id: '2014011166',
-      operator_role: 'admin',
       orgId: localStorage.getItem('orgId'),
       timeSolt: '',
       type: 'pw',
@@ -139,9 +136,6 @@ const actions = {
     let data = {
       deliveryTerminal: '门户端',
       gamesNum: '',
-      intendedFor: '在职教职工',
-      operator_id: '2014011166',
-      operator_role: 'admin',
       orgId: localStorage.getItem('orgId'),
       timeSolt: '',
       type: 'kw',

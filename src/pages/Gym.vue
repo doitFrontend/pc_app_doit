@@ -3,42 +3,13 @@
     <div class="showImg"></div>
     <div class="container">
       <div class="inner">
-        <!-- <Row :gutter="16">
-          <Col :sm="4" :md="4" :lg="2">
-            <div>体育项目：</div>
-          </Col>
-          <Col :sm="18" :md="18" :lg="22">
-            <div></div>
-          </Col>
-        </Row> -->
-        <!-- <Divider /> -->
-        <!-- <Row :gutter="16">
-          <Col :sm="2" :md="2" :lg="2">
-            <div style="line-height: 2.6em;text-align:center;font-size:16px;">区域：</div>
-          </Col>
-          <Col :sm="22" :md="22" :lg="22">
-            <div>
-              <RadioGroup v-model="button1" type="button">
-                <Radio label="北京"></Radio>
-                <Radio label="上海"></Radio>
-                <Radio label="江苏"></Radio>
-                <Radio label="深圳"></Radio>
-                <Radio label="杭州"></Radio>
-              </RadioGroup>
-            </div>
-          </Col>
-        </Row> -->
         <Row>
           <Col :sm="3" :md="3" :lg="3"  class="leibie">
             <div class="label">所在区域 <span>|</span></div>
           </Col>
           <Col :sm="21" :md="21" :lg="21"  class="leibie2">
             <RadioGroup v-model="default_button" type="button">
-              <Radio label="北京"></Radio>
-                <Radio label="上海"></Radio>
-                <Radio label="江苏"></Radio>
-                <Radio label="深圳"></Radio>
-                <Radio label="杭州"></Radio>
+              <Radio v-for="(item, index) in fData" :key="index" :label="item.label"></Radio>
             </RadioGroup>
           </Col>
         </Row>
@@ -79,20 +50,25 @@
 </template>
 <script>
 import GoodsItem from '@/components/GoodsItem.vue';
+import cityData from '../utils/provinceCity';
 export default {
   name: 'Gym',
   components: { GoodsItem },
   data() {
     return {
       goodLists: [],
-      MockData: {},
       i_width: 240,
-      button1: '江苏',
-      default_button: '北京',
+      fData: null,
     };
   },
   created() {
     this.fetchData();
+    this.circleList(cityData, localStorage.getItem('currentCity'));
+  },
+  computed: {
+    default_button() {
+      return this.fData[0].label || '';
+    },
   },
   methods: {
     toGoodDetails(item) {
@@ -121,6 +97,24 @@ export default {
       }).catch(error => {
         console.log(error);
       });
+    },
+    circleList(list, currentCity) {
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].label.indexOf(currentCity) !== -1) {
+          if (list[i].children) {
+            if (list[i].children.length > 1) {
+              this.fData = list[i].children;
+            } else {
+              this.fData = list[i].children[0].children;
+            }
+          } else {
+            this.fData = list;
+          }
+          // break;
+        } else {
+          list[i].children && this.circleList(list[i].children, currentCity);
+        }
+      }
     },
   },
 };

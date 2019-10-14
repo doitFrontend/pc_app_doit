@@ -22,7 +22,7 @@
 </template>
 <script>
 import PersonalCenterNav from '@/components/PersonalCenterNav.vue';
-import { ticketLists } from '@/utils/mockdata';
+// import { ticketLists } from '@/utils/mockdata';
 export default {
   name: 'MyTicket',
   components: { PersonalCenterNav },
@@ -33,14 +33,14 @@ export default {
   },
   data() {
     return {
-      ticketLists: [],
+      // ticketLists: [],
       MockData: {},
       myTicketForPortal: [],
     };
   },
   created() {
-    this.ticketLists = ticketLists.ticketLists;
-    console.log(this.ticketLists);
+    // this.ticketLists = ticketLists.ticketLists;
+    // console.log(this.ticketLists);
   },
   methods: {
     // 获取票卡所有的类别

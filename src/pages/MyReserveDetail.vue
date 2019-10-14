@@ -5,15 +5,15 @@
     <Row>
       <Col span="12">
       <div class="" style="border-top: 1px  solid #ddd;border-left: 1px  solid #ddd;">
-        <div class="div1"><span>场馆名称：</span><p>健身器材票（非家属）</p></div>
-        <div class="div1"><span>场地名称：</span><p>1号场-半1</p></div>
-        <div class="div1" style="height:200px;"><span>使用时段</span><p>2019-09-12 19:25:32~2019-09-12 19:25:32</p></div>
+        <div class="div1"><span>场馆名称：</span><p>{{myReserveInfo.fieldSale.fieldType.fieldTypeName}}</p></div>
+        <div class="div1"><span>场地名称：</span><p>{{myReserveInfo.fieldNo}}</p></div>
+        <div class="div1" style="height:200px;"><span>使用时段</span><p>{{myReserveInfo.fieldStartTime}}~{{myReserveInfo.fieldEndTime}}</p></div>
       </div>
       </Col>
       <Col span="12">
       <div style="border-top: 1px  solid #ddd;">
-        <div class="div1"><span>场地价格：</span><p>￥60.00</p></div>
-        <div class="div1"><span>使用状态：</span><p>未使用</p></div>
+        <div class="div1"><span>场地价格：</span><p>￥{{myReserveInfo.orderChildProductPrice}}</p></div>
+        <div class="div1"><span>使用状态：</span><p v-if="!myReserveInfo.orderChildUsedStatus=='0'">未使用</p><p v-if="!myReserveInfo.orderChildUsedStatus=='1'">已使用</p></div>
         <div class="div1" style="height:200px;"><span>二维码：</span><p><canvas id="canvas"></canvas></p></div>
         </div>
       </Col>
@@ -30,11 +30,14 @@ export default {
   data() {
     return {
       timer: null,
+      myReserveInfo: {},
     };
   },
   created() {
     // let d = document.getElementById('canvas');
     // console.log(d);
+    this.myReserveInfo = this.$route.query;
+    console.log(this.myReserveInfo);
   },
   mounted() {
     let d = document.getElementById('canvas');

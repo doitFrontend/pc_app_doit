@@ -3,13 +3,17 @@
             <h2 id="org_name">我的卡</h2>
             <div>
               <Row>
-                <Col span="8" v-for="(item, i) in ticketLists" :key="i">
-                  <div class="ticket" @click="toTicketDetails(item)">
+                <Col span="8" v-for="(item, i) in myCardForPortal" :key="i">
+                  <div class="ticket" @click="toCardDetails(item)">
                     <div>
-                      <p><i class="ivu-icon ivu-icon-md-headset"></i>{{item.title}}票</p>
+                      <p><i class="ivu-icon ivu-icon-md-headset"></i>{{item.cardTypeName}}</p>
                     </div>
                     <ul>
-                      <li>余额：{{item.price }}元</li>
+                      <li v-if="!item.cardType=='时间'">余额：{{item.leftmoney }}分钟</li>
+                      <li v-if="!item.cardType=='次'">余额：{{item.leftmoney }}次</li>
+                      <li v-if="!item.cardType=='金额'">余额：{{item.leftmoney }}元</li>
+                      <li v-if="!item.cardType=='点'">余额：{{item.leftmoney }}点</li>
+                      <li v-if="!item.cardType=='小时'">余额：{{item.leftmoney }}小时</li>
                       <li>有效期至：{{item.endtime}}</li>
                     </ul>
                     <p>大连理工大学</p>
@@ -21,28 +25,57 @@
 </template>
 <script>
 import PersonalCenterNav from '@/components/PersonalCenterNav.vue';
-import { ticketLists } from '@/utils/mockdata';
+// import { ticketLists } from '@/utils/mockdata';
 export default {
   name: 'MyCard',
   components: { PersonalCenterNav },
+  props: {
+    orgId: {
+      type: String,
+    }
+  },
   data() {
     return {
-      ticketLists: [],
+      // ticketLists: [],
       MockData: {},
+      myCardForPortal: [],
     };
   },
   created() {
-    this.ticketLists = ticketLists.ticketLists;
-    console.log(this.ticketLists);
+    // this.ticketLists = ticketLists.ticketLists;
+    // console.log(this.ticketLists);
   },
   methods: {
-    toTicketDetails(item) {
+    // 获取票卡所有的类别
+    getMyCardForPortal() {
+      let data = {
+        orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+        memberId: '2014011166',
+      };
+      this.$axios({
+        method: 'POST',
+        url: 'card/myCardForPortal.do',
+        data: data,
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.myCardForPortal = res.data.rows;
+        } else {
+          this.$Message.warning(res.code);
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+    },
+    toCardDetails(item) {
       console.log(item);
       this.$router.push({
         path: `MyCard/${item.id}`,
         query: item,
       });
     },
+  },
+  mounted() {
+    this.getMyCardForPortal(); // 获取票卡类别
   },
 };
 </script>

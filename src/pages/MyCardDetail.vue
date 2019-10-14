@@ -5,7 +5,7 @@
     <Row>
       <Col span="12">
       <div class="" style="border-top: 1px  solid #ddd;border-left: 1px  solid #ddd;">
-        <div class="div1"><span>卡名称：</span><p>健身器材票（非家属）</p></div>
+        <div class="div1"><span>卡名称：</span><p>{{gymInfo.cardTypeName}}</p></div>
         <div class="div1"><span>卡号：</span><p>13163153213523232</p></div>
         <div class="div1"><span>使用项目：</span><p>器械健身</p></div>
         <div class="div1"><span>使用状态：</span><p>未使用</p></div>
@@ -33,9 +33,12 @@ export default {
   components: { PersonalCenterNav },
   data() {
     return {
+      myCardInfo: {},
     };
   },
   created() {
+    this.myCardInfo = this.$route.query;
+    console.log(this.myCardInfo);
   },
   mounted() {
     let d = document.getElementById('canvas');

@@ -19,7 +19,7 @@
             <div v-else @mouseleave="handleMouseleave">
               <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
                 <div :key="0" @mouseenter="handleMouseenter">欢迎你:{{isSignIn}}</div>
-                <div v-show="!isNone" :key="1">个人中心</div>
+                <div v-show="!isNone" :key="1" @click="toPersonalCenter">个人中心</div>
                 <div v-show="!isNone" :key="2" @click="signOut">退出登录</div>
               </transition-group>
             </div>
@@ -130,8 +130,11 @@ export default {
       this.isNone = true;
     },
     signOut() {
-      localStorage.clear(); // 清除数据
+      localStorage.removeItem('username'); // 清除当前登陆者的数据
       this.$router.go(0); // 刷新页面 TODO: 有没有局部刷新的方式
+    },
+    toPersonalCenter() {
+      this.$router.push('/PersonalCenter');
     },
     toTrial() { // 跳转3.0试用
       window.open(TO_TRIAL_URL, '_blank');
@@ -219,12 +222,14 @@ $g_border_radius: 20px;
           z-index: 100;
           & > div > span > div {
             &:nth-child(n+2) {
-                background: #fff;
-                color: $g_default_color;
+              background: #fff;
+              color: $g_default_color;
               border-radius: 8px;
+              height: 32px;
+              line-height: 32px;
               &:hover {
                 color: #fff;
-                background: $g_default_color;
+                background: #999;
               }
             }
           }

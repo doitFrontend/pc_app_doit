@@ -8,8 +8,8 @@
           </div>
           <input type="text" v-model="phoneNum" placeholder="请输入手机号">
           <input v-if="!isCountLog" type="text" v-model="idCode" placeholder="请输入动态码">
-          <input v-else type="text" v-model="password" placeholder="请输入密码">
-          <input type="button" value="登录" @click.enter="signIn">
+          <input v-else type="text" v-model="password" placeholder="请输入密码" @keyup.enter="signIn">
+          <input type="button" value="登录" @click="signIn">
           <div v-if="!isCountLog" class="rcode" @click="sendIDCode">{{text}}</div>
           <div v-if="!isCountLog && isFloat" class="rcode" style="opacity: 0">遮罩</div>
           <div class="common forgetcode">忘记密码</div>

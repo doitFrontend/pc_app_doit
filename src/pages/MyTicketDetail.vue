@@ -1,5 +1,5 @@
 <template>
-<div id="MyCardDetail">
+<div id="MyTicketDetail">
   <h2 id="org_name">票详情</h2>
   <div class="ticket_detail">
     <Row>
@@ -28,16 +28,17 @@
 import PersonalCenterNav from '@/components/PersonalCenterNav.vue';
 import QRCode from 'qrcode';
 export default {
-  name: 'MyCardDetail',
+  name: 'MyTicketDetail',
   components: { PersonalCenterNav },
   data() {
     return {
       timer: null,
+      myTicketInfo: {},
     };
   },
   created() {
-    // let d = document.getElementById('canvas');
-    // console.log(d);
+    this.myTicketInfo = this.$route.query;
+    console.log(this.myTicketInfo);
   },
   mounted() {
     let d = document.getElementById('canvas');
@@ -63,7 +64,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-#MyCardDetail {
+#MyTicketDetail {
 height: 100%;
 background-color: #fff;
 font-size: 14px;

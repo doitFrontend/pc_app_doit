@@ -3,16 +3,16 @@
     <h2 id="org_name">我的票</h2>
     <div>
       <Row>
-        <Col span="8" v-for="(item, i) in ticketLists" :key="i">
-          <div class="ticket" @click="toTicketDetails(item)">
+        <Col span="8" v-for="(item, i) in myReserveForPortal" :key="i">
+          <div class="ticket" @click="toReserveDetails(item)">
             <div>
-              <p><i class="ivu-icon ivu-icon-md-headset"></i>{{item.title}}票</p>
+              <p><i class="ivu-icon ivu-icon-md-headset"></i>{{item.fieldNo}}票</p>
             </div>
             <dl>
-              <dt>2号场-半1</dt>
+              <dt>{{item.fieldNo}}</dt>
               <dd>
-                {{item.endtime}}</br>
-                {{item.endtime}}
+                {{item.fieldStartTime}}</br>
+                {{item.fieldEndTime}}
               </dd>
             </dl>
             <p>大连理工大学</p>
@@ -24,28 +24,54 @@
 </template>
 <script>
 import PersonalCenterNav from '@/components/PersonalCenterNav.vue';
-import { ticketLists } from '@/utils/mockdata';
+// import { ticketLists } from '@/utils/mockdata';
 export default {
   name: 'MyReserve',
   components: { PersonalCenterNav },
+  props: {
+    orgId: {
+      type: String,
+    }
+  },
   data() {
     return {
-      ticketLists: [],
+      // ticketLists: [],
       MockData: {},
+      myReserveForPortal: [],
     };
   },
   created() {
-    this.ticketLists = ticketLists.ticketLists;
-    console.log(this.ticketLists);
+    // this.ticketLists = ticketLists.ticketLists;
+    // console.log(this.ticketLists);
   },
   methods: {
-    toTicketDetails(item) {
+    // 获取票卡所有的类别
+    getMyReserveForPortal() {
+      let data = {
+        orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+        memberId: 't201701',
+      };
+      this.$axios({
+        method: 'POST',
+        url: 'myFieldList.do',
+        data: data,
+      }).then(res => {
+        this.myReserveForPortal = res.data;
+        console.log(this.myReserveForPortal);
+      }).catch(error => {
+        console.log(error);
+      });
+    },
+    toReserveDetails(item) {
       console.log(item);
       this.$router.push({
         path: `MyReserve/${item.id}`,
         query: item,
       });
     },
+  },
+  mounted() {
+    this.getMyReserveForPortal(); // 获取票卡类别
   },
 };
 </script>

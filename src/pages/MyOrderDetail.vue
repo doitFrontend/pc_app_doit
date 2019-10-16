@@ -114,7 +114,7 @@ export default {
                 style: {
                   color: '#999',
                 }
-              }, strEndTime + params.row.fieldEndTime +'~'+ params.row.fieldEndTime),
+              }, strEndTime + params.row.fieldEndTime + '~' + params.row.fieldEndTime),
               h('p', {
                 style: {
                   color: '#999',

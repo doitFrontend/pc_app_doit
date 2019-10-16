@@ -6,14 +6,28 @@
         <div class="container">
           <div class="inner">
             <Row>
-              <Col :sm="4" :md="4" :lg="4"  class="leibie">
-                <div class="label">所在区域 <span>|</span></div>
-              </Col>
-              <Col :sm="20" :md="20" :lg="20">
-                <RadioGroup v-model="default_button" type="button">
-                  <Radio v-for="(item, index) in fData" :key="index" :label="item.label"></Radio>
-                </RadioGroup>
-              </Col>
+              <div>
+                <Col :sm="4" :md="4" :lg="4"  class="leibie">
+                  <div class="label">区域<span>|</span></div>
+                </Col>
+                <Col :sm="20" :md="20" :lg="20">
+                  <RadioGroup v-model="default_button" type="button">
+                    <Radio :label="default_button"></Radio>
+                    <Radio v-for="(item, index) in fData" :key="index" :label="item.label"></Radio>
+                  </RadioGroup>
+                </Col>
+              </div>
+              <div>
+                <Col :sm="4" :md="4" :lg="4"  class="leibie">
+                  <div class="label">项目<span>|</span></div>
+                </Col>
+                <Col :sm="20" :md="20" :lg="20">
+                  <RadioGroup v-model="default_button" type="button">
+                    <Radio :label="default_button"></Radio>
+                    <Radio v-for="(item, index) in sData" :key="index" :label="item.label"></Radio>
+                  </RadioGroup>
+                </Col>
+              </div>
             </Row>
           </div>
         </div>
@@ -64,6 +78,15 @@ export default {
       goodLists: [],
       i_width: 220,
       fData: null,
+      sData: [
+        { label: '游泳', value: '' },
+        { label: '羽毛球', value: '' },
+        { label: '篮球', value: '' },
+        { label: '瑜伽', value: '' },
+        { label: '器械健身', value: '' },
+        { label: '兵乓球', value: '' },
+        { label: '台球', value: '' },
+      ],
       iconList: [
         { text: '灯光', icon: 'ios-arrow-down' },
         { text: '休息室', icon: 'ios-arrow-down' },
@@ -76,7 +99,7 @@ export default {
   },
   computed: {
     default_button() {
-      return this.fData[0].label || '';
+      return '所有';
     },
   },
   methods: {

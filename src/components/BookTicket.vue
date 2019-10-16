@@ -38,7 +38,7 @@
                   </div>
                 </div>
                 <div class="price">
-                  <div calss="price2">￥{{item.price}}.00</div>
+                  <div calss="price2">￥{{item.price | toFixed(2)}}</div>
                   <button-groups @countSum="countPriz" :item="item"></button-groups>
                 </div>
               </div>
@@ -112,11 +112,6 @@ export default {
     delFromCart(item) {
       this.$store.commit('delTicket', item);
     },
-  },
-  filters: {
-    toFixed(value) {
-      return value.toFixed(2);
-    }
   },
   computed: {
     ticketList: {

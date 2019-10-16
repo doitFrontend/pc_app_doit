@@ -1,5 +1,5 @@
 <template>
-  <div class="card" @click="toGoodItem" :style="{height: `${o_height}px`}">
+  <div class="card" :style="{height: `${o_height}px`}">
     <!-- mode="horizonal"水平模式 height以图片的高度来填充 -->
     <div class="h">
       <Row type="flex" align="bottom" :gutter="24">
@@ -32,9 +32,14 @@
         <Col style="margin-left: 244px;">
           <div class="detail">
             <div class="item" v-for="(i) in 3" :key="i">
-              {{i}}
+              <div class="img"></div>
+              <h4>成人游泳票</h4>
+              <div class="price">
+                <div>￥20.0</div>
+                <div>已售268</div>
+              </div>
             </div>
-            <div class="more">更多商品</div>
+            <div class="more" @click="moreItem">更多商品</div>
           </div>
         </Col>
       </Row>
@@ -72,13 +77,15 @@ export default {
     };
   },
   methods: {
-    toGoodItem() {
-      return; // test
-      // this.$emit('goodItemDetails');
-    },
+    // toGoodItem() {
+    //   this.$emit('goodItemDetails');
+    // },
     foldInfo() {
       this.isFold = !this.isFold;
     },
+    moreItem() {
+      this.$emit('getMoreItem');
+    }
   },
 };
 </script>
@@ -88,7 +95,7 @@ export default {
     // height: 280px;
     padding: 0.8em;
     border-radius: 6px;
-    cursor: pointer;
+    // cursor: pointer;
     &:hover {
       background: #f7f7f7;
     }
@@ -112,12 +119,29 @@ export default {
             width: 158px;
             height: 100%;
             margin-right: 0.5em;
-            background: lightpink;
+            background: #fff;
+            .img {
+              height: 158px;
+              background: url('http://img.doit10019.com/2ba448d7-67ba-4620-b835-b5c5cbca6f09') no-repeat;
+              background-size: 100% 100%;
+            }
+            h4 {
+              padding: 6px 0 0 1em;
+            }
+            .price {
+              padding: 6px 1em;
+              display: flex;
+              justify-content: space-between;
+            }
           }
           .more {
             // height: 100%;
             // background: lightpink;
             font-size: 14px;
+            &:hover {
+              cursor: pointer;
+              color: $g_default_color;
+            }
             &::after {
               content: '>>'
             }

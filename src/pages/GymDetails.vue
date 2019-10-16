@@ -1,7 +1,7 @@
 <template>
     <div id="gymDetails">
       <div class="inner">
-        <Carousel v-model="default_value" loop>
+        <Carousel autoplay v-model="default_value" loop>
           <CarouselItem v-for="i in 3" :key="i">
             <div class="demo-carousel" :style="{backgroundImage: `url(${gymInfo.orgImages})`}"></div>
           </CarouselItem>
@@ -38,7 +38,7 @@
         </div>
         <div class="sale">
           <div class="sale_left">
-            <Tabs value="ticket" type="card">
+            <Tabs :value="NOW_CHOSEN" type="card">
               <TabPane label="购票" name="ticket">
                 <book-ticket :orgId="gymInfo.orgId"></book-ticket>
               </TabPane>
@@ -91,11 +91,13 @@ export default {
       center: {lng: 0, lat: 0},
       zoom: 17,
       img: 'http://img.doit10019.com/2ba448d7-67ba-4620-b835-b5c5cbca6f09',
+      NOW_CHOSEN: 'ticket',
     };
   },
   created() {
     this.gymInfo = this.$route.query;
     localStorage.setItem('orgId', this.gymInfo.orgId); // orgId存入, 供vuex中acitons使用
+    this.NOW_CHOSEN = localStorage.getItem('NOW_CHOSEN');
   },
   methods: {
     handleReady({BMap}) {

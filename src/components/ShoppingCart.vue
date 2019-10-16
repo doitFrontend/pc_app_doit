@@ -133,12 +133,13 @@ export default {
     }
   }
 }
+$toBottom: 3em;
 #cart {
   width: 278px;
   height: 40px;
   padding-bottom: 40px;
   position: fixed;
-  bottom: 0;
+  bottom: $toBottom;
   left: calc(calc(100% - #{$g_width})/2 + #{$g_left_width} + 1em);
   z-index: 100;
   background: #EDF1F2;
@@ -146,7 +147,7 @@ export default {
   flex-direction: column-reverse;
   .self {
     position: fixed;
-    bottom: 0;
+    bottom: $toBottom;
     // background: #f60;
     display: flex;
     width: inherit;

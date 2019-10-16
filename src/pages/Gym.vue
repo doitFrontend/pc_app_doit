@@ -21,7 +21,7 @@
           <div class="inner">
             <Row v-for="(item, i) in goodLists" :key="i">
               <Col span="24">
-                <goods-item-new @goodItemDetails="toGoodDetails(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.orgImages" :baseRate="10">
+                <goods-item-new @getMoreItem="toSaleItem(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.orgImages" :baseRate="10">
                   <div class="text" slot="title">{{item.orgName}}</div>
                   <div class="text" slot="rate">201 条评价</div>
                   <div class="text" slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</div>
@@ -80,7 +80,14 @@ export default {
     },
   },
   methods: {
-    toGoodDetails(item) {
+    // toGoodDetails(item) {
+    //   this.$router.push({
+    //     path: `gym/${item.orgId}`,
+    //     query: item,
+    //   });
+    // },
+    toSaleItem(item) {
+      console.log(item);
       this.$router.push({
         path: `gym/${item.orgId}`,
         query: item,

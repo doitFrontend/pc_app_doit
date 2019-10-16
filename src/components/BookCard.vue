@@ -30,7 +30,7 @@
                       <span>{{item.typeName}}</span>
                     </div>
                     <div  class="ticket-dtail">
-                      <b style="font-size:18px;">￥</b>{{item.price}}.00<br>
+                      <b style="font-size:18px;">￥</b>{{item.price | toFixed(2)}}<br>
                       <div style="font-size: 16px;padding-top:10px">
                         {{item.frequency1}}卡
                       </div>
@@ -38,7 +38,7 @@
                   </div>
                 </div>
                 <div class="price">
-                  <div calss="price2">￥{{item.price}}.00</div>
+                  <div calss="price2">￥{{item.price | toFixed(2)}}</div>
                   <button-groups @countSum="countPriz" :item="item"></button-groups>
                 </div>
               </div>
@@ -51,7 +51,6 @@
 </template>
 <script>
 import ButtonGroups from './ButtonGroups';
-// import Mock from 'mockjs';
 export default {
   name: 'bookCard',
   components: {

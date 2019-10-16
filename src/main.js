@@ -13,6 +13,7 @@ import { hasPermission } from '@/utils/index';
 import axios from 'axios';
 import REGEXP from '@/utils/regExp';
 import BaiduMap from 'vue-baidu-map';
+import * as filters from './utils/filters';
 
 // element辅助
 import { Autocomplete } from 'element-ui';
@@ -40,6 +41,13 @@ Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
 
 Vue.prototype.REGEXP = REGEXP;
+
+// 遍历注册过滤器
+Object.keys(filters).forEach(key => {
+  console.log(key);
+  console.log(filters[key]);
+  Vue.filter(key, filters[key]);
+});
 
 iView.LoadingBar.config({
   color: '#5cb85c',

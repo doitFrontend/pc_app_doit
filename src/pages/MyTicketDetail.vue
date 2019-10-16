@@ -5,19 +5,19 @@
     <Row>
       <Col span="12">
       <div class="" style="border-top: 1px  solid #ddd;border-left: 1px  solid #ddd;">
-        <div class="div1"><span>票名称：</span><p>健身器材票（非家属）</p></div>
-        <div class="div1"><span>票价格：</span><p>￥60.00</p></div>
-        <div class="div1"><span>使用项目：</span><p>器械健身</p></div>
-        <div class="div1"><span>有效期：</span><p>2019-09-12 19:25:32</p></div>
+        <div class="div1"><span>票名称：</span><p>{{myTicketInfo.ticketTypeName}}</p></div>
+        <div class="div1"><span>票价格：</span><p>￥{{myTicketInfo.ticketPrice}}</p></div>
+        <div class="div1"><span>使用项目：</span><p>{{myTicketInfo.json[1]}}</p></div>
+        <div class="div1"><span>有效期：</span><p>{{myTicketInfo.endtime}}</p></div>
         <div class="div1" style="height:200px;"><span>二维码：</span><p><canvas id="canvas"></canvas></p></div>
       </div>
       </Col>
       <Col span="12">
       <div style="border-top: 1px  solid #ddd;">
         <div class="div1"><span>商家名称：</span><p>大连理工大学</p></div>
-        <div class="div1"><span>使用人群：</span><p>不区分人群</p></div>
-        <div class="div1"><span>使用时段：</span><p>00:00-23:00</p></div>
-        <div class="div1"><span>使用状态：</span><p>未使用</p></div>
+        <div class="div1"><span>使用人群：</span><p>{{myTicketInfo.json[3]}}</p></div>
+        <div class="div1"><span>使用时段：</span><p>{{myTicketInfo.starthour}}~{{myTicketInfo.endhour}}</p></div>
+        <div class="div1"><span>使用状态：</span><p  v-if="myTicketInfo.status=='0'">已使用</p><p  v-if="!myTicketInfo.status=='0'">未使用</p></div>
         </div>
       </Col>
     </Row>
@@ -44,16 +44,17 @@ export default {
     let d = document.getElementById('canvas');
     console.log(d);
     this.timer = setInterval(() => {
-      this.qrcode();
+      this.qrcode(this.myTicketInfo.cardNo);
     }, 1000);
   },
   destroyed() {
     clearInterval(this.timer);
   },
   methods: {
-    qrcode() {
+    qrcode(cardNo) {
       let canvas = document.getElementById('canvas');
-      QRCode.toCanvas(canvas, 'sample text' + Date(), function(error) {
+      let myDate = new Date().getTime();
+      QRCode.toCanvas(canvas, cardNo + '&' + myDate, function(error) {
         if (error) {
           console.error(error);
         }

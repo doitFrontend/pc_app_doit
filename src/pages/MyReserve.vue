@@ -3,13 +3,13 @@
     <h2 id="org_name">我的票</h2>
     <div>
       <Row>
-        <Col span="8" v-for="(item, i) in myReserveForPortal" :key="i">
+        <Col span="8" v-for="(item, i) in myReserveLists" :key="i">
           <div class="ticket" @click="toReserveDetails(item)">
             <div>
-              <p><i class="ivu-icon ivu-icon-md-headset"></i>{{item.fieldNo}}票</p>
+              <p><i class="ivu-icon ivu-icon-md-headset"></i>{{item.fieldSale.fieldType.fieldTypeName}}票</p>
             </div>
             <dl>
-              <dt>{{item.fieldNo}}</dt>
+              <dt>{{item.fieldNo}}号场</dt>
               <dd>
                 {{item.fieldStartTime}}</br>
                 {{item.fieldEndTime}}
@@ -37,7 +37,7 @@ export default {
     return {
       // ticketLists: [],
       MockData: {},
-      myReserveForPortal: [],
+      myReserveLists: [],
     };
   },
   created() {
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     // 获取票卡所有的类别
-    getMyReserveForPortal() {
+    getMyReserveLists() {
       let data = {
         orgId: 'c4f67f3177d111e986f98cec4bb1848c',
         memberId: 't201701',
@@ -56,8 +56,8 @@ export default {
         url: 'myFieldList.do',
         data: data,
       }).then(res => {
-        this.myReserveForPortal = res.data;
-        console.log(this.myReserveForPortal);
+        this.myReserveLists = res.data;
+        console.log(this.myReserveLists);
       }).catch(error => {
         console.log(error);
       });
@@ -71,7 +71,7 @@ export default {
     },
   },
   mounted() {
-    this.getMyReserveForPortal(); // 获取票卡类别
+    this.getMyReserveLists(); // 获取票卡类别
   },
 };
 </script>

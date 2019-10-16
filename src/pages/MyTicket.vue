@@ -3,14 +3,14 @@
             <h2 id="org_name">我的票</h2>
             <div>
               <Row>
-                <div v-if="!myTicketForPortal.length">暂无数据</div>
-                <Col span="8" v-for="(item, i) in myTicketForPortal" :key="i">
+                <div v-if="!myTicketLists.length">暂无数据</div>
+                <Col span="8" v-for="(item, i) in myTicketLists" :key="i">
                   <div class="ticket" @click="toTicketDetails(item)">
                     <div>
-                      <p><i class="ivu-icon ivu-icon-md-headset"></i>{{item.title}}票</p>
+                      <p><i class="ivu-icon ivu-icon-md-headset"></i>{{item.ticketTypeName }}票</p>
                     </div>
                     <ul>
-                      <li><i>￥</i>{{item.price }}<i>.00</i></li>
+                      <li><i>￥</i>{{item.ticketPrice|toFixed(2)}}<i></i></li>
                       <li>有效期至：{{item.endtime}}</li>
                     </ul>
                     <p>大连理工大学</p>
@@ -21,11 +21,10 @@
 </div>
 </template>
 <script>
-import PersonalCenterNav from '@/components/PersonalCenterNav.vue';
 // import { ticketLists } from '@/utils/mockdata';
 export default {
   name: 'MyTicket',
-  components: { PersonalCenterNav },
+  components: { },
   props: {
     orgId: {
       type: String,
@@ -34,8 +33,8 @@ export default {
   data() {
     return {
       // ticketLists: [],
-      MockData: {},
-      myTicketForPortal: [],
+      //  MockData: {},
+      myTicketLists: [],
     };
   },
   created() {
@@ -44,7 +43,7 @@ export default {
   },
   methods: {
     // 获取票卡所有的类别
-    getMyTicketForPortal() {
+    getMyTicketLists() {
       let data = {
         orgId: 'c4f67f3177d111e986f98cec4bb1848c',
         memberId: '2014011166',
@@ -55,7 +54,7 @@ export default {
         data: data,
       }).then(res => {
         if (res.data.code === 200) {
-          this.myTicketForPortal = res.data.rows;
+          this.myTicketLists = res.data.rows;
         } else {
           this.$Message.warning(res.code);
         }
@@ -72,7 +71,7 @@ export default {
     },
   },
   mounted() {
-    this.getMyTicketForPortal(); // 获取票卡类别
+    this.getMyTicketLists(); // 获取票卡类别
   },
 };
 </script>

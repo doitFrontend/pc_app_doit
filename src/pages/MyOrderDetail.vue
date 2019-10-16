@@ -5,33 +5,67 @@
     <div class="order_state">
       <div class="order_state_l">
         <div>当前状态</div>
-        <h3 class="color_progress"> 未付款 </h3>
+        <h3 class="color_progress"  v-if="myOrderInfo.orderMainPayStatus=='SUCCESS'">已付</h3>
+        <h3 class="color_progress"  v-if="myOrderInfo.orderMainPayStatus=='REFUND'">已退</h3>
+        <h3 class="color_progress"  v-if="myOrderInfo.orderMainPayStatus=='PARTREFUND'">部分已退</h3>
+        <h3 class="color_progress"  v-if="myOrderInfo.orderMainPayStatus=='NOTPAY'">未支付</h3>
+        <h3 class="color_progress"  v-if="myOrderInfo.orderMainPayStatus=='CLOSED'">已关闭</h3>
+        <h3 class="color_progress"  v-if="myOrderInfo.orderMainPayStatus=='USERPAYING'">支付中</h3>
+        <h3 class="color_progress"  v-if="myOrderInfo.orderMainPayStatus=='REVOKED'">已撤销</h3>
+        <h3 class="color_progress"  v-if="myOrderInfo.orderMainPayStatus=='NOPAY'">未支付支付超时</h3>
+        <h3 class="color_progress"  v-if="myOrderInfo.orderMainPayStatus=='PAYERROR'">支付失败</h3>
+        <h3 class="color_progress"  v-if="myOrderInfo.orderMainPayStatus=='cancel'">取消支付</h3>
+
       </div>
       <div class="order_state_r">
-        <template>
+        <template  v-if="myOrderInfo.orderMainPayStatus=='NOTPAY' || myOrderInfo.orderMainPayStatus=='CLOSED' || myOrderInfo.orderMainPayStatus=='NOPAY' || myOrderInfo.orderMainPayStatus=='PAYERROR'">
           <Steps :current="1">
             <Step title="已完成" content="提交订单"></Step>
             <Step title="进行中" content="买家付款"></Step>
             <Step title="待进行" content="付款成功"></Step>
-            </Steps>
-            </template>
-        </div>
+          </Steps>
+        </template>
+        <template  v-if="myOrderInfo.orderMainPayStatus=='USERPAYING'">
+          <Steps :current="2">
+            <Step title="已完成" content="提交订单"></Step>
+            <Step title="进行中" content="买家付款"></Step>
+            <Step title="待进行" content="付款成功"></Step>
+          </Steps>
+        </template>
+        <template  v-if="myOrderInfo.orderMainPayStatus=='SUCCESS' || myOrderInfo.orderMainPayStatus=='REFUND' || myOrderInfo.orderMainPayStatus=='PARTREFUND'">
+          <Steps :current="3">
+            <Step title="已完成" content="提交订单"></Step>
+            <Step title="已完成" content="买家付款"></Step>
+            <Step title="已完成" content="付款成功"></Step>
+          </Steps>
+        </template>
+      </div>
     </div>
     <div class="order_information">
       <h4>订单信息</h4>
         <Row>
           <Col span="8">
             <ul>
-              <li><em>订单编号：</em><span>20191008346209301e</span></li>
-              <li><em>下单时间：</em><span>2019-10-08 16:17:00</span></li>
-              <li><em>支付状态：</em><span>未支付</span></li>
+              <li><em>订单编号：</em><span>{{ myOrderInfo.orderMainId }}</span></li>
+              <li><em>下单时间：</em><span>{{ myOrderInfo.createTime }}</span></li>
+              <li><em>支付状态：</em>
+              <span  v-if="myOrderInfo.orderMainPayStatus=='SUCCESS'">已付</span>
+              <span  v-if="myOrderInfo.orderMainPayStatus=='REFUND'">已退</span>
+              <span  v-if="myOrderInfo.orderMainPayStatus=='PARTREFUND'">部分已退</span>
+              <span  v-if="myOrderInfo.orderMainPayStatus=='NOTPAY'">未支付</span>
+              <span  v-if="myOrderInfo.orderMainPayStatus=='CLOSED'">已关闭</span>
+              <span  v-if="myOrderInfo.orderMainPayStatus=='USERPAYING'">支付中</span>
+              <span  v-if="myOrderInfo.orderMainPayStatus=='REVOKED'">已撤销</span>
+              <span  v-if="myOrderInfo.orderMainPayStatus=='NOPAY'">未支付支付超时</span>
+              <span  v-if="myOrderInfo.orderMainPayStatus=='cancel'">取消支付</span>
+              </li>
             </ul>
           </Col>
           <Col span="8">
             <ul>
-              <li><em>商品总额：</em><span>0.01</span></li>
-              <li><em>支付金额：</em><span style="color: #fd683d;">¥0.01</span></li>
-              <li><em>支付方式：</em><span>CASHPAY</span></li>
+              <li><em>商品总额：</em><span>{{ myOrderInfo.orderMainSumPrice|toFixed(2) }}</span></li>
+              <li><em>支付金额：</em><span style="color: #fd683d;">¥{{ myOrderInfo.orderMainSumHaspay|toFixed(2) }}</span></li>
+              <li><em>支付方式：</em><span>{{ myOrderInfo.orderMainPayType }}</span></li>
             </ul>
           </Col>
           <Col span="8">
@@ -40,68 +74,9 @@
     </div>
     <div class="good_information">
       <h4>商品信息</h4>
-      <!-- <table class="table2">
-        <thead>
-          <tr>
-            <th>商品类型</th>
-            <th>商品信息</th>
-            <th>单价</th>
-            <th>数量</th>
-            <th>金额</th>
-          </tr>
-        </thead>
-        <tbody id="201909275765a4d781">
-          <tr>
-            <td class="w150 b-r-1"> <h3>场地</h3></td>
-            <td class="w200">
-              <h3>台球-预定（非家属）</h3>
-              <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
-              <p class="gray">商家：大连理工体育馆</p>
-            </td>
-            <td class="w100"><span>¥100.00</span></td>
-            <td class="w150 b-r-1">
-              <div>¥100.00×1</div>
-            </td>
-            <td class="w100 b-r-1" rowspan="4">
-              <div>¥0.00</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="w150 b-r-1"><h3>场地</h3></td>
-            <td class="w200">
-              <h3>台球-预定（非家属）</h3>
-              <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
-              <p class="gray">商家：大连理工体育馆</p></td>
-            <td class="w100"><span>¥100.00</span></td>
-            <td class="w150 b-r-1"><div>¥100.00×1</div></td>
-          </tr>
-          <tr>
-            <td class="w150 b-r-1"><h3>场地</h3></td>
-            <td class="w200">
-              <h3>台球-预定（非家属）</h3>
-              <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
-              <p class="gray">商家：大连理工体育馆</p>
-            </td>
-            <td class="w100"><span>¥100.00</span></td>
-            <td class="w150 b-r-1"><div>¥100.00×1</div></td>
-          </tr>
-          <tr>
-            <td class="w150 b-r-1"><h3>场地</h3></td>
-            <td class="w200">
-              <h3>台球-预定（非家属）</h3>
-              <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
-              <p class="gray">商家：大连理工体育馆</p>
-            </td>
-            <td class="w100"><span>¥100.00</span></td>
-            <td class="w150 b-r-1">
-              <div>¥100.00×1</div>
-            </td>
-          </tr>
-        </tbody>
-      </table> -->
       <template>
-    <Table border :columns="columns7" :data="data6"></Table>
-</template>
+        <Table border :columns="columns7" :data="data6"></Table>
+      </template>
     </div>
   </div>
 </div>
@@ -114,6 +89,7 @@ export default {
   data() {
     return {
       timer: null,
+      myOrderInfo: {},
       columns7: [
         {
           title: '商品类型',
@@ -200,6 +176,8 @@ export default {
   created() {
     // let d = document.getElementById('canvas');
     // console.log(d);
+    this.myOrderInfo = this.$route.query;
+    console.log(this.myOrderInfo);
   },
   mounted() {
     let d = document.getElementById('canvas');
@@ -244,7 +222,7 @@ font-family:Microsoft YaHei;
         h4{
           font-size: 14px;
           line-height: 40px;
-          margin: 10px;
+          margin: 10px 0;
           }
         .order_state{
           display: flex;

@@ -96,6 +96,9 @@ export default {
           key: 'orderChildProductType',
           width: 200,
           align: 'center',
+          render: (h, params) => {
+            return h('div', {}, params.row.orderChildProductType);
+          }
         },
         {
           title: '商品信息',
@@ -106,12 +109,12 @@ export default {
             // return h('div', {}, str);
             return h('div', [
               h('h3', {
-              }, params.row.Name),
+              }, params.row.fieldType1.fieldTypeName),
               h('span', {
                 style: {
                   color: '#999',
                 }
-              }, strEndTime + params.row.EndTime),
+              }, strEndTime + params.row.fieldEndTime +'~'+ params.row.fieldEndTime),
               h('p', {
                 style: {
                   color: '#999',
@@ -124,21 +127,25 @@ export default {
         {
           title: '单价',
           align: 'center',
+          key: 'orderChildProductPrice',
           render: (h, params) => {
-            return h('div', {}, params.orderChildProductPrice);
+            return h('div', {}, params.row.orderChildProductPrice);
           }
         },
         {
           title: '数量',
           align: 'center',
           render: (h, params) => {
-            return h('div', {}, params.orderChildProductNum);
+            return h('div', {}, params.row.orderChildProductNum);
           }
         },
         {
           title: '金额',
           key: 'orderChildProductPrice',
           align: 'center',
+          render: (h, params) => {
+            return h('div', {}, params.row.orderChildProductPrice);
+          }
         },
       ],
       data6: [],
@@ -200,7 +207,7 @@ export default {
       }).then(res => {
         if (res.data.code === 200) {
           console.log(res.data);
-          this.data6 = res.data;
+          this.data6 = res.data.data;
         } else {
           this.$Message.warning(res.code);
         }

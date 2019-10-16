@@ -29,8 +29,8 @@
             </tr>
         </thead>
         <tbody id="201909275765a4d781">
-          <tr v-for="(item, index) in getsublist(item.orderMainId)">
-            <td class="w150 b-r-1"> <h3>场地{{item.name}}</h3></td>
+          <tr>
+            <td class="w150 b-r-1"> <h3>场地</h3></td>
             <td class="w200">
               <h3>台球-预定（非家属）</h3>
               <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
@@ -40,21 +40,21 @@
             <td class="w150 b-r-1">
               <div>¥100.00×1</div>
             </td>
-            <td class="w100 b-r-1" :rowspan="getsublist(item.orderMainId).length">
+            <td class="w100 b-r-1" rowspan="4">
               <div>¥0.00</div>
             </td>
-            <td class="w100 b-r-1" :rowspan="getsublist(item.orderMainId).length">
+            <td class="w100 b-r-1" rowspan="4">
               <div class="gray">未支付</div>
               <a data-name=" 大连理工体育馆 " data-status=" 未支付 " @click="toOrderDetails(item)">订单详情</a>
             </td>
-            <td class="w100 b-r-1" :rowspan="getsublist(item.orderMainId).length">
+            <td class="w100 b-r-1" rowspan="4">
               <div class="unpaid">
               <a onclick="pay_order(this)" data-set="201909275765a4d781" style="">立即付款</a>
               <a onclick="cancle_order(this)" data-set="201909275765a4d781" style="color:rgba(68,68,68,1);">取消订单</a>
               </div>
             </td>
           </tr>
-          <!-- <tr>
+          <tr>
             <td class="w150 b-r-1"><h3>场地</h3></td>
             <td class="w200">
               <h3>台球-预定（非家属）</h3>
@@ -62,8 +62,8 @@
               <p class="gray">商家：大连理工体育馆</p></td>
             <td class="w100"><span>¥100.00</span></td>
             <td class="w150 b-r-1"><div>¥100.00×1</div></td>
-          </tr> -->
-          <!-- <tr>
+          </tr>
+          <tr>
             <td class="w150 b-r-1"><h3>场地</h3></td>
             <td class="w200">
               <h3>台球-预定（非家属）</h3>
@@ -84,15 +84,16 @@
             <td class="w150 b-r-1">
               <div>¥100.00×1</div>
             </td>
-          </tr> -->
+          </tr>
         </tbody>
       </table>
     </li>
   </ul>
   <div class="pull-right" style="float:right;margin-top:20px;">
     <template>
-      <Page :total="1000" />
+      <Page :total="1000"  show-elevator />
     </template>
+    <div>aaaaa</div>
   </div>
 </div>
 </template>
@@ -106,9 +107,6 @@ export default {
       // ticketLists: [],
       // MockData: {},
       myOrderLists: [],
-      pageTotal: 0,
-      pageNum: 1,
-      pageSize: 10,
     };
   },
   created() {
@@ -135,14 +133,6 @@ export default {
       }).catch(error => {
         console.log(error);
       });
-    },
-    getsublist(id) {
-      // ajax
-      let sublist = [
-        {name: 'jjs'},
-        {name: 'jay'},
-      ]
-      return sublist || [];
     },
     toOrderDetails(item) {
       console.log(item);

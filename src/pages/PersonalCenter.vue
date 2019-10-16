@@ -44,29 +44,16 @@
 </div>
 </template>
 <script>
-import PersonalCenterNav from '@/components/PersonalCenterNav.vue';
-import { ticketLists } from '@/utils/mockdata';
 export default {
-  name: 'MyTicket',
-  components: { PersonalCenterNav },
+  name: 'personalCenter',
   data() {
     return {
-      ticketLists: [],
-      MockData: {},
     };
   },
   created() {
-    this.ticketLists = ticketLists;
-    console.log(this.ticketLists);
+
   },
   methods: {
-    toTicketDetails(item) {
-      console.log(item);
-      this.$router.push({
-        path: `MyTicket/${item.id}`,
-        query: item,
-      });
-    },
   },
 };
 </script>

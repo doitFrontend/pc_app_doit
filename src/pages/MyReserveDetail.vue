@@ -42,15 +42,16 @@ export default {
   mounted() {
     let d = document.getElementById('canvas');
     console.log(d);
+     this.qrcode(this.myTicketInfo.cardNo);
     this.timer = setInterval(() => {
-      this.qrcode();
+      this.qrcode(this.myTicketInfo.cardNo);
     }, 1000);
   },
   destroyed() {
     clearInterval(this.timer);
   },
   methods: {
-    qrcode() {
+    qrcode(cardNo) {
       let canvas = document.getElementById('canvas');
       QRCode.toCanvas(canvas, 'sample text' + Date(), function(error) {
         if (error) {

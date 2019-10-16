@@ -3,7 +3,7 @@
             <h2 id="org_name">我的卡</h2>
             <div>
               <Row>
-                <Col span="8" v-for="(item, i) in myCardForPortal" :key="i">
+                <Col span="8" v-for="(item, i) in myCardLists" :key="i">
                   <div class="ticket" @click="toCardDetails(item)">
                     <div>
                       <p><i class="ivu-icon ivu-icon-md-headset"></i>{{item.cardTypeName}}</p>
@@ -38,7 +38,7 @@ export default {
     return {
       // ticketLists: [],
       MockData: {},
-      myCardForPortal: [],
+      myCardLists: [],
     };
   },
   created() {
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     // 获取票卡所有的类别
-    getMyCardForPortal() {
+    getMyCardLists() {
       let data = {
         orgId: 'c4f67f3177d111e986f98cec4bb1848c',
         memberId: '2014011166',
@@ -58,7 +58,7 @@ export default {
         data: data,
       }).then(res => {
         if (res.data.code === 200) {
-          this.myCardForPortal = res.data.rows;
+          this.myCardLists = res.data.rows;
         } else {
           this.$Message.warning(res.code);
         }
@@ -75,7 +75,7 @@ export default {
     },
   },
   mounted() {
-    this.getMyCardForPortal(); // 获取票卡类别
+    this.getMyCardLists(); // 获取票卡类别
   },
 };
 </script>

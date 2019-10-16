@@ -1,19 +1,15 @@
 <template>
-  <div id="mapid"></div>
+  <div id="stage">
+  </div>
 </template>
 <script>
 export default {
-  mounted() {
-    this.createMap();
-  },
-  methods: {
-    createMap() {},
-  },
+  name: 'Stage',
 };
 </script>
 <style lang="scss" scoped>
-  #mapid {
-    width: 1000px;
-    height: 700px;
+  #stage {
+    width: 100%;
+    height: 100%;
   }
 </style>

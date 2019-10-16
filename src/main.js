@@ -12,16 +12,22 @@ import 'animate.css';
 import { hasPermission } from '@/utils/index';
 import axios from 'axios';
 import REGEXP from '@/utils/regExp';
+import BaiduMap from 'vue-baidu-map';
+import * as filters from './utils/filters';
 
 // element辅助
 import { Autocomplete } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './theme/element_index.scss';
+import './assets/iconfont/iconfont.css';
 Vue.use(Autocomplete);
 
 Vue.use(router);
 Vue.use(store);
 Vue.use(iView);
+Vue.use(BaiduMap, {
+  ak: 'MfTf0gej32MGmr5pSm7qwVjN1vufeRjT',
+});
 
 Vue.prototype.hasPermission = hasPermission;
 // 根据env获取路径
@@ -36,10 +42,20 @@ Vue.config.productionTip = false;
 
 Vue.prototype.REGEXP = REGEXP;
 
+// 遍历注册过滤器
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key]);
+});
+
+iView.LoadingBar.config({
+  color: '#5cb85c',
+  // failedColor: '#f0ad4e',
+  height: 8,
+});
+
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
   // to and from are both route objects. must call `next`.
-  console.log(to.fullPath);
   let notOpenUrl = ['/train', '/games', 'mall', '/community'];
   if (notOpenUrl.indexOf(to.fullPath) !== -1) {
     next({
@@ -48,26 +64,32 @@ router.beforeEach((to, from, next) => {
   }
   // 判断该路由是否需要登陆
   if (to.matched.some(res => res.meta.isLogin)) {
-    if (sessionStorage['username']) {
+    if (localStorage['username']) {
       next();
     } else {
-      next({
-        path: '/login',
-        query: {
-          redirect: to.fullPath,
-        },
-      });
+      setTimeout(() => {
+        iView.Message.warning({
+          content: '请先登录',
+          duration: 5,
+        });
+        next({
+          path: '/login',
+          query: {
+            redirect: to.fullPath,
+          },
+        });
+      }, 0);
     };
   } else {
     next();
   };
   // 判断是否需要选择城市
-  if (localStorage['currentCity']) {
-    next();
-  } else {
+  if (!localStorage['currentCity'] || localStorage['currentCity'] === 'undefined') {
     next({
       name: 'City'
     });
+  } else {
+    next();
   }
 });
 

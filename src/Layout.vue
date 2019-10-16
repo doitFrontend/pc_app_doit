@@ -19,22 +19,28 @@
             <div v-else @mouseleave="handleMouseleave">
               <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
                 <div :key="0" @mouseenter="handleMouseenter">欢迎你:{{isSignIn}}</div>
-                <div v-show="!isNone" :key="1">个人中心</div>
+                <div v-show="!isNone" :key="1" @click="toPersonalCenter">个人中心</div>
                 <div v-show="!isNone" :key="2" @click="signOut">退出登录</div>
               </transition-group>
             </div>
           </div>
+        </div>
+        <div class="trial">
+          <Button type="default" ghost @click="toTrial">免费试用</Button>
         </div>
       </div>
     </div>
     <div class="nav_container" :class="{ 'nav_fixed': is_nav_fixed }">
       <div class="nav">
           <router-link tag="div" to="/home">首页</router-link>
-          <router-link tag="div" to="/gym">票务</router-link>
+          <router-link tag="div" to="/bookTicket">票务</router-link>
+          <router-link tag="div" to="/bookCard">卡务</router-link>
+          <router-link tag="div" to="/bookField">场地</router-link>
           <router-link tag="div" to="/train">培训</router-link>
           <router-link tag="div" to="/games">赛事</router-link>
-          <router-link tag="div" to="/mall">商城</router-link>
-          <router-link tag="div" to="/community">社区</router-link>
+          <!-- <router-link tag="div" to="/mall">商城</router-link> -->
+          <!-- <router-link tag="div" to="/community">社区</router-link> -->
+          <router-link tag="div" to="/PersonalCenter">个人</router-link>
           <input type="text" /><Icon size="24" type="ios-search-outline" />
       </div>
     </div>
@@ -60,7 +66,7 @@
       <div class="inner">
         <h2>联系我们</h2>
         <p>地址：南通市崇川区世伦路世濠花园商铺101号3层</p>
-        <p>400-081-0019</p>
+        <p>联系电话：400-081-0019</p>
       </div>
       <div class="inner">
         <img src="./assets/erweima.jpg" alt="" srcset="">
@@ -72,6 +78,7 @@
 <script>
 import Login from '@/pages/Login';
 import BackToTop from '@/components/BackToTop';
+import { TO_TRIAL_URL } from './utils/urlManage';
 export default {
   name: 'Layout',
   components: { Login, BackToTop },
@@ -85,7 +92,7 @@ export default {
   },
   computed: {
     isSignIn: function() {
-      return sessionStorage['username'];
+      return localStorage['username'];
     },
     location: {
       get: function() {
@@ -97,7 +104,6 @@ export default {
     },
   },
   mounted() {
-    console.log(location);
     window.addEventListener('scroll', this.fixHeader);
   },
   destroyed() {
@@ -124,8 +130,14 @@ export default {
       this.isNone = true;
     },
     signOut() {
-      sessionStorage.clear(); // 清除数据
+      localStorage.removeItem('username'); // 清除当前登陆者的数据
       this.$router.go(0); // 刷新页面 TODO: 有没有局部刷新的方式
+    },
+    toPersonalCenter() {
+      this.$router.push('/PersonalCenter');
+    },
+    toTrial() { // 跳转3.0试用
+      window.open(TO_TRIAL_URL, '_blank');
     },
   },
   beforeRouteEnter(to, from, next) { // 组件路由监听 通过vm进行访问
@@ -158,7 +170,7 @@ $g_border_radius: 20px;
     display: none;
   }
   min-width: 1280px;
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  font-family: "SourceHanSansCn Normal";
   .header {
     width: 100%;
     height: 6em;
@@ -210,13 +222,26 @@ $g_border_radius: 20px;
           z-index: 100;
           & > div > span > div {
             &:nth-child(n+2) {
-              background: $g_default_color;
+              background: #fff;
+              color: $g_default_color;
               border-radius: 8px;
+              height: 32px;
+              line-height: 32px;
               &:hover {
-                background: #fff;
-                color: $g_default_color;
+                color: #fff;
+                background: #999;
               }
             }
+          }
+        }
+      }
+      .trial {
+        margin-top: 2em;
+        .ivu-btn-default {
+          color: #fff;
+          background: $g_default_color;
+          &:hover {
+            border-color: #fff;
           }
         }
       }
@@ -228,7 +253,6 @@ $g_border_radius: 20px;
     .nav {
       height: 6em;
       margin: auto;
-      // margin-top: 6em;
       width: $g_width;
       position: relative;
       div {
@@ -239,7 +263,7 @@ $g_border_radius: 20px;
         font-weight: 500;
         font-size: 18px;
         margin: 1em auto;
-        padding: 6px 16px 0 18px;
+        padding: 4px 16px 0 18px;
         border-radius: $g_border_radius;
         cursor: pointer;
         &:hover {
@@ -278,16 +302,13 @@ $g_border_radius: 20px;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 20;
+    z-index: 200;
     background: $g_background;
     box-shadow: 0 5px 14px #ccc;
   }
   .footer {
-    // position: absolute;
-    // bottom: 0;
-    // left: calc( (100% - 1000px)/2 );
     width: $g_width;
-    padding: 6em 1em;
+    padding: 3em 1em 1em 1em;
     margin: auto;
     display: flex;
     align-items: flex-start;

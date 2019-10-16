@@ -26,12 +26,13 @@ export default {
   .backTop {
     position: fixed;
     right: 2em;
-    bottom: 2em;
+    bottom: 60px;
     font-size: 12px; // 用em单位必须标明font-size大小
     width: 3em;
     height: 3em;
     background: #515a6e;
     border-radius: 5px;
+    z-index: 200;
     display: flex;
     align-items: center;
     justify-content: center;

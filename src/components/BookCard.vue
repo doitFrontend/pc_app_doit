@@ -2,12 +2,12 @@
   <div id="bookCard">
     <div class="container">
       <div class="inner">
-        <Row :gutter="16">
-          <Col :sm="4" :md="4" :lg="4">
-            <div class="label">卡类别：</div>
+        <Row>
+          <Col :sm="3" :md="3" :lg="3"  class="leibie">
+            <div class="label">卡类别 <span>|</span></div>
           </Col>
-          <Col :sm="18" :md="18" :lg="18">
-            <RadioGroup v-model="default_button" type="button">
+          <Col :sm="21" :md="21" :lg="21"  class="leibie2">
+            <RadioGroup v-model="default_button" type="button" @on-change="changeCardType">
               <Radio label="所有"></Radio>
               <Radio v-for="(item, i) in ticketOrCardTypeList" :key="i" :label="item"></Radio>
             </RadioGroup>
@@ -16,58 +16,64 @@
       </div>
       <Divider />
       <div class="inner">
-        <Row >
-          <Col v-for="(item, index) in MockData.cardLists" :key="index" :sm="8" :md="8" :lg="8" >
-            <div class="item_card">
-              <div class="card">
-                <div class="piece">
-                  <div>
-                    <Icon color="#fff" size="36" type="md-headset" />
-                    <div>{{item.title}}</div>
-                  </div>
-                </div>
-                <div class="piece">
-                  <div>
-                    ￥{{item.price}}<br>
-                    <div style="font-size: 16px;">
-                      有效期至：{{item.time}}
+        <div class="" style="margin:0 20px">
+          <Row :gutter="16">
+            <!-- TODO: 缺省页 -->
+            <div v-if="!tempCardLists.length">暂无此类型卡</div>
+            <Col v-else v-for="item in tempCardLists" :key="item.sportId" :sm="8" :md="8" :lg="8">
+              <div class="item_ticket">
+                <div class="ticket">
+                  <div class="piece">
+                    <div>
+                      <!-- <Icon color="#fff" size="28" type="md-headset" /> -->
+                      <Icon color="#fff" size="28" :custom="`iconfont ${item.icon.split('#')[1]}`" />
+                      <span>{{item.typeName}}</span>
+                    </div>
+                    <div  class="ticket-dtail">
+                      <b style="font-size:18px;">￥</b>{{item.price | toFixed(2)}}<br>
+                      <div style="font-size: 16px;padding-top:10px">
+                        {{item.frequency1}}卡
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div class="price">
+                  <div calss="price2">￥{{item.price | toFixed(2)}}</div>
+                  <button-groups @countSum="countPriz" :item="item"></button-groups>
+                </div>
               </div>
-              <div class="price">
-                <div calss="price2">{{item.price}}</div>
-                <button-groups @countSum="countPriz" :item="item"></button-groups>
-              </div>
-            </div>
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
 import ButtonGroups from './ButtonGroups';
-import Mock from 'mockjs';
 export default {
-  name: 'BookCard',
+  name: 'bookCard',
   components: {
     ButtonGroups,
+  },
+  props: {
+    orgId: {
+      type: String,
+    }
   },
   data() {
     return {
       MockData: {},
       ticketOrCardTypeList: [],
       default_button: '所有',
+      tempCardLists: [],
     };
   },
   methods: {
     // 获取票卡所有的类别
     getCardOrTicketTypes() {
       let data = {
-        operator_id: 'c4fb984777d111e986f98cec4bb1848c',
-        operator_role: 'admin',
-        orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+        orgId: this.orgId,
         type: 'kw',
       };
       this.$axios({
@@ -84,36 +90,50 @@ export default {
         console.log(error);
       });
     },
+    // 切换卡类别
+    changeCardType(label) {
+      if (label !== '所有') {
+        this.tempCardLists = this.cardLists.filter(item => JSON.parse(item.dictionaries)[18] === label);
+      } else {
+        this.tempCardLists = this.cardLists;
+      }
+    },
     countPriz({ item, sign }) {
       if (sign === 'ADD') {
-        this.setToCart(item); // 把item存入shoppingCartList
+        this.setToCart(item);
       } else {
         this.delFromCart(item);
       }
     },
     setToCart(item) {
-      console.log(item);
-      console.log(this.$store.state.shoppingCartList);
+      this.$store.commit('addCard', item);
     },
-    delFromCart(item) {},
+    delFromCart(item) {
+      this.$store.commit('delCard', item);
+    },
   },
-  created() {
-    this.MockData = Mock.mock({
-      'cardLists|6': [{
-        'id|+1': 1,
-        'icon': '#icon-youyong',
-        'title|1': ['游泳季卡', '器械健身月卡', '羽毛球年卡', '篮球年卡'],
-        'price|1': [120, 320, 200, 400, 280],
-        'time|1': ['2019-11-20', '2019-11-23', '2019-11-29'],
-        'num': 0,
-      }],
-    });
-    this.$store.state.shoppingCartList = [...this.MockData.cardLists];
+  computed: {
+    cardLists() {
+      return this.$store.state.cardList;
+    }
+  },
+  mounted() {
+    this.$store.dispatch('getCardList');
     this.getCardOrTicketTypes(); // 获取票卡类别
+    // 数据依赖于computed里的数据，computed数据来源于store，
+    // 没有延迟的时候就是默认值，不是预期效果 TODO:
+    setTimeout(() => {
+      this.tempCardLists = this.cardLists;
+    }, 500);
   },
 };
 </script>
 <style lang="scss" scoped>
+  @mixin div_commen {
+    padding: 0.5em 1em 0.5em 1em;
+    margin: 1em 1em 0 0;
+    cursor: pointer;
+  }
   #bookCard {
     .container {
       .inner {
@@ -121,40 +141,69 @@ export default {
         &:nth-child(1) {
           .label {
             text-align: center;
+            font-size: 16px;
+            span{padding-left: 10px;padding-right: 15px}
           }
         }
         &:nth-child(3) {
           min-height: 500px;
-          .item_card {
+          .item_ticket {
             width: 100%;
             height: inherit;
             padding: 2em;
-            margin-bottom: 1em;
+            margin-bottom: 30px;
             &:hover {
               background: #e8eaec;
             }
-            .card {
-              width: 100%;
-              height: 140px;
-              background: $g_default_color;
+            .ticket {
+              width: 240px;
+              height: 280px;
+              margin: auto;
               display: flex;
-              border-radius: 10px;
               & > div.piece{ // 票 左右两块
-                width: 50%;
+                width: 100%;
+                height: inherit;
+                background: url(../assets/card.png) no-repeat;
                 position: relative;
+                & > div.spot {
+                  width: 16px;
+                  height: 16px;
+                  background: #fff;
+                  border-radius: 50%;
+                  position: absolute;
+                  top: calc( 50% - (16px/2) );
+                }
+                .spot_left {
+                  left: -8px;
+                }
+                .spot_right {
+                  right: -8px;
+                }
                 & > div:nth-child(1) { // 票内容样式
-                  width: 100%;
-                  height: inherit;
-                  padding: 1.2em;
-                  text-align: center;
-                  font-size: 20px;
+                  width: 100%;text-align: center;
+                  height: 40px;
+                  line-height: 40px;
+                  margin-top: 20px;
+                  font-size: 24px;font-weight: 200;
                   color: #fff;
+                }
+                .ticket-dtail {
+                width:80%;margin:auto;
+                background: #fff;
+                height:175px;
+                border-radius: 5px;
+                margin-top:15px;
+                color:#333;
+                font-size:40px;
+                padding-top:30px;
+                text-align: center;
+                vertical-align: midd
                 }
               }
             }
-            .price {
-              width: 100%;
-              margin-top: 10px;
+              .price {
+              width: 90%;
+              margin-top: 30px;
               display: flex;
               position: relative;
               .ivu-btn-group {
@@ -164,8 +213,10 @@ export default {
               }
               & > div:nth-child(1) {
                 width: 250px;
-                font-size: 14px;
-                color: #dcdee2;
+                font-size: 18px;
+                color: #ed4014;
+                padding-left: 10px;
+                line-height: 32px;
               }
             }
           }

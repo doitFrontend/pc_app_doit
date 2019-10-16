@@ -41,3 +41,10 @@ yarn run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## 分支管理
+```bash
+# 分支差异管理
+# 查看master分支比dev分支多的提交
+git log dev..master
+```

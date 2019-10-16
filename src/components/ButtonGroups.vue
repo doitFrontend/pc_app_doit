@@ -1,15 +1,15 @@
 <template>
   <ButtonGroup shape="circle">
-    <Button class="btn-remove" style="font-weight: 700" v-show="item.num > 0" @click="minusNum(item)"><Icon type="md-remove" size="24" color="#bebebe" style="position: relative;top:-3px" /></Button>
-    <Button v-show="item.num > 0" type="primary">{{item.num}}</Button>
+    <Button v-show="isShow" class="btn-remove" style="font-weight: 700" @click="minusNum(item)"><Icon type="md-remove" size="24" color="#bebebe" style="position: relative;top:-3px" /></Button>
+    <Button v-show="isShow" type="primary">{{item.num}}</Button>
     <transition
       @before-enter="beforeEnter"
       @enter="enter"
       @after-enter="afterEnter">
       <div v-show="isBallShow" class="ball"></div>
     </transition>
-    <Button v-if="item.num > 0" class="addnum" @click="addNum(item)"><Icon type="md-add" size="24" color="#fff"  style="position: relative;top:-3px"  /></Button>
-    <Button v-else @click="addNum(item)" style="width:120px;font-size:18px;border-radius: 32px;color: #fff;background: #f76900;margin-right:5px">加入购物车</Button>
+    <Button v-if="isShow" class="addnum" @click="addNum(item)"><Icon type="md-add" size="24" color="#fff"  style="position: relative;top:-3px"/></Button>
+    <Button v-else @click="addNum(item, 'true')" style="width:120px;font-size:18px;border-radius: 32px;color: #fff;background: #f76900;margin-right:5px">加入购物车</Button>
   </ButtonGroup>
 </template>
 <script>
@@ -23,11 +23,13 @@ export default {
   data() {
     return {
       isBallShow: false,
+      isShow: false,
     };
   },
   computed: {},
   methods: {
-    addNum(item) {
+    addNum(item, b) {
+      b && (this.isShow = true);
       this.isBallShow = true;
       this.$emit('countSum', { item, sign: 'ADD' });
     },
@@ -35,6 +37,7 @@ export default {
       if (item.num === 0) { // 逻辑里面进一步判断是否可以继续减
         return;
       }
+      (item.num === 1) && (this.isShow = false);
       this.$emit('countSum', { item, sign: 'MINUS' });
     },
     // 点击动画效果

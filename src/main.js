@@ -44,8 +44,6 @@ Vue.prototype.REGEXP = REGEXP;
 
 // 遍历注册过滤器
 Object.keys(filters).forEach(key => {
-  console.log(key);
-  console.log(filters[key]);
   Vue.filter(key, filters[key]);
 });
 

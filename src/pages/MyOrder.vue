@@ -21,15 +21,15 @@
           <tr>
             <th colspan="8">
               <dl class="clearfix">
-                <dt class="pull-left">订单号：<span>{{item.orderMainId }}</span></dt>
-                <dd class="pull-left">下单日期：<span>{{item.createTime }}</span>
+                <dt class="pull-left">订单号：<span>{{item.orderMainId}}</span></dt>
+                <dd class="pull-left">下单日期：<span>{{item.createTime}}</span>
                 </dd>
               </dl>
             </th>
             </tr>
         </thead>
         <tbody id="201909275765a4d781">
-          <tr v-for="(item2, j) in getsublist(item.orderMainId)" :key="j">
+          <tr v-for="(item2, j) in sublist[i]" :key="j">
             <td class="w150 b-r-1">
               <h3 v-if="item2.orderChildProductType=='ticket'">票</h3>
               <h3 v-if="item2.orderChildProductType=='card'">卡</h3>
@@ -45,14 +45,14 @@
             <td class="w150 b-r-1">
               <div>¥{{item2.orderChildProductNum}}×1</div>
             </td>
-            <td class="w100 b-r-1"  v-if="index = 1" :rowspan="getsublist(item.orderMainId).length" >
+            <td class="w100 b-r-1"  v-if="j === 0" :rowspan="sublist[i].length" >
               <div>¥{{item.orderMainSumHaspay}}</div>
             </td>
-            <td class="w100 b-r-1"  v-if="index = 1" :rowspan="getsublist(item.orderMainId).length">
+            <td class="w100 b-r-1"  v-if="j === 0" :rowspan="sublist[i].length">
               <div class="gray">未支付</div>
               <a  @click="toOrderDetails(item)">订单详情</a>
             </td>
-            <td class="w100 b-r-1"  v-if="index = 1" :rowspan="getsublist(item.orderMainId).length">
+            <td class="w100 b-r-1"  v-if="j === 0" :rowspan="sublist[i].length">
               <div class="unpaid">
               <a onclick="pay_order(this)" style="">立即付款</a>
               <a onclick="cancle_order(this)" style="color:rgba(68,68,68,1);">取消订单</a>
@@ -111,6 +111,7 @@ export default {
       // ticketLists: [],
       // MockData: {},
       myOrderLists: [],
+      sublist: [],
       pageTotal: 0,
       pageNum: 1,
       pageSize: 10,
@@ -134,20 +135,20 @@ export default {
       }).then(res => {
         if (res.data.code === 200) {
           this.myOrderLists = res.data.rows;
+          return this.myOrderLists;
         } else {
           this.$Message.warning(res.code);
         }
+      }).then(myOrderLists => {
+        myOrderLists.forEach(item => {
+          console.log(item.orderMainId);
+          this.getsublist(item.orderMainId);
+        });
       }).catch(error => {
         console.log(error);
       });
     },
     getsublist(id) {
-      // ajax
-      // let sublist = [
-      //   {name: 'jjs'},
-      //   {name: 'jay'},
-      // ];
-      let sublist = [];
       let data2 = {
         orgId: 'c4f67f3177d111e986f98cec4bb1848c',
         operator_id: '2014011166',
@@ -159,15 +160,14 @@ export default {
         data: data2,
       }).then(res => {
         if (res.data.code === 200) {
-          sublist = res.data.data;
-          console.log(sublist);
+          this.sublist.push(res.data.data);
+          console.log(this.sublist);
         } else {
           // this.$Message.warning(res.code);
         }
       }).catch(error => {
         console.log(error);
       });
-      return sublist || [];
     },
     toOrderDetails(item) {
       console.log(item);

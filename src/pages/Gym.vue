@@ -1,47 +1,51 @@
 <template>
   <div id="gym">
     <div class="showImg"></div>
-    <div class="container">
-      <div class="inner">
-        <Row>
-          <Col :sm="3" :md="3" :lg="3"  class="leibie">
-            <div class="label">所在区域 <span>|</span></div>
-          </Col>
-          <Col :sm="21" :md="21" :lg="21"  class="leibie2">
-            <RadioGroup v-model="default_button" type="button">
-              <Radio v-for="(item, index) in fData" :key="index" :label="item.label"></Radio>
-            </RadioGroup>
-          </Col>
-        </Row>
+    <div class="outcontainer">
+      <div class="left">
+        <div class="container">
+          <div class="inner">
+            <Row>
+              <Col :sm="4" :md="4" :lg="4"  class="leibie">
+                <div class="label">所在区域 <span>|</span></div>
+              </Col>
+              <Col :sm="20" :md="20" :lg="20">
+                <RadioGroup v-model="default_button" type="button">
+                  <Radio v-for="(item, index) in fData" :key="index" :label="item.label"></Radio>
+                </RadioGroup>
+              </Col>
+            </Row>
+          </div>
+        </div>
+        <div class="container">
+          <div class="inner">
+            <Row v-for="(item, i) in goodLists" :key="i">
+              <Col span="24">
+                <goods-item-new @goodItemDetails="toGoodDetails(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.orgImages" :baseRate="10">
+                  <div class="text" slot="title">{{item.orgName}}</div>
+                  <div class="text" slot="rate">201 条评价</div>
+                  <div class="text" slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</div>
+                  <div class="icons">
+                    <div class="item" v-for="(item, index) in iconList" :key="index">
+                      <Button shape="circle" :icon="item.icon"></Button>
+                      <div>{{item.text}}</div>
+                    </div>
+                  </div>
+                </goods-item-new>
+              </Col>
+            </Row>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="container">
-      <div class="inner">
-        <Row>
-          <Col :sm="18" :md="19" :lg="19">
-            <Row v-for="(item, i) in goodLists" :key="i">
-              <Col span="24">
-                <goods-item @goodItemDetails="toGoodDetails(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.orgImages" :baseRate="10">
-                  <span slot="title">{{item.orgName}}</span>
-                  <span slot="rate">201 条评价</span>
-                  <span slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</span>
-                  <span slot="price">人均消费￥ 100 起</span>
-                </goods-item>
-              </Col>
-            </Row>
-          </Col>
-          <Col :sm="6" :md="5" :lg="5">
-            <h3 style="marginLeft: 1em;margin-top:5px;">猜你喜欢</h3>
-            <Row v-for="(item, i) in goodLists" :key="i">
-              <Col span="24">
-                <goods-item :imgSrc="item.orgImages" :i_height="100" :baseRate="10">
-                  <span slot="title">{{item.orgName}}</span>
-                  <span slot="rate">201 条评价</span>
-                  <span slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</span>
-                  <span slot="price">人均消费￥ 100 起</span>
-                </goods-item>
-              </Col>
-            </Row>
+      <div class="right">
+        <h3 style="marginLeft: 1em;margin-top:5px;">猜你喜欢</h3>
+        <Row v-for="(item, i) in goodLists" :key="i">
+          <Col span="24">
+            <goods-item :imgSrc="item.orgImages" :i_height="100" :baseRate="10">
+              <span slot="title">{{item.orgName}}</span>
+              <span slot="rate">201 条评价</span>
+              <span slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</span>
+            </goods-item>
           </Col>
         </Row>
       </div>
@@ -49,16 +53,21 @@
   </div>
 </template>
 <script>
+import GoodsItemNew from '@/components/GoodsItemNew.vue';
 import GoodsItem from '@/components/GoodsItem.vue';
 import cityData from '../utils/provinceCity';
 export default {
   name: 'Gym',
-  components: { GoodsItem },
+  components: { GoodsItemNew, GoodsItem },
   data() {
     return {
       goodLists: [],
-      i_width: 240,
+      i_width: 220,
       fData: null,
+      iconList: [
+        { text: '灯光', icon: 'ios-arrow-down' },
+        { text: '休息室', icon: 'ios-arrow-down' },
+      ],
     };
   },
   created() {
@@ -131,30 +140,65 @@ export default {
     background-size: cover;
     background-position-y: -20px;
   }
-  .container {
-    padding-bottom: 2em;
+  .outcontainer {
+    width: $g_width;
     background: $g_background;
-    .inner {
-      height: 100%;
-      width: $g_width;
-      margin: auto;
-      padding: 15px;
-      background: #fff;
-      border-radius: 4px;
+    border-radius: 4px;
+    margin: 2em auto;
+    display: flex;
+    .left {
+      width: 900px;
+      .container {
+        .inner { // 搜索框
+          height: 100%;
+          margin: auto;
+          padding: 15px;
+          background: #fff;
+          border-radius: 4px;
           &:nth-child(1) {
-          .label {
-            text-align: center;
-            font-size: 16px;
-            span{padding-left: 10px;padding-right: 15px}
+            .label {
+              text-align: center;
+              font-size: 16px;
+              span{
+                padding: 0 15px;
+              }
+            }
           }
         }
-        .leibie2{left: -40px;}
-      h2 {
-        padding-left: 0.5em;
+        &:nth-child(2) { // 下列表
+          padding-top: 2em;
+          .text {
+            // padding: 1em 0;
+          }
+          .icons {
+            height: 52px;
+            display: flex;
+            justify-content: flex-start;
+            text-align: center;
+            align-items: flex-end;
+            .item {
+              width: 48px;
+              height: inherit;
+              margin-right: 10px;
+              padding: 4px;
+            }
+          }
+        }
       }
     }
-    &:nth-child(2) {
-      padding-top: 2em;
+    .right { // 右侧列表
+      width: 360px;
+      margin-left: 2em;
+      background: #fff;
+      padding: 1em;
+      h3 {
+        padding: 8px 0 8px 1em;
+        margin: 0 !important;
+        background: #EDF1F2;
+      }
+      .ivu-row {
+        margin-top: 1em;
+      }
     }
   }
 }

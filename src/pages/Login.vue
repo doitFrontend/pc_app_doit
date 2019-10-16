@@ -34,6 +34,10 @@
             </div>
           </div>
         </div>
+        <Spin size="large" fix v-if="spinShow">
+          <Icon type="ios-loading" size=36 class="demo-spin-icon-load"></Icon>
+          <div>登陆中...</div>
+        </Spin>
     </div>
 </template>
 <script>
@@ -54,6 +58,7 @@ export default {
         borderBottom: '1px solid #00a1e9',
       },
       isFloat: false,
+      spinShow: false,
     };
   },
   computed: {
@@ -90,6 +95,7 @@ export default {
       this.text = `已发送(${this.default_scondes}s)`;
     },
     signIn() {
+      this.spinShow = true;
       let isLegal = this.checkData();
       if (isLegal) {
         this.login();
@@ -122,6 +128,7 @@ export default {
           return Qs.stringify(data);
         }], // 重要
       }).then(res => {
+        this.spinShow = false;
         if (res.data.code === 200) {
           this.moreTodo(res);
         } else {

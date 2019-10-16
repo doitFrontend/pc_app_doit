@@ -43,10 +43,6 @@ export default new Router({
       component: Stage,
     },
     {
-      path: '/stage',
-      component: Stage,
-    },
-    {
       path: '',
       component: Layout,
       children: [

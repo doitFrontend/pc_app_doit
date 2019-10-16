@@ -52,64 +52,100 @@ export default {
       myCardCredentialUseFlow: [],
       columns7: [
         {
-          title: '名称',
-          key: 'name',
-          width: 150,
-          align: 'center',
-        },
-        {
-          title: '名称1',
-          // key: 'name',
-          width: 150,
-          align: 'center',
-          render: (h, params) => {
-            return h('div', {}, params.row.obj.name);
-          }
-        },
-        {
           title: '项目名称',
-          key: 'orderChildProductType',
+          key: 'project',
+          width: 100,
+          align: 'center',
+        },
+        {
+          title: '卡号',
+          key: 'cardNo',
           width: 150,
           align: 'center',
         },
         {
           title: '入场时间',
-          key: 'orderChildProductPrice',
+          // key: 'name',
           width: 150,
+          align: 'center',
+          render: (h, params) => {
+            return h('div', {}, params.row.obj.intTime);
+          }
         },
         {
           title: '出场时间',
-          key: 'orderChildProductPrice',
+          width: 150,
           align: 'center',
+          render: (h, params) => {
+            return h('div', {}, params.row.obj.outTime);
+          }
         },
         {
           title: '历时时长',
           align: 'center',
-          key: 'orderChildProductNum',
+          render: (h, params) => {
+            return h('div', {}, params.row.obj.timeDiff);
+          }
         },
         {
           title: '进场闸机编号',
-          key: 'orderChildProductPrice',
           align: 'center',
+          render: (h, params) => {
+            return h('div', {}, params.row.obj.inWaitno);
+          }
         },
         {
           title: '出场闸机编号',
-          key: 'orderChildProductPrice',
           align: 'center',
+          render: (h, params) => {
+            return h('div', {}, params.row.obj.outWaitno);
+          }
         },
         {
           title: '扣除额度',
-          key: 'orderChildProductPrice',
           align: 'center',
+          render: (h, params) => {
+            return h('div', {}, params.row.obj.subMoney);
+          }
         },
       ],
       data6: [
         {
-          name: 'jay',
+          project: '游泳',
+          cardNo: '1111',
           obj: {
-            name: 'jj',
+            intTime: '2019-09-27 18:45:00',
+            outTime: '2019-09-27 20:45:00',
+            timeDiff: '2小时',
+            inWaitno: '1111111',
+            outWaitno: '1111222',
+            subMoney: '5元',
           }
-        }
+        },
+        {
+          project: '篮球',
+          cardNo: '1111',
+          obj: {
+            intTime: '2019-09-27 18:45:00',
+            outTime: '2019-09-27 20:45:00',
+            timeDiff: '2小时',
+            inWaitno: '1111111',
+            outWaitno: '1111222',
+            subMoney: '5元',
+          }
+        },
+        {
+          project: '游泳',
+          cardNo: '1111',
+          obj: {
+            intTime: '2019-09-27 18:45:00',
+            outTime: '2019-09-27 20:45:00',
+            timeDiff: '2小时',
+            inWaitno: '1111111',
+            outWaitno: '1111222',
+            subMoney: '5元',
+          }
+        },
       ],
     };
   },
@@ -120,6 +156,7 @@ export default {
   mounted() {
     let d = document.getElementById('canvas');
     console.log(d);
+    this.qrcode(this.myCardInfo.cardNo);
     this.timer = setInterval(() => {
       this.qrcode(this.myCardInfo.cardNo);
     }, 1000 * 60);
@@ -220,6 +257,7 @@ word-break:break-all;
               color: #999;
               text-align: center;
             }
+            .ivu-table-cell{padding-left: 0;padding-right: 0;}
           }
         }
       }

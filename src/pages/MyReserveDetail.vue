@@ -45,7 +45,7 @@ export default {
     this.qrcode(this.myTicketInfo.cardNo);
     this.timer = setInterval(() => {
       this.qrcode(this.myTicketInfo.cardNo);
-    }, 1000);
+    }, 1000 * 60);
   },
   destroyed() {
     clearInterval(this.timer);

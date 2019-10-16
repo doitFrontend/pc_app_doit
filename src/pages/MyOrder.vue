@@ -37,8 +37,20 @@
               <h3 v-if="item2.orderChildProductType=='course'">课程</h3>
             </td>
             <td class="w200">
-              <h3>台球-预定（非家属）</h3>
-              <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
+              <div  v-if="item2.fieldType1">
+                <h3  v-if="item2.fieldType1">{{item2.fieldType1.fieldTypeName}}</h3>
+                <p class="gray"  v-if="item2.fieldType1">时段：{{item2.fieldStartTime}}~ {{item2.fieldEndTime}}</p>
+              </div>
+              <div v-if="item2.cardType1">
+                <h3>{{item2.cardType1.cardTypeName}}</h3>
+                <p class="gray" v-if="JSON.parse(item2.cardType1.rcode).有效期">有效期：{{JSON.parse(item2.cardType1.rcode).有效期 }}</p>
+                <P v-else>有效期：长期有效</P>
+              </div>
+              <div v-if="item2.ticketType1">
+                <h3>{{item2.ticketType1.ticketTypeName}}</h3>
+                <p class="gray"  v-if="JSON.parse(item2.ticketType1.rcode).有效期">有效期：{{JSON.parse(item2.ticketType1.rcode).有效期 }}</p>
+                <P v-else>有效期：1天</P>
+              </div>
               <p class="gray">商家：大连理工体育馆</p>
             </td>
             <td class="w100"><span>¥{{item2.orderChildProductPrice}}</span></td>
@@ -49,47 +61,24 @@
               <div>¥{{item.orderMainSumHaspay}}</div>
             </td>
             <td class="w100 b-r-1"  v-if="j === 0" :rowspan="sublist[i].length">
-              <div class="gray">未支付</div>
-              <a  @click="toOrderDetails(item)">订单详情</a>
+              <div class="gray" v-if="item.orderMainPayStatus=='SUCCESS'">已付</div>
+              <div class="gray" v-if="item.orderMainPayStatus=='REFUND'">已退</div>
+              <div class="gray" v-if="item.orderMainPayStatus=='PARTREFUND'">部分已退</div>
+              <div class="gray" v-if="item.orderMainPayStatus=='NOTPAY'">未支付</div>
+              <div class="gray" v-if="item.orderMainPayStatus=='CLOSED'">已关闭</div>
+              <div class="gray" v-if="item.orderMainPayStatus=='USERPAYING'">支付中</div>
+              <div class="gray" v-if="item.orderMainPayStatus=='REVOKED'">已撤销</div>
+              <div class="gray" v-if="item.orderMainPayStatus=='NOPAY'">未支付支付超时</div>
+              <div class="gray" v-if="item.orderMainPayStatus=='cancel'">取消支付</div>
+              <a  @click="toOrderDetails(item)" >订单详情</a>
             </td>
             <td class="w100 b-r-1"  v-if="j === 0" :rowspan="sublist[i].length">
               <div class="unpaid">
-              <a onclick="pay_order(this)" style="">立即付款</a>
-              <a onclick="cancle_order(this)" style="color:rgba(68,68,68,1);">取消订单</a>
+              <a onclick="pay_order(this)" v-if="item.orderMainPayStatus=='NOTPAY'" class="unpaid-a">立即付款</a>
+              <a  @click="toCancleOrder(item.orderMainId)" style="color:rgba(68,68,68,1);">取消订单</a>
               </div>
             </td>
           </tr>
-          <!-- <tr>
-            <td class="w150 b-r-1"><h3>场地</h3></td>
-            <td class="w200">
-              <h3>台球-预定（非家属）</h3>
-              <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
-              <p class="gray">商家：大连理工体育馆</p></td>
-            <td class="w100"><span>¥100.00</span></td>
-            <td class="w150 b-r-1"><div>¥100.00×1</div></td>
-          </tr> -->
-          <!-- <tr>
-            <td class="w150 b-r-1"><h3>场地</h3></td>
-            <td class="w200">
-              <h3>台球-预定（非家属）</h3>
-              <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
-              <p class="gray">商家：大连理工体育馆</p>
-            </td>
-            <td class="w100"><span>¥100.00</span></td>
-            <td class="w150 b-r-1"><div>¥100.00×1</div></td>
-          </tr>
-          <tr>
-            <td class="w150 b-r-1"><h3>场地</h3></td>
-            <td class="w200">
-              <h3>台球-预定（非家属）</h3>
-              <p class="gray">时段：2019-09-27 17:00:00~ 2019-09-27 18:00:00</p>
-              <p class="gray">商家：大连理工体育馆</p>
-            </td>
-            <td class="w100"><span>¥100.00</span></td>
-            <td class="w150 b-r-1">
-              <div>¥100.00×1</div>
-            </td>
-          </tr> -->
         </tbody>
       </table>
     </li>
@@ -176,6 +165,24 @@ export default {
         query: item,
       });
     },
+    toCancleOrder(orderMainId) {
+      let data3 = {
+        orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+        orderMainId: orderMainId,
+      };
+      this.$axios({
+        method: 'POST',
+        url: 'cancleOrderMain.do',
+        data: data3,
+      }).then(res => {
+        if (res.data.code === 200) {
+        } else {
+          // this.$Message.warning(res.code);
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+    },
   },
   mounted() {
     this.getMyOrderLists(); // 获取票卡类别
@@ -227,6 +234,7 @@ font-family:Microsoft YaHei;
       line-height: 40px;
       font-size: 14px;
       font-weight: 400;
+      width: 948px;
       dt,dd {
         float: left;padding-left: 20px
       }
@@ -255,7 +263,7 @@ font-family:Microsoft YaHei;
         .unpaid{
           text-align: center;
           a:last-child{color:rgba(0,161,233,1);}
-          a:first-child{
+          .unpaid-a{
             display:block;
             width:78px;
             height:26px;

@@ -10,7 +10,7 @@
                       <p><i class="ivu-icon ivu-icon-md-headset"></i>{{item.ticketTypeName }}票</p>
                     </div>
                     <ul>
-                      <li><i>￥</i>{{item.ticketPrice|toFixed(2)}}<i></i></li>
+                      <li><i>￥</i>{{item.ticketPrice}}<i></i></li>
                       <li>有效期至：{{item.endtime}}</li>
                     </ul>
                     <p>大连理工大学</p>
@@ -54,6 +54,7 @@ export default {
         data: data,
       }).then(res => {
         if (res.data.code === 200) {
+          console.log(res.data);
           this.myTicketLists = res.data.rows;
         } else {
           this.$Message.warning(res.code);

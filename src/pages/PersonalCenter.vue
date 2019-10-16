@@ -73,7 +73,7 @@ background-color: $g_background;
     border-radius: 4px;
     .personalCenter {
         display: flex;
-        min-height: 600px;
+        min-height: 800px;
         .personalCenter_right {
           background: #fff;
           width: 1000px;

@@ -63,8 +63,8 @@
           </Col>
           <Col span="8">
             <ul>
-              <li><em>商品总额：</em><span>{{ myOrderInfo.orderMainSumPrice|toFixed(2) }}</span></li>
-              <li><em>支付金额：</em><span style="color: #fd683d;">¥{{ myOrderInfo.orderMainSumHaspay|toFixed(2) }}</span></li>
+              <li><em>商品总额：</em><span>{{ myOrderInfo.orderMainSumPrice}}</span></li>
+              <li><em>支付金额：</em><span style="color: #fd683d;">¥{{ myOrderInfo.orderMainSumHaspay}}</span></li>
               <li><em>支付方式：</em><span>{{ myOrderInfo.orderMainPayType }}</span></li>
             </ul>
           </Col>

@@ -302,7 +302,7 @@ $g_border_radius: 20px;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 200;
+    z-index: 1000;
     background: $g_background;
     box-shadow: 0 5px 14px #ccc;
   }

@@ -29,7 +29,7 @@
             </tr>
         </thead>
         <tbody id="201909275765a4d781">
-          <tr v-for="(item, index) in getsublist(item.orderMainId)">
+          <tr v-for="(item, index) in getsublist(item.orderMainId)" :key="index">
             <td class="w150 b-r-1"> <h3>场地{{item.name}}</h3></td>
             <td class="w200">
               <h3>台球-预定（非家属）</h3>
@@ -141,7 +141,7 @@ export default {
       let sublist = [
         {name: 'jjs'},
         {name: 'jay'},
-      ]
+      ];
       return sublist || [];
     },
     toOrderDetails(item) {

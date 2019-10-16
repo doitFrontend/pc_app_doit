@@ -42,7 +42,7 @@ export default {
   mounted() {
     let d = document.getElementById('canvas');
     console.log(d);
-     this.qrcode(this.myTicketInfo.cardNo);
+    this.qrcode(this.myTicketInfo.cardNo);
     this.timer = setInterval(() => {
       this.qrcode(this.myTicketInfo.cardNo);
     }, 1000);

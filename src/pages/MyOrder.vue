@@ -85,7 +85,7 @@
   </ul>
   <div class="pull-right" style="float:right;margin-top:20px;">
     <template>
-      <Page :total="1000" />
+      <Page :total="total" show-elevator show-total :current="currentPage" @on-change="handleChangeNum" />
     </template>
   </div>
 </div>
@@ -101,8 +101,8 @@ export default {
       // MockData: {},
       myOrderLists: [],
       sublist: [],
-      pageTotal: 0,
-      pageNum: 1,
+      total: 0,
+      currentPage: 1,
       pageSize: 10,
     };
   },
@@ -111,11 +111,16 @@ export default {
     // console.log(this.ticketLists);
   },
   methods: {
+    handleChangeNum(currentPage) {
+      this.currentPage = currentPage;
+      this.getMyOrderLists();
+    },
     // 获取票卡所有的类别
     getMyOrderLists() {
       let data = {
         orgId: 'c4f67f3177d111e986f98cec4bb1848c',
         memberId: '2014011166',
+        pageIndex: this.pageSize * (this.currentPage - 1),
       };
       this.$axios({
         method: 'POST',
@@ -124,13 +129,13 @@ export default {
       }).then(res => {
         if (res.data.code === 200) {
           this.myOrderLists = res.data.rows;
+          this.total = res.data.total;
           return this.myOrderLists;
         } else {
           this.$Message.warning(res.code);
         }
       }).then(myOrderLists => {
         myOrderLists.forEach(item => {
-          console.log(item.orderMainId);
           this.getsublist(item.orderMainId);
         });
       }).catch(error => {
@@ -150,7 +155,6 @@ export default {
       }).then(res => {
         if (res.data.code === 200) {
           this.sublist.push(res.data.data);
-          console.log(this.sublist);
         } else {
           // this.$Message.warning(res.code);
         }
@@ -159,7 +163,6 @@ export default {
       });
     },
     toOrderDetails(item) {
-      console.log(item);
       this.$router.push({
         path: `MyOrder/${item.id}`,
         query: item,

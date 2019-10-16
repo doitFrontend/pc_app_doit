@@ -123,13 +123,17 @@ export default {
         },
         {
           title: '单价',
-          key: 'orderChildProductPrice',
           align: 'center',
+          render: (h, params) => {
+            return h('div', {}, params.orderChildProductPrice);
+          }
         },
         {
           title: '数量',
           align: 'center',
-          key: 'orderChildProductNum',
+          render: (h, params) => {
+            return h('div', {}, params.orderChildProductNum);
+          }
         },
         {
           title: '金额',
@@ -137,63 +141,72 @@ export default {
           align: 'center',
         },
       ],
-      data6: [
-        {
-          orderChildProductType: '场地',
-          orderChildProductPrice: 18,
-          orderChildProductNum: 1,
-          orgName: 'New York No. 1 Lake Park',
-          Name: '台球-预定',
-          EndTime: '2016-10-03',
-        },
-        {
-          orderChildProductType: '票',
-          orderChildProductPrice: 24,
-          orderChildProductNum: 1,
-          orgName: 'London No. 1 Lake ParkLondon No. 1 Lake Park',
-          Name: '篮球篇',
-          EndTime: '2016-10-01'
-        },
-        {
-          orderChildProductType: '卡',
-          orderChildProductPrice: 30,
-          orderChildProductNum: 1,
-          orgName: 'Sydney No. 1 Lake Park',
-          Name: '季卡',
-          EndTime: '2016-10-02'
-        },
-        {
-          orderChildProductType: '卡',
-          orderChildProductPrice: 26,
-          orderChildProductNum: 1,
-          orgName: 'Ottawa No. 2 Lake Park',
-          Name: '年卡',
-          EndTime: '2016-10-04'
-        },
-      ],
+      data6: [],
+      // data6: [
+      //   {
+      //     orderChildProductType: '场地',
+      //     orderChildProductPrice: 18,
+      //     orderChildProductNum: 1,
+      //     orgName: 'New York No. 1 Lake Park',
+      //     Name: '台球-预定',
+      //     EndTime: '2016-10-03',
+      //   },
+      //   {
+      //     orderChildProductType: '票',
+      //     orderChildProductPrice: 24,
+      //     orderChildProductNum: 1,
+      //     orgName: 'London No. 1 Lake ParkLondon No. 1 Lake Park',
+      //     Name: '篮球篇',
+      //     EndTime: '2016-10-01'
+      //   },
+      //   {
+      //     orderChildProductType: '卡',
+      //     orderChildProductPrice: 30,
+      //     orderChildProductNum: 1,
+      //     orgName: 'Sydney No. 1 Lake Park',
+      //     Name: '季卡',
+      //     EndTime: '2016-10-02'
+      //   },
+      //   {
+      //     orderChildProductType: '卡',
+      //     orderChildProductPrice: 26,
+      //     orderChildProductNum: 1,
+      //     orgName: 'Ottawa No. 2 Lake Park',
+      //     Name: '年卡',
+      //     EndTime: '2016-10-04'
+      //   },
+      // ],
     };
   },
   created() {
-    // let d = document.getElementById('canvas');
-    // console.log(d);
     this.myOrderInfo = this.$route.query;
     console.log(this.myOrderInfo);
   },
   mounted() {
-    let d = document.getElementById('canvas');
-    console.log(d);
+    this.getMyCardForPortal(this.myOrderInfo.orderMainId);
   },
   destroyed() {
   },
   methods: {
-    show(index) {
-      this.$Modal.info({
-        title: 'User Info',
-        content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
+    getMyCardForPortal(orderMainId) {
+      let data = {
+        orgId: 'c4f67f3177d111e986f98cec4bb1848c',
+        orderMainId: orderMainId,
+      };
+      this.$axios({
+        method: 'POST',
+        url: '/selectChildListByMainId.do',
+        data: data,
+      }).then(res => {
+        if (res.data.code === 200) {
+          console.log(res.data);
+          this.data6 = res.data;
+        } else {
+          this.$Message.warning(res.code);
+        }
+      }).catch(error => {
+        console.log(error);
       });
-    },
-    remove(index) {
-      this.data6.splice(index, 1);
     },
   },
 };

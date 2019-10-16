@@ -58,7 +58,7 @@
               <div>¥{{item2.orderChildProductNum}}×1</div>
             </td>
             <td class="w100 b-r-1"  v-if="j === 0" :rowspan="sublist[i].length" >
-              <div>¥{{item.orderMainSumHaspay}}</div>
+              <div>¥{{item.orderMainSumPrice}}</div>
             </td>
             <td class="w100 b-r-1"  v-if="j === 0" :rowspan="sublist[i].length">
               <div class="gray" v-if="item.orderMainPayStatus=='SUCCESS'">已付</div>

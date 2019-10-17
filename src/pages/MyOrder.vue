@@ -14,22 +14,23 @@
       </tr>
     </thead>
   </table>
-  <ul class="table-ul clearfix">
-    <li v-for="(item, i) in myOrderLists" :key="i">
+  <ul class="table-ul clearfix" style="position: relative;">
+    <Spin size="large" fix v-if="spinShow"></Spin>
+    <li v-for="(item, i) in sublist" :key="i">
       <table class="table2">
         <thead>
           <tr>
             <th colspan="8">
               <dl class="clearfix">
-                <dt class="pull-left">订单号：<span>{{item.orderMainId}}</span></dt>
-                <dd class="pull-left">下单日期：<span>{{item.createTime}}</span>
+                <dt class="pull-left">订单号：<span>{{item[0].orderMainId}}</span></dt>
+                <dd class="pull-left">下单日期：<span>{{item[0].createTime}}</span>
                 </dd>
               </dl>
             </th>
             </tr>
         </thead>
         <tbody id="201909275765a4d781">
-          <tr v-for="(item2, j) in sublist[i]" :key="j">
+          <tr v-for="(item2, j) in item" :key="j">
             <td class="w150 b-r-1">
               <h3 v-if="item2.orderChildProductType=='ticket'">票</h3>
               <h3 v-if="item2.orderChildProductType=='card'">卡</h3>
@@ -57,25 +58,25 @@
             <td class="w150 b-r-1">
               <div>¥{{item2.orderChildProductNum}}×1</div>
             </td>
-            <td class="w100 b-r-1"  v-if="j === 0" :rowspan="sublist[i].length" >
-              <div>¥{{item.orderMainSumPrice}}</div>
+            <td class="w100 b-r-1"  v-if="j === 0" :rowspan="item.length" >
+              <div>¥{{myOrderLists[i].orderMainSumPrice}}</div>
             </td>
-            <td class="w100 b-r-1"  v-if="j === 0" :rowspan="sublist[i].length">
-              <div class="gray" v-if="item.orderMainPayStatus=='SUCCESS'">已付</div>
-              <div class="gray" v-if="item.orderMainPayStatus=='REFUND'">已退</div>
-              <div class="gray" v-if="item.orderMainPayStatus=='PARTREFUND'">部分已退</div>
-              <div class="gray" v-if="item.orderMainPayStatus=='NOTPAY'">未支付</div>
-              <div class="gray" v-if="item.orderMainPayStatus=='CLOSED'">已关闭</div>
-              <div class="gray" v-if="item.orderMainPayStatus=='USERPAYING'">支付中</div>
-              <div class="gray" v-if="item.orderMainPayStatus=='REVOKED'">已撤销</div>
-              <div class="gray" v-if="item.orderMainPayStatus=='NOPAY'">未支付支付超时</div>
-              <div class="gray" v-if="item.orderMainPayStatus=='cancel'">取消支付</div>
-              <a  @click="toOrderDetails(item)" >订单详情</a>
+            <td class="w100 b-r-1"  v-if="j === 0" :rowspan="item.length">
+              <div class="gray" v-if="myOrderLists[i].orderMainPayStatus=='SUCCESS'">已付</div>
+              <div class="gray" v-if="myOrderLists[i].orderMainPayStatus=='REFUND'">已退</div>
+              <div class="gray" v-if="myOrderLists[i].orderMainPayStatus=='PARTREFUND'">部分已退</div>
+              <div class="gray" v-if="myOrderLists[i].orderMainPayStatus=='NOTPAY'">未支付</div>
+              <div class="gray" v-if="myOrderLists[i].orderMainPayStatus=='CLOSED'">已关闭</div>
+              <div class="gray" v-if="myOrderLists[i].orderMainPayStatus=='USERPAYING'">支付中</div>
+              <div class="gray" v-if="myOrderLists[i].orderMainPayStatus=='REVOKED'">已撤销</div>
+              <div class="gray" v-if="myOrderLists[i].orderMainPayStatus=='NOPAY'">未支付支付超时</div>
+              <div class="gray" v-if="myOrderLists[i].orderMainPayStatus=='cancel'">取消支付</div>
+              <a  @click="toOrderDetails(myOrderLists[i])" >订单详情</a>
             </td>
-            <td class="w100 b-r-1"  v-if="j === 0" :rowspan="sublist[i].length">
+            <td class="w100 b-r-1"  v-if="j === 0" :rowspan="item.length">
               <div class="unpaid">
-              <a onclick="pay_order(this)" v-if="item.orderMainPayStatus=='NOTPAY'" class="unpaid-a">立即付款</a>
-              <a  @click="toCancleOrder(item.orderMainId)" style="color:rgba(68,68,68,1);">取消订单</a>
+              <a onclick="pay_order(this)" v-if="myOrderLists[i].orderMainPayStatus=='NOTPAY'" class="unpaid-a">立即付款</a>
+              <a @click="toCancleOrder(myOrderLists[i].orderMainId)" style="color:rgba(68,68,68,1);">取消订单</a>
               </div>
             </td>
           </tr>
@@ -91,36 +92,52 @@
 </div>
 </template>
 <script>
-// import { ticketLists } from '@/utils/mockdata';
 export default {
   name: 'MyOrder',
   components: { },
   data() {
     return {
-      // ticketLists: [],
-      // MockData: {},
       myOrderLists: [],
       sublist: [],
       total: 0,
       currentPage: 1,
       pageSize: 10,
+      spinShow: true,
     };
   },
   created() {
-    // this.ticketLists = ticketLists.ticketLists;
-    // console.log(this.ticketLists);
+    this.getData();
   },
   methods: {
     handleChangeNum(currentPage) {
+      this.spinShow = true;
       this.currentPage = currentPage;
+      this.getData();
+    },
+    getData() {
       this.getMyOrderLists();
+      setTimeout(() => {
+        this.sublist.sort(this.sortByTime);
+        this.spinShow = false;
+      }, 500);
+    },
+    sortByTime(a, b) {
+      if (a[0].createTime < b[0].createTime) {
+        return 1;
+      }
+      if (a[0].createTime > b[0].createTime) {
+        return -1;
+      }
+      return 0;
     },
     // 获取票卡所有的类别
     getMyOrderLists() {
+      this.sublist = [];
       let data = {
         orgId: 'c4f67f3177d111e986f98cec4bb1848c',
         memberId: '2014011166',
         pageIndex: this.pageSize * (this.currentPage - 1),
+        // sortorder: 'desc',
       };
       this.$axios({
         method: 'POST',
@@ -156,7 +173,7 @@ export default {
         if (res.data.code === 200) {
           this.sublist.push(res.data.data);
         } else {
-          // this.$Message.warning(res.code);
+          this.$Message.warning(res.code);
         }
       }).catch(error => {
         console.log(error);
@@ -180,15 +197,12 @@ export default {
       }).then(res => {
         if (res.data.code === 200) {
         } else {
-          // this.$Message.warning(res.code);
+          this.$Message.warning(res.code);
         }
       }).catch(error => {
         console.log(error);
       });
     },
-  },
-  mounted() {
-    this.getMyOrderLists(); // 获取票卡类别
   },
 };
 </script>

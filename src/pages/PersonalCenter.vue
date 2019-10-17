@@ -76,16 +76,16 @@ background-color: $g_background;
         min-height: 800px;
         .personalCenter_right {
           background: #fff;
-          width: 1000px;
+          width: 990px;
           text-align: center;
-          padding:25px;
+          padding:20px;
           margin-left: 20px;
         }
         .personalCenter_left {
-          width: 200px;
+          width: 190px;
           background: #fff;
           /deep/ .ivu-menu-vertical .ivu-menu-item-group-title{height: 10px !important;}
-          /deep/ .ivu-menu-vertical{width: 200px !important;}
+          /deep/ .ivu-menu-vertical{width: 190px !important;}
           /deep/ .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu):after {left: 0;}
           /deep/ .ivu-menu-light.ivu-menu-vertical:after {height: 0px !important;}
           .personal_information{

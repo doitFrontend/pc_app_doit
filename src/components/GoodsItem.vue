@@ -13,7 +13,7 @@
             <slot name="title"></slot>
           </div>
           <div>
-            <Icon color="#ffac2d" type="ios-star" v-for="n in 4" :key="n"></Icon><Icon color="#ffac2d" type="ios-star" v-if="9.4 >= baseRate"></Icon><Icon color="#ffac2d" type="ios-star-half" v-else></Icon>
+            <Icon color="rgb(233, 0, 33)" type="ios-star" v-for="n in 4" :key="n"></Icon><Icon color="rgb(233, 0, 33)" type="ios-star" v-if="9.4 >= baseRate"></Icon><Icon color="rgb(233, 0, 33)" type="ios-star-half" v-else></Icon>
             <slot name="rate"></slot>
           </div>
           <div>
@@ -34,7 +34,7 @@
         <slot name="title"></slot>
       </div>
       <div>
-        <Icon color="#ffac2d" type="ios-star" v-for="n in 4" :key="n"></Icon><Icon color="#ffac2d" type="ios-star" v-if="9.4 >= baseRate"></Icon><Icon color="#ffac2d" type="ios-star-half" v-else></Icon>
+        <Icon color="rgb(233, 0, 33)" type="ios-star" v-for="n in 4" :key="n"></Icon><Icon color="rgb(233, 0, 33)" type="ios-star" v-if="9.4 >= baseRate"></Icon><Icon color="rgb(233, 0, 33)" type="ios-star-half" v-else></Icon>
         <slot name="rate"></slot>
       </div>
       <div>

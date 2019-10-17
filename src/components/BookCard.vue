@@ -26,7 +26,7 @@
                   <div class="piece">
                     <div>
                       <!-- <Icon color="#fff" size="28" type="md-headset" /> -->
-                      <Icon color="#fff" size="28" :custom="`iconfont ${item.icon.split('#')[1]}`" />
+                      <Icon color="#fff" size="20" :custom="`iconfont ${item.icon.split('#')[1]}`" />
                       <span>{{item.typeName}}</span>
                     </div>
                     <div  class="ticket-dtail">
@@ -156,14 +156,15 @@ export default {
               background: #e8eaec;
             }
             .ticket {
-              width: 240px;
-              height: 280px;
+              width: 220px;
+              height: 260px;
               margin: auto;
               display: flex;
               & > div.piece{ // 票 左右两块
                 width: 100%;
                 height: inherit;
                 background: url(../assets/card.png) no-repeat;
+                background-size: 220px 260px;
                 position: relative;
                 & > div.spot {
                   width: 16px;
@@ -184,17 +185,17 @@ export default {
                   height: 40px;
                   line-height: 40px;
                   margin-top: 20px;
-                  font-size: 24px;font-weight: 200;
+                  font-size: 20px;font-weight: 200;
                   color: #fff;
                 }
                 .ticket-dtail {
                 width:80%;margin:auto;
                 background: #fff;
-                height:175px;
+                height:155px;
                 border-radius: 5px;
                 margin-top:15px;
                 color:#333;
-                font-size:40px;
+                font-size:32px;
                 padding-top:30px;
                 text-align: center;
                 vertical-align: midd
@@ -202,7 +203,7 @@ export default {
               }
             }
               .price {
-              width: 90%;
+              width: 100%;
               margin-top: 30px;
               display: flex;
               position: relative;
@@ -215,7 +216,6 @@ export default {
                 width: 250px;
                 font-size: 18px;
                 color: #ed4014;
-                padding-left: 10px;
                 line-height: 32px;
               }
             }

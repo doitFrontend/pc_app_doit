@@ -5,7 +5,7 @@
       <Row type="flex" align="bottom" :gutter="24">
         <Col>
           <div>
-            <img :style="{ width: `${i_width}px`, height: `${i_height}px`, backgroundSize: 'cover', }" :src="imgSrc" alt="">
+            <img :style="{ width: `${i_width}px`, height: `${i_height}px`, backgroundSize: 'cover', borderRadius: '4px', }" :src="imgSrc" alt="">
           </div>
         </Col>
         <Col style="width: 484px;">
@@ -13,7 +13,7 @@
             <slot name="title"></slot>
           </div>
           <div>
-            <Icon color="#ffac2d" type="ios-star" v-for="n in 4" :key="n"></Icon><Icon color="#ffac2d" type="ios-star" v-if="9.4 >= baseRate"></Icon><Icon color="#ffac2d" type="ios-star-half" v-else></Icon>
+            <Icon color="rgba(233,0,33,1)" type="ios-star" v-for="n in 4" :key="n"></Icon><Icon color="rgba(233,0,33,1)" type="ios-star" v-if="9.4 >= baseRate"></Icon><Icon color="rgba(233,0,33,1)" type="ios-star-half" v-else></Icon>
             <slot name="rate"></slot>
           </div>
           <div>
@@ -49,7 +49,7 @@
 <script>
 // import { oneOf } from '@/utils/index';
 export default {
-  name: 'GoodsItem',
+  name: 'GoodsItemNew',
   props: {
     imgSrc: {
       type: String,
@@ -95,6 +95,8 @@ export default {
     // height: 280px;
     padding: 0.8em;
     border-radius: 6px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     // cursor: pointer;
     &:hover {
       background: #f7f7f7;
@@ -118,12 +120,14 @@ export default {
           .item {
             width: 158px;
             height: 100%;
-            margin-right: 0.5em;
+            margin-right: 12px;
             background: #fff;
+            color:rgba(51,51,51,1);
             .img {
               height: 158px;
               background: url('http://img.doit10019.com/2ba448d7-67ba-4620-b835-b5c5cbca6f09') no-repeat;
               background-size: 100% 100%;
+              border-radius:4px;
             }
             h4 {
               padding: 6px 0 0 1em;
@@ -132,12 +136,16 @@ export default {
               padding: 6px 1em;
               display: flex;
               justify-content: space-between;
+              div:first-child{
+                color:rgba(247,105,0,1);
+              }
             }
           }
           .more {
             // height: 100%;
             // background: lightpink;
-            font-size: 14px;
+            font-size: 12px;
+            color:rgba(51,51,51,1);
             &:hover {
               cursor: pointer;
               color: $g_default_color;

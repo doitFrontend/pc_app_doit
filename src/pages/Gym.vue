@@ -120,16 +120,19 @@ export default {
     fetchData() {
       let data = {
         orgId: '123456',
-        city_likeDouble: localStorage.getItem('currentCity'),
+        // city_likeDouble: localStorage.getItem('currentCity'),
+        city_likeDouble: '',
         county: '',
+        rcode_likeDouble: '游泳',
+        doorType: 'pw',
       };
       this.$axios({
         method: 'POST',
-        url: 'listApiOrg.do',
+        url: 'http://192.168.1.199:8080/diantuo/doorOrgTicketOrCardList.do',
         data: data,
       }).then(res => {
         if (res.data.code === 200) {
-          this.goodLists = res.data.rows;
+          this.goodLists = res.data.data;
         } else {
           this.$Message.warning(res.code);
         }

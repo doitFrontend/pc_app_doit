@@ -31,8 +31,8 @@
       <Row v-show="!isFold">
         <Col style="margin-left: 244px;">
           <div class="detail">
-            <div class="item" v-for="(i) in 3" :key="i">
-              <div class="img"></div>
+            <div class="item" v-for="(item, i) in arr" :key="i">
+              <div class="img" style="background-image: url('http://img.doit10019.com/2ba448d7-67ba-4620-b835-b5c5cbca6f09')"></div>
               <h4>成人游泳票</h4>
               <div class="price">
                 <div>￥20.0</div>
@@ -69,6 +69,9 @@ export default {
     i_width: {
       type: Number,
       default: 220,
+    },
+    arr: {
+      type: Array,
     },
   },
   data() {
@@ -125,7 +128,7 @@ export default {
             color:rgba(51,51,51,1);
             .img {
               height: 158px;
-              background: url('http://img.doit10019.com/2ba448d7-67ba-4620-b835-b5c5cbca6f09') no-repeat;
+              background-repeat: no-repeat;
               background-size: 100% 100%;
               border-radius:4px;
             }

@@ -5,7 +5,7 @@
       <Row type="flex" align="bottom" :gutter="24">
         <Col>
           <div>
-            <div :style="{ width: `${i_width}px`, height: `${i_height}px`, backgroundSize: 'cover', borderRadius: '4px', }" :src="imgSrc" alt="">
+            <img :style="{ width: `${i_width}px`, height: `${i_height}px`, backgroundSize: 'cover', borderRadius: '4px', }" :src="imgSrc" alt="">
           </div>
         </Col>
         <Col style="width: 464px;">
@@ -32,7 +32,7 @@
         <Col style="margin-left: 244px;">
           <div class="detail">
             <div class="item" v-for="(i) in 3" :key="i">
-              <div></div>
+              <div class="img"></div>
               <h4>成人游泳票</h4>
               <div class="price">
                 <div>￥20.0</div>

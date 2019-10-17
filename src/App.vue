@@ -8,7 +8,7 @@
         font-family: "SourceHanSansCn Normal";
     }
     #bookTicket .leibie,#bookCard .leibie, #gym .leibie{position: relative;line-height:36px}
-    #bookTicket .leibie2,#bookCard .leibie2,#BookField .leibie2,#gym .leibie2{position: relative;left:-20px}
+    #bookTicket .leibie2,#bookCard .leibie2,#BookField .leibie2,#gym .leibie2,{position: relative;left:-20px}
     #bookTicket .ivu-radio-wrapper,#bookCard .ivu-radio-wrapper, #BookField .ivu-radio-wrapper, #gym .ivu-radio-wrapper{
         font-size: 16px;
         line-height: 24px;

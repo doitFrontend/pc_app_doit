@@ -7,21 +7,23 @@
           <div class="inner">
             <Row>
               <div>
-                <Col :sm="4" :md="4" :lg="4"  class="leibie">
+                <Col :sm="3" :md="3" :lg="3"  class="leibie">
                   <div class="label">区域<span>|</span></div>
                 </Col>
-                <Col :sm="20" :md="20" :lg="20">
+                <Col :sm="21" :md="21" :lg="21"  class="leibie2">
                   <RadioGroup v-model="default_button" type="button">
                     <Radio :label="default_button"></Radio>
                     <Radio v-for="(item, index) in fData" :key="index" :label="item.label"></Radio>
                   </RadioGroup>
                 </Col>
               </div>
+            </Row>
+            <Row>
               <div>
-                <Col :sm="4" :md="4" :lg="4"  class="leibie">
+                <Col :sm="3" :md="3" :lg="3"  class="leibie">
                   <div class="label">项目<span>|</span></div>
                 </Col>
-                <Col :sm="20" :md="20" :lg="20">
+                <Col :sm="21" :md="21" :lg="21"  class="leibie2">
                   <RadioGroup v-model="default_button" type="button">
                     <Radio :label="default_button"></Radio>
                     <Radio v-for="(item, index) in sData" :key="index" :label="item.label"></Radio>
@@ -55,7 +57,7 @@
         <h3 style="marginLeft: 1em;margin-top:5px;">猜你喜欢</h3>
         <Row v-for="(item, i) in goodLists" :key="i">
           <Col span="24">
-            <goods-item :imgSrc="item.orgImages" :i_height="100" :baseRate="10">
+            <goods-item :imgSrc="item.orgImages" :i_height="130" :baseRate="10">
               <span slot="title">{{item.orgName}}</span>
               <span slot="rate">201 条评价</span>
               <span slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</span>
@@ -220,7 +222,7 @@ export default {
       }
     }
     .right { // 右侧列表
-      width: 360px;
+      width: 280px;
       margin-left: 2em;
       background: #fff;
       padding: 1em;

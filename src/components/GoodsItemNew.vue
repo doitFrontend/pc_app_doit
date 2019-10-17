@@ -5,10 +5,10 @@
       <Row type="flex" align="bottom" :gutter="24">
         <Col>
           <div>
-            <img :style="{ width: `${i_width}px`, height: `${i_height}px`, backgroundSize: 'cover', borderRadius: '4px', }" :src="imgSrc" alt="">
+            <div :style="{ width: `${i_width}px`, height: `${i_height}px`, backgroundSize: 'cover', borderRadius: '4px', }" :src="imgSrc" alt="">
           </div>
         </Col>
-        <Col style="width: 484px;">
+        <Col style="width: 464px;">
           <div class="title">
             <slot name="title"></slot>
           </div>
@@ -32,7 +32,7 @@
         <Col style="margin-left: 244px;">
           <div class="detail">
             <div class="item" v-for="(i) in 3" :key="i">
-              <div class="img"></div>
+              <div></div>
               <h4>成人游泳票</h4>
               <div class="price">
                 <div>￥20.0</div>

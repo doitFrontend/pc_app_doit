@@ -74,14 +74,10 @@ export default {
       type: Array,
     },
   },
-  computed: {
-    newArr() {
-      return this.arr.splice(0, 3);
-    },
-  },
   data() {
     return {
       isFold: false,
+      newArr: this.arr.splice(0, 3),
     };
   },
   methods: {

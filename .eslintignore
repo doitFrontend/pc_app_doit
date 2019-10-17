@@ -2,4 +2,4 @@
 /config/
 /dist/
 /*.js
-/src/assets
+/src/components/CIcon/iconfont*/

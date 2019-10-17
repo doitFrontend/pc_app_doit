@@ -16,6 +16,8 @@
         <div class="i"></div>
         <div class="c"></div>
       </div>
+      <c-icon type="wuxianwang" :size="30"></c-icon>
+      <c-icon type="qq" :size="30"></c-icon>
   </div>
 </template>
 <script>

@@ -19,8 +19,12 @@ import * as filters from './utils/filters';
 import { Autocomplete } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './theme/element_index.scss';
-import './assets/iconfont/iconfont.css';
-import './assets/iconfont1/iconfont.css';
+
+import CIcon from './components/CIcon/index';
+import '../src/components/CIcon/iconfont/iconfont.css';
+import '../src/components/CIcon/iconfont1/iconfont.css';
+
+Vue.component('CIcon', CIcon);
 Vue.use(Autocomplete);
 
 Vue.use(router);

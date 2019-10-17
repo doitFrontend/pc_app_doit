@@ -52,7 +52,7 @@
                 <p class="gray"  v-if="JSON.parse(item2.ticketType1.rcode).有效期">有效期：{{JSON.parse(item2.ticketType1.rcode).有效期 }}</p>
                 <P v-else>有效期：1天</P>
               </div>
-              <p class="gray">商家：大连理工体育馆</p>
+              <p class="gray" style="margin-bottom:10px;">商家：大连理工体育馆</p>
             </td>
             <td class="w100"><span>¥{{item2.orderChildProductPrice}}</span></td>
             <td class="w150 b-r-1">
@@ -272,9 +272,6 @@ font-family:Microsoft YaHei;
       color:rgba(68,68,68,1);
       .gray {
         color: #999999;
-        }
-      p:last-child{
-        margin-bottom: 10px;
         }
         a{display: block;margin-top: 10px;color:rgba(0,161,233,1);}
         .unpaid{

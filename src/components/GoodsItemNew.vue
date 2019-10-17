@@ -25,18 +25,18 @@
           <slot></slot>
         </Col>
         <Col>
-          <Button type="primary" @click="foldInfo">收起票务信息&nbsp;<Icon :type="!isFold? 'ios-arrow-up': 'ios-arrow-down'"></Icon></Button>
+          <Button type="primary" @click="foldInfo"><span v-show="!isFold">收起票务信息&nbsp;</span><span v-show="isFold">展开票务信息&nbsp;</span><Icon :type="!isFold? 'ios-arrow-up': 'ios-arrow-down'"></Icon></Button>
         </Col>
       </Row>
       <Row v-show="!isFold">
         <Col style="margin-left: 244px;">
           <div class="detail">
-            <div class="item" v-for="(item, i) in arr" :key="i">
-              <div class="img" style="background-image: url('http://img.doit10019.com/2ba448d7-67ba-4620-b835-b5c5cbca6f09')"></div>
-              <h4>成人游泳票</h4>
+            <div class="item" v-for="(item, i) in newArr" :key="i">
+              <div class="img" v-bind:style="{backgroundImage:'url(' + item.ticketImages + ')'}"></div>
+              <h4>{{item.typeName}}</h4>
               <div class="price">
-                <div>￥20.0</div>
-                <div>已售268</div>
+                <div>￥{{item.price}}</div>
+                <div>已售{{item.num}}</div>
               </div>
             </div>
             <div class="more" @click="moreItem">更多商品</div>
@@ -72,6 +72,11 @@ export default {
     },
     arr: {
       type: Array,
+    },
+  },
+  computed: {
+    newArr() {
+      return this.arr.splice(0, 3);
     },
   },
   data() {

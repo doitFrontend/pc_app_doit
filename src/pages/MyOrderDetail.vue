@@ -102,24 +102,23 @@ export default {
         },
         {
           title: '商品信息',
-          // key: 'age',
           render: (h, params) => {
             let strEndTime = '有效期：';
             let strOrgName = '商家：';
             // return h('div', {}, str);
             return h('div', [
               h('h3', {
-              }, params.row.fieldType1.fieldTypeName),
+              }, params.row.cardType1.cardTypeName),
               h('span', {
                 style: {
                   color: '#999',
                 }
-              }, strEndTime + params.row.fieldEndTime + '~' + params.row.fieldEndTime),
+              }, strEndTime + JSON.parse(params.row.cardType1.rcode).有效期),
               h('p', {
                 style: {
                   color: '#999',
                 }
-              }, strOrgName + params.row.orgName),
+              }, strOrgName + '大连理工体育馆'),
             ]);
           },
           width: 400,

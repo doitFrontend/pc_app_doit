@@ -8,7 +8,7 @@
             <Row>
               <div>
                 <Col :sm="3" :md="3" :lg="3"  class="leibie">
-                  <div class="label">区域<span>|</span></div>
+                  <div class="label">区&nbsp;&nbsp;域<span>|</span></div>
                 </Col>
                 <Col :sm="21" :md="21" :lg="21"  class="leibie2">
                   <RadioGroup v-model="default_button" type="button">
@@ -21,7 +21,7 @@
             <Row>
               <div>
                 <Col :sm="3" :md="3" :lg="3"  class="leibie">
-                  <div class="label">项目<span>|</span></div>
+                  <div class="label">项&nbsp;&nbsp;目<span>|</span></div>
                 </Col>
                 <Col :sm="21" :md="21" :lg="21"  class="leibie2">
                   <RadioGroup v-model="default_button" type="button">
@@ -43,7 +43,10 @@
                   <div class="text" slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</div>
                   <div class="icons">
                     <div class="item" v-for="(item, index) in iconList" :key="index">
-                      <Button shape="circle" :icon="item.icon"></Button>
+                      <i class="iconfont iconxiuxishi"></i>
+                      <!-- <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#iconxiuxishi"></use>
+                      </svg> -->
                       <div>{{item.text}}</div>
                     </div>
                   </div>
@@ -210,7 +213,6 @@ export default {
             display: flex;
             justify-content: flex-start;
             text-align: center;
-            align-items: flex-end;
             .item {
               width: 48px;
               height: inherit;

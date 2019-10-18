@@ -95,6 +95,11 @@ import cityData from '../utils/provinceCity';
 export default {
   name: 'Gym',
   components: { GoodsItemNew, GoodsItem },
+  watch: {
+    '$route'(to, from) {
+      console.log(to);
+    },
+  },
   data() {
     return {
       goodLists: [],

@@ -3,10 +3,10 @@
     <div class="container">
       <div class="inner">
         <Row>
-          <Col :sm="3" :md="3" :lg="3"  class="leibie">
+          <Col :sm="4" :md="4" :lg="4"  class="leibie">
             <div class="label">卡类别 <span>|</span></div>
           </Col>
-          <Col :sm="21" :md="21" :lg="21"  class="leibie2">
+          <Col :sm="20" :md="20" :lg="20"  class="leibie2">
             <RadioGroup v-model="default_button" type="button" @on-change="changeCardType">
               <Radio label="所有"></Radio>
               <Radio v-for="(item, i) in ticketOrCardTypeList" :key="i" :label="item"></Radio>
@@ -142,6 +142,7 @@ export default {
           .label {
             text-align: center;
             font-size: 16px;
+            letter-spacing:2px;
             span{padding-left: 10px;padding-right: 15px}
           }
         }

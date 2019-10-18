@@ -24,9 +24,9 @@
           </div>
           <slot></slot>
         </Col>
-        <Col>
-          <Button type="primary" @click="foldInfo"><span v-show="!isFold">收起票务信息&nbsp;</span><span v-show="isFold">展开票务信息&nbsp;</span><Icon :type="!isFold? 'ios-arrow-up': 'ios-arrow-down'"></Icon></Button>
-        </Col>
+        <div >
+          <Button type="primary" @click="foldInfo" style="background:rgba(0,161,233,0.2); border-color: #fff;color:rgba(0,161,233,1)"><span v-show="!isFold">收起票务信息&nbsp;</span><span v-show="isFold">展开票务信息&nbsp;</span><Icon :type="!isFold? 'ios-arrow-up': 'ios-arrow-down'"></Icon></Button>
+        </div>
       </Row>
       <Row v-show="!isFold">
         <Col style="margin-left: 244px;">
@@ -36,7 +36,7 @@
               <h4>{{item.typeName}}</h4>
               <div class="price">
                 <div>￥{{item.price}}</div>
-                <div>已售{{item.num}}</div>
+                <div style="display: flex;"><c-icon type="redu"  :size="14"></c-icon>&nbsp;<span>已售{{item.num}}</span></div>
               </div>
             </div>
             <div class="more" @click="moreItem">更多商品</div>
@@ -53,6 +53,7 @@ export default {
   props: {
     imgSrc: {
       type: String,
+      // default: '../assets/ticket.png',
     },
     baseRate: {
       type: Number,

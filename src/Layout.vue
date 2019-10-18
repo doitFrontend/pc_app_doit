@@ -257,15 +257,15 @@ $g_border_radius: 20px;
       position: relative;
       div {
         display: inline-block;
-        width: 4em;
         height: 2em;
         color: #000;
         font-weight: 500;
         font-size: 18px;
         margin: 1em auto;
-        padding: 4px 16px 0 18px;
+        padding: 5px 15px 5px 20px;
         border-radius: $g_border_radius;
         cursor: pointer;
+        letter-spacing:5px;
         &:hover {
           background: #00a1e9;
           color: #fff;

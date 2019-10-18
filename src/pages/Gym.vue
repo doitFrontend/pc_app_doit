@@ -7,10 +7,10 @@
           <div class="inner">
             <Row>
               <div>
-                <Col :sm="3" :md="3" :lg="3"  class="leibie">
-                  <div class="label">区&nbsp;&nbsp;域<span>|</span></div>
+                <Col :sm="4" :md="4" :lg="4"  class="leibie">
+                  <div class="label">区&nbsp;&nbsp;&nbsp;&nbsp;域<span>|</span></div>
                 </Col>
-                <Col :sm="21" :md="21" :lg="21"  class="leibie2">
+                <Col :sm="20" :md="20" :lg="20"  class="leibie2">
                   <RadioGroup v-model="default_button" type="button">
                     <Radio :label="default_button"></Radio>
                     <Radio v-for="(item, index) in fData" :key="index" :label="item.label"></Radio>
@@ -20,10 +20,10 @@
             </Row>
             <Row>
               <div>
-                <Col :sm="3" :md="3" :lg="3"  class="leibie">
-                  <div class="label">项&nbsp;&nbsp;目<span>|</span></div>
+                <Col :sm="4" :md="4" :lg="4"  class="leibie">
+                  <div class="label">项&nbsp;&nbsp;&nbsp;&nbsp;目<span>|</span></div>
                 </Col>
-                <Col :sm="21" :md="21" :lg="21"  class="leibie2">
+                <Col :sm="20" :md="20" :lg="20"  class="leibie2">
                   <RadioGroup v-model="default_button" type="button">
                     <Radio :label="default_button"></Radio>
                     <Radio v-for="(item, index) in sData" :key="index" :label="item.label"></Radio>
@@ -42,12 +42,29 @@
                   <div class="text" slot="rate">201 条评价</div>
                   <div class="text" slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</div>
                   <div class="icons">
-                    <div class="item" v-for="(item, index) in iconList" :key="index">
-                      <i class="iconfont iconxiuxishi"></i>
-                      <!-- <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#iconxiuxishi"></use>
-                      </svg> -->
-                      <div>{{item.text}}</div>
+                    <div class="item">
+                      <c-icon type="dengguang"  :size="30"></c-icon>
+                      <div>灯光</div>
+                    </div>
+                    <div class="item">
+                      <c-icon type="xiuxishi"  :size="30"></c-icon>
+                      <div>休息室</div>
+                    </div>
+                    <div class="item">
+                      <c-icon type="xiyu"  :size="30"></c-icon>
+                      <div>浴室</div>
+                    </div>
+                    <div class="item">
+                      <c-icon type="gengyigui"  :size="30"></c-icon>
+                      <div>更衣柜</div>
+                    </div>
+                    <div class="item">
+                      <c-icon type="wuxianwang"  :size="30"></c-icon>
+                      <div>无线网</div>
+                    </div>
+                    <div class="item">
+                      <c-icon type="tingche"  :size="30"></c-icon>
+                      <div>停车</div>
                     </div>
                   </div>
                 </goods-item-new>
@@ -133,7 +150,7 @@ export default {
       };
       this.$axios({
         method: 'POST',
-        url: 'http://192.168.1.199:8080/diantuo/doorOrgTicketOrCardList.do',
+        url: '/doorOrgTicketOrCardList.do',
         data: data,
       }).then(res => {
         if (res.data.code === 200) {

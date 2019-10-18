@@ -1,6 +1,6 @@
 <template>
   <ButtonGroup shape="circle">
-    <Button v-show="isShow" class="btn-remove" style="font-weight: 700" @click="minusNum(item)"><Icon type="md-remove" size="24" color="#bebebe" style="position: relative;top:-3px" /></Button>
+    <Button v-show="isShow" class="btn-remove" style="font-weight: 700" @click="minusNum(item)"><Icon type="md-remove" size="20" color="#bebebe" style="position: relative;top:-5px" /></Button>
     <Button v-show="isShow" type="primary">{{item.num}}</Button>
     <transition
       @before-enter="beforeEnter"
@@ -8,8 +8,8 @@
       @after-enter="afterEnter">
       <div v-show="isBallShow" class="ball"></div>
     </transition>
-    <Button v-if="isShow" class="addnum" @click="addNum(item)"><Icon type="md-add" size="24" color="#fff"  style="position: relative;top:-3px"/></Button>
-    <Button v-else @click="addNum(item, 'true')" style="width:120px;font-size:18px;border-radius: 32px;color: #fff;background: #f76900;margin-right:5px">加入购物车</Button>
+    <Button v-if="isShow" class="addnum" @click="addNum(item)"><Icon type="md-add" size="20" color="#fff"  style="position: relative;top:-5px"/></Button>
+    <Button v-else @click="addNum(item, 'true')" style="width:100px;font-size:14px;border-radius: 32px;color: #fff;background: #f76900;margin-right:5px;margin-top:3px;">加入购物车</Button>
   </ButtonGroup>
 </template>
 <script>
@@ -69,15 +69,15 @@ export default {
     z-index: 100;
   }
   .ivu-btn{padding: 0;}
-  .ivu-btn-primary{background: #e5e5e5;border: none; width: 40px;height: 28px;color: #333333;font-size: 18px}
+  .ivu-btn-primary{background: #e5e5e5;border: none; width: 40px;height: 26px;color: #333333;font-size: 14px;line-height: 26px;}
   .ivu-btn-group:not(.ivu-btn-group-vertical) > .ivu-btn:first-child,.ivu-btn-group:not(.ivu-btn-group-vertical)>.ivu-btn:last-child{
         border-radius: 32px;
         border-bottom-left-radius: 32px;
         border-top-left-radius: 32px;
-        width: 28px;
-        height: 28px;
-        margin-left: 10px;
-        margin-right: 10px;
+        width: 26px;
+        height: 26px;
+        margin-left: 8px;
+        margin-right: 8px;
         background: #f76900;
         color: #fff;
         font-size: 18px;

@@ -55,41 +55,6 @@ export default new Router({
           name: 'Home',
           component: Home,
         },
-        // {
-        //   path: '/MyTicket',
-        //   name: 'MyTicket',
-        //   component: MyTicket,
-        // },
-        // {
-        //   path: '/MyTicket/:id',
-        //   name: 'MyTicketDetail',
-        //   component: MyTicketDetail,
-        // },
-        // {
-        //   path: '/MyCard',
-        //   name: 'MyCard',
-        //   component: MyCard,
-        // },
-        // {
-        //   path: '/MyCard/:id',
-        //   name: 'MyCardDetail',
-        //   component: MyCardDetail,
-        // },
-        // {
-        //   path: '/MyReserve',
-        //   name: 'MyReserve',
-        //   component: MyReserve,
-        // },
-        // {
-        //   path: '/MyReserve/:id',
-        //   name: 'MyReserveDetail',
-        //   component: MyReserveDetail,
-        // },
-        // {
-        //   path: '/MyOrder',
-        //   name: 'MyOrder',
-        //   component: MyOrder,
-        // },
         {
           path: '/PersonalCenter',
           component: PersonalCenter,

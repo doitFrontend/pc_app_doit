@@ -96,19 +96,9 @@ export default {
   name: 'Gym',
   components: { GoodsItemNew, GoodsItem },
   watch: {
-    '$route'(to, from) {
-      console.log(to);
-      switch (to.path) {
-        case '/bookCard':
-          this.fetchData('kw');
-          break;
-        case '/bookField':
-          this.fetchDataField();
-          break;
-        default:
-          this.fetchData('pw');
-          break;
-      }
+    '$route': {
+      handler: 'handleRoute',
+      immediate: true,
     },
   },
   data() {
@@ -132,8 +122,6 @@ export default {
     };
   },
   created() {
-    this.fetchData();
-    this.fetchDataField();
     this.circleList(cityData, localStorage.getItem('currentCity'));
   },
   computed: {
@@ -142,6 +130,20 @@ export default {
     },
   },
   methods: {
+    handleRoute(to, from) {
+      console.log(to);
+      switch (to.path) {
+        case '/bookCard':
+          this.fetchData('kw');
+          break;
+        case '/bookField':
+          this.fetchDataField();
+          break;
+        default:
+          this.fetchData('pw');
+          break;
+      }
+    },
     // toGoodDetails(item) {
     //   this.$router.push({
     //     path: `gym/${item.orgId}`,
@@ -156,8 +158,7 @@ export default {
       });
     },
     // 获取场馆信息(票、卡)
-    fetchData(type = 'pw') {
-      alert(type);
+    fetchData(type) {
       let data = {
         orgId: '123456',
         // city_likeDouble: localStorage.getItem('currentCity'),

@@ -37,7 +37,38 @@
           <div class="inner">
             <Row v-for="(item, i) in goodLists" :key="i">
               <Col span="24">
-                <goods-item-new :arr="item.cardOrTicketMap.data" @getMoreItem="toSaleItem(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.orgImages" :baseRate="10">
+                <goods-item-new v-if="showType === 'pw' || showType === 'kw'" :arr="item.cardOrTicketMap.data" @getMoreItem="toSaleItem(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.orgImages" :baseRate="10">
+                  <div class="text" slot="title">{{item.orgName}}</div>
+                  <div class="text" slot="rate">201 条评价</div>
+                  <div class="text" slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</div>
+                  <div class="icons">
+                    <div class="item">
+                      <c-icon type="dengguang"  :size="30"></c-icon>
+                      <div>灯光</div>
+                    </div>
+                    <div class="item">
+                      <c-icon type="xiuxishi"  :size="30"></c-icon>
+                      <div>休息室</div>
+                    </div>
+                    <div class="item">
+                      <c-icon type="xiyu"  :size="30"></c-icon>
+                      <div>浴室</div>
+                    </div>
+                    <div class="item">
+                      <c-icon type="gengyigui"  :size="30"></c-icon>
+                      <div>更衣柜</div>
+                    </div>
+                    <div class="item">
+                      <c-icon type="wuxianwang"  :size="30"></c-icon>
+                      <div>无线网</div>
+                    </div>
+                    <div class="item">
+                      <c-icon type="tingche"  :size="30"></c-icon>
+                      <div>停车</div>
+                    </div>
+                  </div>
+                </goods-item-new>
+                <goods-item-new v-else-if="showType === 'cd'" :arr="item.fieldSales" @getMoreItem="toSaleItem(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.orgImages" :baseRate="10">
                   <div class="text" slot="title">{{item.orgName}}</div>
                   <div class="text" slot="rate">201 条评价</div>
                   <div class="text" slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</div>
@@ -71,6 +102,7 @@
               </Col>
             </Row>
           </div>
+          <Spin size="large" fix v-if="spinShow"></Spin>
         </div>
       </div>
       <div class="right">
@@ -103,9 +135,11 @@ export default {
   },
   data() {
     return {
+      spinShow: true,
       goodLists: [],
       i_width: 220,
       fData: null,
+      showType: '', // 展示模块
       sData: [
         { label: '游泳', value: '' },
         { label: '羽毛球', value: '' },
@@ -131,7 +165,6 @@ export default {
   },
   methods: {
     handleRoute(to, from) {
-      console.log(to);
       switch (to.path) {
         case '/bookCard':
           this.fetchData('kw');
@@ -151,7 +184,6 @@ export default {
     //   });
     // },
     toSaleItem(item) {
-      console.log(item);
       this.$router.push({
         path: `gym/${item.orgId}`,
         query: item,
@@ -159,6 +191,7 @@ export default {
     },
     // 获取场馆信息(票、卡)
     fetchData(type) {
+      this.showType = type;
       let data = {
         orgId: '123456',
         // city_likeDouble: localStorage.getItem('currentCity'),
@@ -172,10 +205,9 @@ export default {
         url: '/doorOrgTicketOrCardList.do',
         data: data,
       }).then(res => {
+        this.spinShow = false;
         if (res.data.code === 200) {
           this.goodLists = res.data.data;
-          console.log(res.data.data);
-          console.log(res.data[1].orgName);
         } else {
           this.$Message.warning(res.code);
         }
@@ -185,6 +217,7 @@ export default {
     },
     // 获取场馆信息(场地)
     fetchDataField() {
+      this.showType = 'cd';
       let data = {
         orgId: '123456',
         // city_likeDouble: localStorage.getItem('currentCity'),
@@ -198,9 +231,9 @@ export default {
         url: '/listOrgWithFields.do',
         data: data,
       }).then(res => {
+        this.spinShow = false;
         if (res) {
           this.goodLists = res.data;
-          console.log(res.data[0].orgName);
         } else {
           this.$Message.warning(res);
         }
@@ -267,6 +300,8 @@ export default {
           }
         }
         &:nth-child(2) { // 下列表
+          position: relative;
+          min-height: 400px;
           padding-top: 2em;
           .text {
             // padding: 1em 0;

@@ -98,6 +98,17 @@ export default {
   watch: {
     '$route'(to, from) {
       console.log(to);
+      switch (to.path) {
+        case '/bookCard':
+          this.fetchData('kw');
+          break;
+        case '/bookField':
+          this.fetchDataField();
+          break;
+        default:
+          this.fetchData('pw');
+          break;
+      }
     },
   },
   data() {
@@ -122,6 +133,7 @@ export default {
   },
   created() {
     this.fetchData();
+    this.fetchDataField();
     this.circleList(cityData, localStorage.getItem('currentCity'));
   },
   computed: {
@@ -143,15 +155,16 @@ export default {
         query: item,
       });
     },
-    // 获取场馆信息
-    fetchData() {
+    // 获取场馆信息(票、卡)
+    fetchData(type = 'pw') {
+      alert(type);
       let data = {
         orgId: '123456',
         // city_likeDouble: localStorage.getItem('currentCity'),
         city_likeDouble: '',
         county: '',
         rcode_likeDouble: '游泳',
-        doorType: 'pw',
+        doorType: type,
       };
       this.$axios({
         method: 'POST',
@@ -160,8 +173,35 @@ export default {
       }).then(res => {
         if (res.data.code === 200) {
           this.goodLists = res.data.data;
+          console.log(res.data.data);
+          console.log(res.data[1].orgName);
         } else {
           this.$Message.warning(res.code);
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+    },
+    // 获取场馆信息(场地)
+    fetchDataField() {
+      let data = {
+        orgId: '123456',
+        // city_likeDouble: localStorage.getItem('currentCity'),
+        city_likeDouble: '',
+        county: '',
+        project: '篮球',
+
+      };
+      this.$axios({
+        method: 'POST',
+        url: '/listOrgWithFields.do',
+        data: data,
+      }).then(res => {
+        if (res) {
+          this.goodLists = res.data;
+          console.log(res.data[0].orgName);
+        } else {
+          this.$Message.warning(res);
         }
       }).catch(error => {
         console.log(error);

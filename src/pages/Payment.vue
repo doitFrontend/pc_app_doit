@@ -4,24 +4,55 @@
     <div class="inner">
       <h2>支付方式</h2>
       <div class="payway">
-          <div class="log">
-            <Icon size="40" color="rgb(4, 172, 238)" custom="icon iconfont icon-qq" />
+          <div class="log" @click="showQRcode">
+            <c-icon type="zhifubao" :size="40"></c-icon>
           </div>
-          <div class="log">
-            <Icon size="38" color="rgb(10, 183, 14)" custom="iconfont icon-weixin" />
+          <div class="log" @click="showQRcode">
+            <c-icon type="weixin" :size="40"></c-icon>
           </div>
       </div>
     </div>
+    <Modal v-model="showModal" width="10">
+      <h2 slot="header">请扫码支付</h2>
+      <canvas id="canvas" style="width: 180px;height: 180px;"></canvas>
+      <div slot="footer"></div>
+    </Modal>
   </div>
 </template>
 <script>
+import QRCode from 'qrcode';
 export default {
   created() {
     console.log(this.$route.params);
+    console.log(this.money);
+    if (!this.money) {
+      this.$router.push('checkout');
+    }
+  },
+  data() {
+    return {
+      showModal: false,
+    };
   },
   computed: {
     money() {
       return this.$route.params.money;
+    },
+  },
+  methods: {
+    showQRcode() {
+      this.showModal = true;
+      this.qrcode(Math.random());
+    },
+    qrcode(cardNo) {
+      let canvas = document.getElementById('canvas');
+      let myDate = new Date().getTime();
+      QRCode.toCanvas(canvas, cardNo + '&' + myDate, function(error) {
+        if (error) {
+          console.error(error);
+        }
+        console.log('success!');
+      });
     },
   },
 };
@@ -53,6 +84,7 @@ export default {
         display: flex;
         .log {
           border-radius: 8px;
+          padding: 1em;
           &:hover {
             background: rgb(207, 206, 206);
             cursor: pointer;

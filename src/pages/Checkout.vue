@@ -5,7 +5,7 @@
             <Row>
                 <Col span="8">
                     <h3>票</h3>
-                    <div v-if="!ticketOrder.length" class="ticketElse">暂无商品</div>
+                    <div v-if="!ticketOrder.length" class="ticketElse">暂无商品, 请选购</div>
                     <div v-else class="ticket">
                         <!-- {{ticketOrder}} -->
                         <Row class="header">
@@ -24,7 +24,7 @@
                 </Col>
                 <Col span="8">
                     <h3>卡</h3>
-                    <div v-if="!cardOrder.length" class="ticketElse">暂无商品</div>
+                    <div v-if="!cardOrder.length" class="ticketElse">暂无商品, 请选购</div>
                     <div v-else class="ticket">
                         <!-- {{cardOrder}} -->
                         <Row class="header">
@@ -41,7 +41,7 @@
                 </Col>
                 <Col span="8">
                     <h3>场地</h3>
-                    <div v-if="!fieldOrder.length" class="ticketElse">暂无商品</div>
+                    <div v-if="!fieldOrder.length" class="ticketElse">暂无商品, 请选购</div>
                     <div v-else class="ticket">
                         <!-- {{fieldOrder}} -->
                         <Row class="header">

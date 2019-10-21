@@ -78,8 +78,12 @@ export default {
   data() {
     return {
       isFold: false,
-      newArr: this.arr.splice(0, 3),
     };
+  },
+  computed: {
+    newArr: function() {
+      return this.newArr1();
+    },
   },
   methods: {
     // toGoodItem() {
@@ -90,7 +94,10 @@ export default {
     },
     moreItem() {
       this.$emit('getMoreItem');
-    }
+    },
+    newArr1() {
+      return this.arr.slice(0, 3);
+    },
   },
 };
 </script>

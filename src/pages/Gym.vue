@@ -165,6 +165,7 @@ export default {
   },
   methods: {
     handleRoute(to, from) {
+      this.spinShow = true;
       switch (to.path) {
         case '/bookCard':
           this.fetchData('kw');

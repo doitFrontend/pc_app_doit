@@ -32,11 +32,18 @@
         <Col style="margin-left: 244px;">
           <div class="detail">
             <div class="item" v-for="(item, i) in newArr" :key="i">
-              <div class="img" v-bind:style="{backgroundImage:'url(' + item.ticketImages + ')'}"></div>
-              <h4>{{item.typeName}}</h4>
-              <div class="price">
+              <div class="img" v-if="item.ticketImages || item.ticketImages=='' " v-bind:style="{backgroundImage:'url(' + item.ticketImages + ')'}"></div>
+              <div class="img"  v-if="item.cardImages || item.cardImages=='' " v-bind:style="{backgroundImage:'url(' + item.cardImages + ')'}"></div>
+              <div class="img"  v-if="item.fieldImages || item.fieldImages=='' " v-bind:style="{backgroundImage:'url(' + item.fieldImages + ')'}"></div>
+              <h4 v-if="item.typeName " >{{item.typeName}}</h4>
+              <h4 v-if="item.rcode " >{{JSON.parse(item.rcode).项目[0]}}场</h4>
+              <div class="price" v-if="item.price">
                 <div>￥{{item.price}}</div>
-                <div style="display: flex;"><c-icon type="redu"  :size="14"></c-icon>&nbsp;<span>已售{{item.num}}</span></div>
+                <div style="display: flex;"><c-icon type="redu"  :size="14"></c-icon>&nbsp;<span>已售60%</span></div>
+              </div>
+              <div class="price" v-if="item.fieldPrice">
+                <div>￥{{JSON.parse(item.fieldPrice)[0].price}}</div>
+                <div style="display: flex;"><c-icon type="redu"  :size="14"></c-icon>&nbsp;<span>热定中</span></div>
               </div>
             </div>
             <div class="more" @click="moreItem">更多商品</div>

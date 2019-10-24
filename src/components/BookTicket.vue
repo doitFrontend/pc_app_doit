@@ -16,16 +16,15 @@
       </div>
       <Divider />
       <div class="inner">
-        <div class="" style="margin:0 20px">
-          <Row :gutter="16">
+        <div>
+          <Row>
             <!-- TODO: 缺省页 -->
             <div v-if="!tempTicketList.length">暂无此类型票</div>
             <Col v-else v-for="item in tempTicketList" :key="item.sportId" :sm="8" :md="8" :lg="8">
               <div class="item_ticket">
                 <div class="ticket">
                   <div class="piece">
-                    <div>
-                      <!-- <Icon color="#fff" size="28" type="md-headset" /> -->
+                    <!-- <div>
                       <Icon color="#fff" size="20" :custom="`iconfont ${item.icon.split('#')[1]}`" />
                       <span>{{item.typeName}}</span>
                     </div>
@@ -34,12 +33,28 @@
                       <div style="font-size: 16px;padding-top:10px">
                         限时：{{item.time}}</br>{{item.timeSlotStr}}
                       </div>
-                    </div>
+                    </div> -->
+                    <div class="img" v-bind:style="{backgroundImage:'url(' + item.ticketImages + ')'}" @click="toBookTicketDetails(item)"></div>
                   </div>
                 </div>
-                <div class="price">
-                  <div calss="price2">￥{{item.price | toFixed(2)}}</div>
-                  <button-groups @countSum="countPriz" :item="item"></button-groups>
+                <div style="width:240px;background:rgba(248,248,248,1);margin: auto;padding:0 10px;">
+                  <div style="font-size:12px;">
+                    <p style="font-size:14px;line-height:18px;padding-top:15px;">{{item.typeName}}</p>
+                    <Row>
+                      <Col :sm="18" :md="18" :lg="18"  class="leibie">
+                        <template>
+                          <Progress :percent="25" />
+                      </template>
+                      </Col>
+                      <Col :sm="6" :md="6" :lg="6"  class="leibie">
+                        已售25%
+                      </Col>
+                    </Row>
+                  </div>
+                  <div class="price">
+                    <div calss="price2">￥{{item.price | toFixed(2)}}</div>
+                    <button-groups @countSum="countPriz" :item="item"></button-groups>
+                  </div>
                 </div>
               </div>
             </Col>
@@ -112,6 +127,13 @@ export default {
     delFromCart(item) {
       this.$store.commit('delTicket', item);
     },
+    toBookTicketDetails(item) {
+      console.log(item);
+      this.$router.push({
+        path: `/GymDetails/${item}`,
+        query: item,
+      });
+    },
   },
   computed: {
     ticketList: {
@@ -142,6 +164,7 @@ export default {
     .container {
       .inner {
         padding: 0 1em;
+        & /deep/  .ivu-progress-text{display: none;}
         &:nth-child(1) {
           .label {
             text-align: center;
@@ -155,22 +178,25 @@ export default {
           .item_ticket {
             width: 100%;
             height: inherit;
-            padding: 2em;
+            padding: 2em 0;
             margin-bottom: 30px;
             &:hover {
               background: #e8eaec;
             }
+            .leibie{line-height: 32px;}
             .ticket {
-              width: 220px;
-              height: 260px;
+              width: 240px;
+              height: 240px;
               margin: auto;
               display: flex;
+              background:rgba(248,248,248,1);
               & > div.piece{ // 票 左右两块
                 width: 100%;
                 height: inherit;
-                background: url(../assets/ticket.png) no-repeat;
-                background-size: 220px 260px;
                 position: relative;
+                .img{width: 240px; height: 240px; background-size: cover; border-radius: 10px;background-repeat: no-repeat;background-size: 100% 100%;
+                }
+                .img:hover{cursor: pointer;}
                 & > div.spot {
                   width: 16px;
                   height: 16px;
@@ -184,15 +210,6 @@ export default {
                 }
                 .spot_right {
                   right: -8px;
-                }
-                & > div:nth-child(1) { // 票内容样式
-                  width: 100%;text-align: center;
-                  height: 40px;
-                  line-height: 40px;
-                  margin-top: 20px;
-                  font-size: 20px;
-                  font-weight: 200;
-                  color: #fff;
                 }
                 .ticket-dtail {
                 width:80%;margin:auto;
@@ -209,9 +226,10 @@ export default {
             }
               .price {
               width: 100%;
-              margin-top: 20px;
               display: flex;
               position: relative;
+              margin-top: 5px;
+              padding-bottom: 15px;
               .ivu-btn-group {
               text-align: right;
               position: absolute;
@@ -220,11 +238,13 @@ export default {
               }
               & > div:nth-child(1) {
                 width: 250px;
-                font-size: 16px;
+                font-size: 18px;
                 color: #ed4014;
                 line-height: 32px;
               }
             }
+            & /deep/  .ivu-progress-show-info .ivu-progress-outer{padding-right:30px;}
+            & /deep/ .ivu-btn{position: relative;right: -5px}
           }
         }
       }

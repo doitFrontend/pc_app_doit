@@ -7,7 +7,10 @@
           </CarouselItem>
         </Carousel>
         <div style="display: flex;margin-top:20px;">
-            <div class="info sale_left">
+        </div>
+        <div class="sale">
+          <div class="sale_left">
+            <div class="info">
               <div class="title">
                 <span style="font-size:24px;margin-right:20px;">{{gymInfo.orgName}}</span>
                 <Icon color="rgba(233,0,33,1)" type="ios-star" v-for="n in 4" :key="n"></Icon><Icon color="rgba(233,0,33,1);" type="ios-star" v-if="9.4 >= baseRate"></Icon><Icon color="rgba(233,0,33,1)" type="ios-star-half" v-else></Icon>
@@ -68,9 +71,9 @@
                             <div>正常提供</div>
                           </div>
                         </Col>
-                        <Col span="4"><label>场馆场地：</label></Col>
+                        <Col span="4"><label>场馆地址：</label></Col>
                         <Col span="20">{{gymInfo.city}}{{gymInfo.county}}{{gymInfo.adressDetail}}</Col>
-                        <Col span="4"><label>场馆场地：</label></Col>
+                        <Col span="4"><label>场馆电话：</label></Col>
                         <Col span="20">13915263362</Col>
                       </Row>
                     </div>
@@ -86,26 +89,7 @@
                   </div>
               </div>
             </div>
-          <div class="sale_right">
-            <h2>场馆公告</h2>
-            <ul>
-              <li>
-                <p>场馆10月12日暂停营业通知</p>
-              </li>
-              <li>
-                <p>羽毛球场馆限时免费开放，快来玩啊</p>
-              </li>
-              <li>
-                <p>场馆将新增瑜伽项目，具体时间等通知</p>
-              </li>
-              <li>
-                <p>购买游泳年卡限时打折</p>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="sale">
-          <div class="sale_left">
+            <div style="height:20px; background: #f7f7f7;"></div>
             <Tabs :value="NOW_CHOSEN" type="card">
               <TabPane label="购票" name="ticket">
                 <book-ticket :orgId="gymInfo.orgId"></book-ticket>
@@ -119,6 +103,28 @@
             </Tabs>
           </div>
           <div class="sale_right">
+            <div style="padding:20px;text-align: center;background: #fff;" class="">
+              <img data-v-64778763="" src="/static/img/erweima.fccf08c.jpg" alt="" srcset="">
+              <p>关注场馆公众号</p>
+            </div>
+            <div>
+              <h2>场馆公告</h2>
+              <ul>
+                <li>
+                  <p>场馆10月12日暂停营业通知</p>
+                </li>
+                <li>
+                  <p>羽毛球场馆限时免费开放，快来玩啊</p>
+                </li>
+                <li>
+                  <p>场馆将新增瑜伽项目，具体时间等通知</p>
+                </li>
+                <li>
+                  <p>购买游泳年卡限时打折</p>
+                </li>
+              </ul>
+            </div>
+            <div style="height:40px; background: #f7f7f7;"></div>
             <h2>购买须知</h2>
             <ul>
               <li>
@@ -264,10 +270,10 @@ export default {
         }
         .inside {
           display: flex;
-          height: 100%;
+          height: calc(100% - 100px);
           .left {
             width: calc(100% - 300px);
-            height: 200px;
+            height: 320px;
           }
           .right {
             width: 300px;
@@ -281,7 +287,6 @@ export default {
         }
       }
       .sale {
-        margin-top: 4em;
         display: flex;
       }
       .sale_left {
@@ -290,16 +295,18 @@ export default {
         }
       .sale_right {
         width: 280px;
-        background: #fff;
-        border: 1px solid #e8eaec;
+        background: #f7f7f7;
         margin-left: 1em;
         h2 {
           width: 100%;
           line-height: 40px;
           background:rgba(237,241,242,1);
           padding-left: 20px;
+          margin-top: 20px;
         }
         ul {
+          background: #fff;
+          height: calc(220px + 2em);
           padding: 10px 20px;
           li {
             padding: 0.2em 0;
@@ -312,6 +319,10 @@ export default {
             }
             p:last-child{padding-left: 15px;}
           }
+        }
+        img{
+          width: 130px;
+          height: 130px;
         }
       }
     }

@@ -4,6 +4,7 @@ import Layout from '@/Layout';
 import Home from '@/pages/Home';
 import Gym from '@/pages/Gym';
 import GymDetails from '@/pages/GymDetails';
+import BookTicketDetail from '@/pages/BookTicketDetail';
 import Checkout from '@/pages/Checkout';
 import Payment from '@/pages/Payment';
 import Login from '@/pages/Login';
@@ -128,6 +129,11 @@ export default new Router({
           path: '/gym/:id',
           name: 'GymDetails',
           component: GymDetails,
+        },
+        {
+          path: '/GymDetails/:id',
+          name: 'BookTicketDetail',
+          component: BookTicketDetail,
         },
         {
           path: '/checkout',

@@ -8,7 +8,7 @@
       @after-enter="afterEnter">
       <div v-show="isBallShow" class="ball"></div>
     </transition>
-    <Button v-if="isShow" class="addnum" @click="addNum(item)"><Icon type="md-add" size="20" color="#fff"  style="position: relative;top:-3px"/></Button>
+    <Button v-if="isShow" class="addnum" @click="addNum(item)"><Icon type="md-add" size="20" color="#fff"  style="position: relative;top:-5px"/></Button>
     <Button v-else @click="addNum(item, 'true')" style="width:100px;font-size:14px;border-radius: 4px;color: #fff;background: #00A1E9;margin-right:5px;margin-top:3px;">加入购物车</Button>
   </ButtonGroup>
 </template>
@@ -69,16 +69,16 @@ export default {
     z-index: 100;
   }
   .ivu-btn{padding: 0;}
-  .ivu-btn-primary{background: #e5e5e5;border: none; width: 40px;height: 30px;color: #333333;font-size: 14px;line-height: 30px;}
+  .ivu-btn-primary{background: #e5e5e5;border: none; width: 40px;height: 26px;color: #333333;font-size: 14px;line-height: 26px;}
   .ivu-btn-group:not(.ivu-btn-group-vertical) > .ivu-btn:first-child,.ivu-btn-group:not(.ivu-btn-group-vertical)>.ivu-btn:last-child{
         border-radius: 32px;
         border-bottom-left-radius: 32px;
         border-top-left-radius: 32px;
-        width: 30px;
-        height: 30px;
+        width: 26px;
+        height: 26px;
         margin-left: 8px;
         margin-right: 8px;
-        background:rgb(0, 161, 233);;
+        background: #f76900;
         color: #fff;
         font-size: 18px;
         &:focus{outline: 0px}

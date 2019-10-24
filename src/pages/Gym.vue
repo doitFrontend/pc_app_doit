@@ -11,8 +11,8 @@
                   <div class="label">区&nbsp;&nbsp;&nbsp;&nbsp;域<span>|</span></div>
                 </Col>
                 <Col :sm="20" :md="20" :lg="20"  class="leibie2">
-                  <RadioGroup v-model="default_button" type="button">
-                    <Radio :label="default_button"></Radio>
+                  <RadioGroup v-model="default_button" type="button" @on-change="handleChange">
+                    <Radio label="所有"></Radio>
                     <Radio v-for="(item, index) in fData" :key="index" :label="item.label"></Radio>
                   </RadioGroup>
                 </Col>
@@ -24,8 +24,8 @@
                   <div class="label">项&nbsp;&nbsp;&nbsp;&nbsp;目<span>|</span></div>
                 </Col>
                 <Col :sm="20" :md="20" :lg="20"  class="leibie2">
-                  <RadioGroup v-model="default_button" type="button">
-                    <Radio :label="default_button"></Radio>
+                  <RadioGroup v-model="default_button1" type="button">
+                    <Radio label="所有"></Radio>
                     <Radio v-for="(item, index) in sData" :key="index" :label="item.label"></Radio>
                   </RadioGroup>
                 </Col>
@@ -35,7 +35,7 @@
         </div>
         <div class="container">
           <div class="inner">
-            <Row v-for="(item, i) in goodLists" :key="i">
+            <Row v-for="(item, i) in tempGoodLists" :key="i">
               <Col span="24">
                 <goods-item-new v-if="showType === 'pw' || showType === 'kw'" :arr="item.cardOrTicketMap.data" @getMoreItem="toSaleItem(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.orgImages" :baseRate="10">
                   <div class="text" slot="title">{{item.orgName}}</div>
@@ -135,8 +135,11 @@ export default {
   },
   data() {
     return {
+      default_button: '所有',
+      default_button1: '所有',
       spinShow: true,
       goodLists: [],
+      tempGoodLists: [],
       i_width: 220,
       fData: null,
       showType: '', // 展示模块
@@ -144,10 +147,22 @@ export default {
         { label: '游泳', value: '' },
         { label: '羽毛球', value: '' },
         { label: '篮球', value: '' },
-        { label: '瑜伽', value: '' },
-        { label: '器械健身', value: '' },
-        { label: '兵乓球', value: '' },
+        { label: '乒乓球', value: '' },
+        { label: '足球', value: '' },
+        { label: '健身', value: '' },
+        { label: '蹦床', value: '' },
+        { label: '攀岩', value: '' },
+        { label: '射击', value: '' },
+        { label: '射箭', value: '' },
         { label: '台球', value: '' },
+        { label: '滑雪', value: '' },
+        { label: '旱冰', value: '' },
+        { label: '直冰', value: '' },
+        { label: '冲浪', value: '' },
+        { label: '跳伞', value: '' },
+        { label: '风洞', value: '' },
+        { label: '垂钓', value: '' },
+        { label: '蹦极', value: '' },
       ],
       iconList: [
         { text: '灯光', icon: 'ios-arrow-down' },
@@ -158,12 +173,25 @@ export default {
   created() {
     this.circleList(cityData, localStorage.getItem('currentCity'));
   },
-  computed: {
-    default_button() {
-      return '所有';
-    },
-  },
+  // computed: {
+  //   default_button: {
+  //     get() {
+  //       return '所有';
+  //     },
+  //     set(newVal, oldVal) {
+
+  //     },
+  //   },
+  // },
   methods: {
+    handleChange(county) {
+      console.log(county);
+      if (county === '所有') {
+        this.tempGoodLists = this.goodLists.filter(item => item);
+      } else {
+        this.tempGoodLists = this.goodLists.filter(item => item.county === county);
+      }
+    },
     handleRoute(to, from) {
       this.spinShow = true;
       switch (to.path) {
@@ -209,6 +237,7 @@ export default {
         this.spinShow = false;
         if (res.data.code === 200) {
           this.goodLists = res.data.data;
+          this.tempGoodLists = this.goodLists;
         } else {
           this.$Message.warning(res.code);
         }
@@ -235,6 +264,7 @@ export default {
         this.spinShow = false;
         if (res) {
           this.goodLists = res.data;
+          this.tempGoodLists = this.goodLists;
         } else {
           this.$Message.warning(res);
         }

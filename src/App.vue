@@ -53,5 +53,5 @@
         bottom: 0;
         line-height: 36px
         }
-        #gymDetails .ivu-tabs-bar{background:#f2f6f8;border-bottom: 1px solid #f2f6f8;}
+        #gymDetails .ivu-tabs-bar{background:#f7f7f7;border-bottom: 1px solid #f2f6f8;}
 </style>

@@ -3,7 +3,7 @@
     <!-- <Button class="btn-remove" style="font-weight: 700" @click="minusNum(item)"><Icon type="md-remove" size="20" color="#bebebe" style="position: relative;top:-3px" /></Button> -->
     <!-- <Button v-show="isShow" type="primary">{{item.num}}</Button> -->
     <Button class="btn-remove" style="font-weight: 700" @click="minusNum(item)"><Icon type="md-remove" size="20" color="#333" style="position: relative;top:-3px" /></Button>
-    <Input v-model="item.num" placeholder="Enter something..." style="width: 50px;float:left;text-a" />
+    <Input v-model="item.num"  style="width: 50px;float:left;" />
     <!-- <transition
       @before-enter="beforeEnter"
       @enter="enter"

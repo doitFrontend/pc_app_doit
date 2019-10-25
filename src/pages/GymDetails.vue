@@ -62,13 +62,13 @@
                           </div>
                           <div class="item">
                             <c-icon type="tingche"  :size="28"></c-icon>
-                            <div>停车</div>
-                            <div>正常提供</div>
+                            <div>水质</div>
+                            <div>合格</div>
                           </div>
                           <div class="item">
                             <c-icon type="tingche"  :size="28"></c-icon>
-                            <div>停车</div>
-                            <div>正常提供</div>
+                            <div>饱和度</div>
+                            <div>繁忙</div>
                           </div>
                         </Col>
                         <Col span="4"><label>场馆地址：</label></Col>

@@ -1,6 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
+import VueAwesomeSwiper from 'vue-awesome-swiper';
 import router from './router';
 import store from './store';
 import App from './App';
@@ -23,6 +24,7 @@ import './theme/element_index.scss';
 import CIcon from './components/CIcon/index';
 import '../src/components/CIcon/iconfont/iconfont.css';
 import '../src/components/CIcon/iconfont1/iconfont.css';
+import 'swiper/dist/css/swiper.css';
 
 Vue.component('CIcon', CIcon);
 Vue.use(Autocomplete);
@@ -33,6 +35,7 @@ Vue.use(iView);
 Vue.use(BaiduMap, {
   ak: 'MfTf0gej32MGmr5pSm7qwVjN1vufeRjT',
 });
+Vue.use(VueAwesomeSwiper, /* { default global options } */);
 
 Vue.prototype.hasPermission = hasPermission;
 // 根据env获取路径

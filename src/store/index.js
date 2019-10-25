@@ -57,6 +57,18 @@ const mutations = {
       state.shoppingCartObj.ticketCart.push(ticketItem);
     }
   },
+  // 添加票
+  addTicket2(state, ticketItem) {
+    console.log(ticketItem);
+    let isExist = state.shoppingCartObj.ticketCart.find(item => item.sportId === ticketItem.sportId);
+    if (isExist) {
+      isExist.num++;
+      alert(isExist.num);
+    } else {
+      ticketItem.num = 1;
+      state.shoppingCartObj.ticketCart.push(ticketItem);
+    }
+  },
   // 添加卡
   addCard(state, itemOut) {
     let isExist = state.shoppingCartObj.cardCart.find(item => item.sportId === itemOut.sportId);
@@ -81,6 +93,16 @@ const mutations = {
   },
   // 删除票
   delTicket(state, ticketItem) {
+    let isExist = state.shoppingCartObj.ticketCart.find(item => item.sportId === ticketItem.sportId);
+    let isExistIndex = state.shoppingCartObj.ticketCart.findIndex(item => item.sportId === ticketItem.sportId);
+    if (isExist && isExist.num >= 1) {
+      isExist.num--;
+    } else {
+      state.shoppingCartObj.ticketCart.splice(isExistIndex, 1);
+    }
+  },
+  // 删除票
+  delTicket2(state, ticketItem) {
     let isExist = state.shoppingCartObj.ticketCart.find(item => item.sportId === ticketItem.sportId);
     let isExistIndex = state.shoppingCartObj.ticketCart.findIndex(item => item.sportId === ticketItem.sportId);
     if (isExist && isExist.num >= 1) {

@@ -4,34 +4,33 @@
       <div class="sale">
         <div class="sale_left">
           <div class="sale_info">
-            <div class="left wrap">
-              <div id="main">
-                <div class="featured-wrapper">
-                  <div id="featured-content">
-                    <div class="featured-post">
-                      <img src="../assets/1.jpg" alt="一组超酷的饮料类网站设计欣赏" class="featured-thumbnail " />
-                    </div>
-                    <div class="featured-post">
-                      <img src="../assets/2.jpg" alt="一组超酷的饮料类网站设计欣赏" class="featured-thumbnail " />
-                    </div>
-                    <div class="featured-post">
-                      <img src="../assets/3.jpg" alt="一组超酷的饮料类网站设计欣赏" class="featured-thumbnail " />
-                    </div>
-                    <div class="featured-post">
-                      <img src="../assets/4.jpg" alt="一组超酷的饮料类网站设计欣赏" class="featured-thumbnail " />
-                    </div>
-                  </div>
-                  <div id="slider-nav">
-                    <ul id="slide-thumbs">
-                      <li class><a><img src="../assets/1.jpg" alt="怎样给扁平化风格选择合适的字体（附字体案例）" class="slider-nav-thumbnail " /></a></li>
-                      <li class><a><img src="../assets/2.jpg" alt="怎样给扁平化风格选择合适的字体（附字体案例）" class="slider-nav-thumbnail " /></a></li>
-                      <li class><a><img src="../assets/3.jpg" alt="怎样给扁平化风格选择合适的字体（附字体案例）" class="slider-nav-thumbnail " /></a></li>
-                      <li class><a><img src="../assets/4.jpg" alt="怎样给扁平化风格选择合适的字体（附字体案例）" class="slider-nav-thumbnail " /></a></li>
-                      <li class><a><img src="../assets/5.jpg" alt="怎样给扁平化风格选择合适的字体（附字体案例）" class="slider-nav-thumbnail " /></a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+            <div class="left">
+              <template>
+                <!-- <md-card>
+                  <md-card-actions>
+                  </md-card-actions>
+                  <md-card-media  style="height: 500px"> -->
+                    <!-- swiper1 -->
+                    <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop">
+                      <swiper-slide class="slide-1"></swiper-slide>
+                      <swiper-slide class="slide-2"></swiper-slide>
+                      <swiper-slide class="slide-3"></swiper-slide>
+                      <swiper-slide class="slide-4"></swiper-slide>
+                      <swiper-slide class="slide-5"></swiper-slide>
+                      <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
+                      <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
+                    </swiper>
+                    <!-- swiper2 Thumbs -->
+                    <swiper :options="swiperOptionThumbs" class="gallery-thumbs" ref="swiperThumbs">
+                      <swiper-slide class="slide-1"></swiper-slide>
+                      <swiper-slide class="slide-2"></swiper-slide>
+                      <swiper-slide class="slide-3"></swiper-slide>
+                      <swiper-slide class="slide-4"></swiper-slide>
+                      <swiper-slide class="slide-5"></swiper-slide>
+                    </swiper>
+                  <!-- </md-card-media>
+                </md-card> -->
+              </template>
             </div>
             <div  class="right">
               <h3>瑜伽全天票</h3>
@@ -49,8 +48,11 @@
                 </Row>
                 <div><label>项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目</label><span>瑜伽</span></div>
               </div>
-              <div style="margin:10px 0 20px;"><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量</label></div>
-              <button data-v-434690d6="" type="button" class="ivu-btn ivu-btn-default" style="width: 140px; font-size: 14px; border-radius: 4px; color: rgb(255, 255, 255); background: rgb(0, 161, 233); margin-left: 20px; margin-top: 3px;"><span style=" padding-left: 0px;">加入购物车</span></button>
+              <div style="margin:10px 0 20px;">
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量</label>
+                <button-groups2 @countSum="countPriz" :item="gymInfo"></button-groups2>
+              </div>
+              <button data-v-434690d6="" type="button" class="ivu-btn ivu-btn-default" style="width: 120px; font-size: 14px;line-height:32px; border-radius: 4px; color: rgb(255, 255, 255); background: rgb(0, 161, 233); margin-left: 20px; margin-top: 3px;"><span style=" padding-left: 0px;">加入购物车</span></button>
             </div>
           </div>
           <div class="instructions">
@@ -59,41 +61,85 @@
               <div>
                 <label>配套服务</label>
                 <p>
-                  <ul><li><li></li></li></ul>
+                  <ul>
+                    <li class="item">
+                      <c-icon type="dengguang"  :size="28"></c-icon>
+                      <div>灯光</div>
+                      <div>正常提供</div>
+                    </li>
+                    <li class="item">
+                      <c-icon type="xiuxishi"  :size="28"></c-icon>
+                      <div>休息室</div>
+                      <div>200<i>/300</i></div>
+                    </li>
+                    <li class="item">
+                      <c-icon type="xiyu"  :size="28"></c-icon>
+                      <div>浴室</div>
+                      <div>正常提供</div>
+                    </li>
+                    <li class="item">
+                      <c-icon type="gengyigui"  :size="28"></c-icon>
+                        <div>更衣柜</div>
+                        <div>200<i>/300</i></div>
+                    </li>
+                    <li class="item">
+                      <c-icon type="wuxianwang"  :size="28"></c-icon>
+                      <div>无线网</div>
+                      <div>正常提供</div>
+                    </li>
+                    <li class="item">
+                      <c-icon type="tingche"  :size="28"></c-icon>
+                      <div>停车</div>
+                      <div>200<i>/300</i></div>
+                    </li>
+                    <li class="item">
+                      <c-icon type="tingche"  :size="28"></c-icon>
+                      <div>水质</div>
+                      <div>合格</div>
+                    </li>
+                    <li class="item">
+                      <c-icon type="tingche"  :size="28"></c-icon>
+                      <div>饱和度</div>
+                      <div>繁忙</div>
+                    </li>
+                  </ul>
                 </p>
               </div>
               <div>
                 <label>有效期</label>
-                <p>11111111111111</p>
+                <p>购买后90天内有效</p>
               </div>
               <div>
                 <label>使用时间</label>
-                <p>2222222222222</p>
+                <p>10:00~22:00</p>
               </div>
               <div>
                 <label>预约信息</label>
-                <p>33333333333</p>
+                <p>请您提前1天预约</p>
               </div>
               <div>
                 <label>适用人数</label>
-                <p>44444444444</p>
+                <p>每张票最多1人使用</p>
               </div>
               <div>
                 <label>适用人群</label>
-                <p></p>
+                <p>男女通用</p>
               </div>
               <div>
                 <label>使用规则</label>
-                <p></p>
+                <p>不再与其他优惠同享</p>
               </div>
               <div>
                 <label>温馨提示</label>
-                <p></p>
+                <p>为了保障您的权益，建议使用点拓线上支付。若使用其他支付方式导致纠纷，点拓不承担任何责任，感谢您的理解和支持！</p>
               </div>
             </div>
           </div>
           <div class="introduce">
             <h4><i></i>票介绍</h4>
+            <div class="img">
+              <img src="../assets/introduce.png" />
+            </div>
           </div>
         </div>
         <div class="sale_right">
@@ -117,31 +163,75 @@
           </ul>
         </div>
       </div>
+      <shopping-cart></shopping-cart>
     </div>
   </div>
 </template>
 <script>
-// import ButtonGroups from './ButtonGroups';
+// var slider_settings = { "timeout": "600" };
+import ButtonGroups2 from '@/components/ButtonGroups2';
+import ShoppingCart from '@/components/ShoppingCart';
+import 'swiper/dist/css/swiper.css';
+import { swiper, swiperSlide } from 'vue-awesome-swiper';
 export default {
   name: 'BookTicketDetail',
-  // components: {
-  // ButtonGroups,
-  // },
+  components: {
+    ButtonGroups2,
+    swiper,
+    swiperSlide,
+    ShoppingCart,
+  },
   data() {
     return {
-      tempGoodLists: [
-        {
-          project: '游泳',
-          num: 6,
+      isShow: true,
+      swiperOptionTop: {
+        spaceBetween: 10,
+        loop: true,
+        loopedSlides: 5,
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false
         },
-      ],
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }
+      },
+      swiperOptionThumbs: {
+        spaceBetween: 20,
+        slidesPerView: 5,
+        touchRatio: 0.2,
+        loop: true,
+        loopedSlides: 5,
+        slideToClickedSlide: true,
+      },
     };
   },
   created() {
     this.gymInfo = this.$route.query;
   },
-
+  mounted() {
+    this.$nextTick(() => {
+      const swiperTop = this.$refs.swiperTop.swiper;
+      const swiperThumbs = this.$refs.swiperThumbs.swiper;
+      swiperTop.controller.control = swiperThumbs;
+      swiperThumbs.controller.control = swiperTop;
+    });
+  },
   methods: {
+    countPriz({ item, sign }) {
+      if (sign === 'ADD') {
+        this.setToCart(item);
+      } else {
+        this.delFromCart(item);
+      }
+    },
+    setToCart(item) {
+      this.$store.commit('addTicket2', item);
+    },
+    delFromCart(item) {
+      this.$store.commit('delTicket2', item);
+    },
   },
 };
 </script>
@@ -156,68 +246,56 @@ export default {
       margin: auto;
       .sale {
         display: flex;
-        margin-top: 20px;
+        margin-top: 30px;
       }
       .sale_left {
           background: #fff;
           width: $g_left_width;
           .sale_info{
             display: flex;
-            .wrap {
+            .left {
               width: 420px;
-              position: relative;
+              .swiper-container {
+                background-color: #fff;
+              }
+              .swiper-slide {
+                background-size: cover;
+                background-position: center;
+                &.slide-1 {
+                  background-image:url('../assets/ticket1.png');
+                }
+                &.slide-2 {
+                  background-image:url('../assets/2.png');
+                }
+                &.slide-3 {
+                  background-image:url('../assets/3.png');
+                }
+                &.slide-4 {
+                  background-image:url('../assets/4.png');
+                }
+                &.slide-5 {
+                  background-image:url('../assets/5.png');
+                }
+              }
+              & /deep/.swiper-slide{height: 420px;width: 420px;}
+              .gallery-top {
+                height: 420px;
+                width: 420px;
+              }
+              .gallery-thumbs {
+                height: 20%!important;
+                box-sizing: border-box;
+                padding: 20px 0;
+              }
+              .gallery-thumbs .swiper-slide {
+                width: 20%;
+                height: 70px!important;
+                opacity: 0.4;
+              }
+              .gallery-thumbs .swiper-slide-active {
+                opacity: 1;
+              }
             }
-            #main {
-              clear: both;
-              width: 100%;
-              margin: 0 auto;
-              position: relative;
-              padding-top:10px;
-            }
-            .featured-wrapper {
-              float: right;
-              margin-bottom: 30px;
-              width: 100%;
-              overflow: hidden;
-              position: relative;
-              z-index: 1;
-            }
-            #featured-content {
-              position: relative;
-              margin-bottom: 20px;
-              height:420px;
-              overflow:hidden;
-            }
-            .featured-post {
-              position: relative;
-              overflow: hidden;
-              float: left;
-            }
-            .featured-post img{width: 420px;height: 420px;}
-            #slider-nav {
-              position: relative;
-              width: 120%;
-              overflow: hidden;
-              padding: 0;
-              margin: 0;
-            }
-            #slide-thumbs {
-              width: 100%;
-              margin: 0;
-            }
-            #slider-nav li {
-              float: left;
-              list-style: none;
-              width: 60px;
-              margin: 0 30px 0 0px;
-            }
-            #slider-nav li a, #slider-nav li a:visited {
-              border-bottom: none;
-              padding: 0;
-            }
-            #slider-nav li.last { margin-right: 0; }
-            #slider-nav li img { max-width: 100%;height: 60px; }
-            .activeSlide img { opacity: 0.3!important; }
             .right{
               margin-left: 40px;
               margin-right: 30px;
@@ -226,6 +304,8 @@ export default {
                 text-indent: 10px;
                 font-size: 16px;
                 font-weight: normal;
+                line-height: 20px;
+                margin-bottom: 15px;
               }
               .info{
                 width: 440px;
@@ -242,15 +322,37 @@ export default {
                   display: none;
                   }
               }
-              label{display: block;color: #888;}
-              span{padding-left: 20px;display: block;}
+              label{display: inline-block;color: #888;margin-right: 20px;}
+              span{display: block;}
             }
           }
           .instructions{
-            line-height: 30px;
+            line-height: 32px;
+            font-size: 14px;
+            margin-bottom: 20px;
             >div>div{display: flex;}
-            ul li{list-style: none;}
+            >div>div:first-child{margin: 20px 0 10px 0}
+            ul li{
+              list-style: none;
+              background: #F8F8F8;
+              width: 70px;
+              height: 70px;
+              display: inline-block;
+              margin-right: 15px;
+              border-radius:4px;
+              text-align: center;
+              font-size: 12px;
+              line-height: 18px;
+              i{font-style: normal;}
+              }
             label{margin-right: 30px;width: 60px;font-size: 14px;color: #333333;}
+          }
+          .introduce{
+            .img{
+              height: auto;
+              max-width: 100%;
+              border-radius: 4px;
+            }
           }
           h4{
             font-size: 14px;
@@ -264,10 +366,7 @@ export default {
         }
       .sale_right {
         width: 280px;
-        background: #f7f7f7;
         margin-left: 1em;
-        border:1px solid rgba(243,243,243,1);
-        margin-top: 10px;
         h2 {
           width: 100%;
           line-height: 40px;
@@ -275,10 +374,13 @@ export default {
           padding-left: 20px;
           font-size: 16px;
           font-weight: normal;
+          border:1px solid rgba(243,243,243,1);
+          border-bottom: none;
           }
         ul {
           background: #fff;
           padding: 10px 0 10px 0;
+          border:1px solid rgba(243,243,243,1);
           li {
             padding: 10px 30px;
             list-style-type:none;
@@ -294,7 +396,6 @@ export default {
               border-radius: 10px;background-repeat: no-repeat;
               background-size: 100% 100%;
               margin-bottom: 10px;
-              border: #f7f7f7 solid 1px;
               }
         }
         img{

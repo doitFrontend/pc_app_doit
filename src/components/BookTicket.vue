@@ -46,8 +46,11 @@
                           <Progress :percent="25" />
                       </template>
                       </Col>
-                      <Col :sm="6" :md="6" :lg="6"  class="leibie">
+                      <Col v-if="percent > 80" :sm="6" :md="6" :lg="6"  class="leibie">
                         已售25%
+                      </Col>
+                      <Col v-else :sm="6" :md="6" :lg="6"  class="leibie">
+                        即将售罄
                       </Col>
                     </Row>
                   </div>
@@ -115,6 +118,7 @@ export default {
       }
     },
     countPriz({ item, sign }) {
+        console.log(item);
       if (sign === 'ADD') {
         this.setToCart(item);
       } else {

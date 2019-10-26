@@ -63,7 +63,6 @@ const mutations = {
     let isExist = state.shoppingCartObj.ticketCart.find(item => item.sportId === ticketItem.sportId);
     if (isExist) {
       isExist.num++;
-      alert(isExist.num);
     } else {
       ticketItem.num = 1;
       state.shoppingCartObj.ticketCart.push(ticketItem);

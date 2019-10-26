@@ -101,6 +101,72 @@
                 <book-field :orgId="gymInfo.orgId"></book-field>
               </TabPane>
             </Tabs>
+            <div class="comment">
+              <h3>用户点评<span>（231）</span></h3>
+              <div class="totalScore">
+                <div>
+                  <span>4.8</span>
+                  <label>综合评分</label>
+                </div>
+                <div>
+                  <label>环境好<span>(24)</span></label>
+                  <label>性价比高<span>(36)</span></label>
+                  <label>配套服务好<span>(36)</span></label>
+                  <label>停车方便<span>(36)</span></label>
+                  <label>便宜<span>(36)</span></label>
+                </div>
+              </div>
+              <div class="title"><label>环境好<span>(24)</span></label><label>环境好<span>(24)</span></label></div>
+              <ul>
+                <li>
+                  <div>
+                    <div class="head"><img src="http://img.doit10019.com/d794cf31-b29f-4dc0-8e93-63d9f707d674"/></div>
+                    <div class="name">柔***光</div>
+                  </div>
+                  <div>
+                  <div>
+                    <Row>
+                      <Col :sm="12" :md="12" :lg="12" >
+                        <template>
+                          <Rate show-text allow-half disabled v-model="valueDisabled"></Rate>
+                      </template>
+                      </Col>
+                      <Col :sm="12" :md="12" :lg="12"  style="text-align:right;color:#BEBEBE">
+                      2019-10-18 11:26:32
+                      </Col>
+                    </Row>
+                  </div>
+                  
+                    <p>昨天中午去的，刚好水池在还水，当时游泳的人不是很多，环境还不错，水也比较干净，宝贝玩地都不愿回家，下午人渐渐 多了。不过美中不足的是:长头发游泳出来，没有吹风机吹头发，只能自然干！小伙伴们值得考虑哦。</p>
+                    <dl>
+                      <dd><img src="/static/img/erweima.fccf08c.jpg"/></dd>
+                      <dd><img src="/static/img/erweima.fccf08c.jpg"/></dd>
+                      <dd><img src="/static/img/erweima.fccf08c.jpg"/></dd>
+                      <dd><img src="/static/img/erweima.fccf08c.jpg"/></dd>
+                    </dl>
+                    <label>篮球成年人年卡</label>
+                    <p><label>南京信息工程大学体育馆回复：</label>非常感谢您的支持，对于您提出的意见我们也会及时改正，不断提高我们的服务水准，欢迎 再次光临。</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <div class="head"><img src="http://img.doit10019.com/d794cf31-b29f-4dc0-8e93-63d9f707d674"/></div>
+                    <div class="name">柔***光</div>
+                  </div>
+                  <div>
+                    <p>昨天中午去的，刚好水池在还水，当时游泳的人不是很多，环境还不错，水也比较干净，宝贝玩地都不愿回家，下午人渐渐 多了。不过美中不足的是:长头发游泳出来，没有吹风机吹头发，只能自然干！小伙伴们值得考虑哦。</p>
+                    <dl>
+                      <dd><img src="/static/img/erweima.fccf08c.jpg"/></dd>
+                      <dd><img src="/static/img/erweima.fccf08c.jpg"/></dd>
+                      <dd><img src="/static/img/erweima.fccf08c.jpg"/></dd>
+                      <dd><img src="/static/img/erweima.fccf08c.jpg"/></dd>
+                    </dl>
+                    <label>篮球成年人年卡</label>
+                    <p><label>南京信息工程大学体育馆回复：</label>非常感谢您的支持，对于您提出的意见我们也会及时改正，不断提高我们的服务水准，欢迎 再次光临。</p>
+                  </div>
+                </li>
+              </ul>
+              </div>
           </div>
           <div class="sale_right">
             <div style="padding:20px;text-align: center;background: #fff;" class="">
@@ -166,6 +232,7 @@ export default {
       zoom: 17,
       img: 'http://img.doit10019.com/2ba448d7-67ba-4620-b835-b5c5cbca6f09',
       NOW_CHOSEN: 'ticket',
+      valueDisabled: 3.8
     };
   },
   created() {
@@ -285,6 +352,74 @@ export default {
             }
           }
         }
+      }
+      .comment{     
+        background: rgb(248, 248, 248);
+        line-height: 30px;
+        h3{
+          font-size: 16px;
+          color: #333;
+          line-height: 50px;
+          font-weight: normal;
+        }
+        .totalScore{
+          background: #fff;
+          padding: 20px 30px;
+          display: flex;
+          div:first-child span{
+          color: #00A1E9;
+          font-size: 36px;
+          display: block;
+          }
+          div:last-child{
+            margin-left: 30px;
+            margin-top: 20px;
+            label{
+            padding:  2px 10px;
+            margin: 10px 5px;
+            border:1px solid rgba(0,161,233,1);
+            color: #00A1E9;
+            border-radius:4px;
+            }      
+          }
+          }
+          .title{
+            height:30px;
+            background:rgba(225,242,250,1);
+            label{margin-left: 30px;}
+            label:first-child{color: #00A1E9}
+          }
+          .head,.head img{width: 54px;height: 54px;border-radius:50%;}
+          ul li{
+            list-style: none;
+            padding: 30px 30px 0px 30px;
+            background: #fff;
+            display: flex;
+            line-height: 28px;
+            > div:first-child{
+              width: 54px;
+              margin-right: 30px;
+              text-align: center;
+            }
+            > div:last-child{border-bottom: solid 1px #F3F3F3;padding-bottom: 30px;}
+            p{font-size: 14px;color: #6D6D6D}
+            dl{
+              dd{display: inline-block}
+              dd img{width: 140px;max-height: 140px;}
+            }
+            label{color: #BEBEBE}
+            p:last-child{
+              color: #00A1E9;
+              label{color: #00A1E9;}
+            }
+            & /deep/ .ivu-rate-star{color: red;font-size: 14px;}
+            & /deep/ .ivu-rate-star-half .ivu-rate-star-content:before, & /deep/ .ivu-rate-star-full:before {
+              color:red;
+              }
+            .leibie label{
+              height: 24px;line-height: 24;padding: 0 10px;background: #F3F3F3;border-radius:12px;color: #333;display: inline-block
+            }
+          }
       }
       .sale {
         display: flex;

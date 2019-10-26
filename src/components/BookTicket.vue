@@ -118,7 +118,7 @@ export default {
       }
     },
     countPriz({ item, sign }) {
-        console.log(item);
+      console.log(item);
       if (sign === 'ADD') {
         this.setToCart(item);
       } else {

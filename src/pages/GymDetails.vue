@@ -136,8 +136,7 @@
                       </Col>
                     </Row>
                   </div>
-                  
-                    <p>昨天中午去的，刚好水池在还水，当时游泳的人不是很多，环境还不错，水也比较干净，宝贝玩地都不愿回家，下午人渐渐 多了。不过美中不足的是:长头发游泳出来，没有吹风机吹头发，只能自然干！小伙伴们值得考虑哦。</p>
+                  <p>昨天中午去的，刚好水池在还水，当时游泳的人不是很多，环境还不错，水也比较干净，宝贝玩地都不愿回家，下午人渐渐 多了。不过美中不足的是:长头发游泳出来，没有吹风机吹头发，只能自然干！小伙伴们值得考虑哦。</p>
                     <dl>
                       <dd><img src="/static/img/erweima.fccf08c.jpg"/></dd>
                       <dd><img src="/static/img/erweima.fccf08c.jpg"/></dd>
@@ -353,7 +352,7 @@ export default {
           }
         }
       }
-      .comment{     
+      .comment{
         background: rgb(248, 248, 248);
         line-height: 30px;
         h3{
@@ -380,8 +379,8 @@ export default {
             border:1px solid rgba(0,161,233,1);
             color: #00A1E9;
             border-radius:4px;
-            }      
-          }
+              }
+            }
           }
           .title{
             height:30px;

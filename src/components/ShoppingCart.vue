@@ -114,7 +114,7 @@ export default {
 @mixin item {
   background: #fff;
   .title {
-    padding: 2px 2em;
+    padding: 5px 2em;
     width: 100%;
     background: #EDF1F2;
   }

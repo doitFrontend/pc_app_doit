@@ -109,7 +109,7 @@
         <h3 style="marginLeft: 1em;margin-top:5px;">猜你喜欢</h3>
         <Row v-for="(item, i) in goodLists" :key="i">
           <Col span="24">
-            <goods-item :imgSrc="item.orgImages" :i_height="130" :baseRate="10">
+            <goods-item :imgSrc="item.orgImages" :i_height="130" :baseRate="10"  @goodItemDetails="toSaleItem(item)">
               <span slot="title">{{item.orgName}}</span>
               <span slot="rate">201 条评价</span>
               <span slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</span>
@@ -213,6 +213,7 @@ export default {
     //   });
     // },
     toSaleItem(item) {
+      // alert(11);
       this.$router.push({
         path: `gym/${item.orgId}`,
         query: item,

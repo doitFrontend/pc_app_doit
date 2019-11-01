@@ -5,6 +5,8 @@ import Home from '@/pages/Home';
 import Gym from '@/pages/Gym';
 import GymDetails from '@/pages/GymDetails';
 import BookTicketDetail from '@/pages/BookTicketDetail';
+import BookTrainDetail from '@/pages/BookTrainDetail';
+import BookMallDetail from '@/pages/BookMallDetail';
 import Checkout from '@/pages/Checkout';
 import Payment from '@/pages/Payment';
 import Login from '@/pages/Login';
@@ -126,6 +128,16 @@ export default new Router({
           alias: '/bookField',
         },
         {
+          path: '/gym3',
+          component: Gym,
+          alias: '/train',
+        },
+        {
+          path: '/gym4',
+          component: Gym,
+          alias: '/mall',
+        },
+        {
           path: '/gym/:id',
           name: 'GymDetails',
           component: GymDetails,
@@ -134,6 +146,16 @@ export default new Router({
           path: '/GymDetails/:id',
           name: 'BookTicketDetail',
           component: BookTicketDetail,
+        },
+        {
+          path: '/GymDetails2/:id',
+          name: 'BookTrainDetail',
+          component: BookTrainDetail,
+        },
+        {
+          path: '/GymDetails3/:id',
+          name: 'BookMallDetail',
+          component: BookMallDetail,
         },
         {
           path: '/checkout',

@@ -26,7 +26,7 @@
           <!-- <div><span></span>上课专属</div> -->
         </div>
     </div>
-    <div v-if="!fieldTypeList.length">暂无数据</div>
+    <div v-if="!fieldTypeList.length" style="text-align: center;line-height:100px;">暂无数据</div>
     <div v-else class="table">
       <div class="line" ref="line"></div>
       <div class="container">

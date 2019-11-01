@@ -13,10 +13,14 @@ const state = {
     ticketCart: [],
     cardCart: [],
     fieldCart: [],
+    trainList: [],
+    mallList: [],
   },
   ticketList: [],
   cardList: [],
   fieldList: [],
+  trainList: [],
+  mallList: [],
 };
 
 const getters = {
@@ -127,6 +131,12 @@ const mutations = {
   // 获取所有卡数据
   setCardList(state, data) {
     state.cardList = data; // 把异步（actions）中获取的数据赋值给state
+  },
+  setTrainList(state, data) {
+    state.trainList = data; // 把异步（actions）中获取的数据赋值给state
+  },
+  setMallList(state, data) {
+    state.mallList = data; // 把异步（actions）中获取的数据赋值给state
   }
 };
 
@@ -168,6 +178,51 @@ const actions = {
     }).then(res => {
       if (res.data.code === 200) {
         context.commit('setCardList', res.data.data);
+      } else {
+        this.$Message.warning(res.code);
+      }
+    }).catch(error => {
+      console.log(error);
+    });
+  },
+  getTrainList(context) {
+    let data = {
+      deliveryTerminal: '门户端',
+      gamesNum: '',
+      orgId: localStorage.getItem('orgId'),
+      timeSolt: '',
+      type: 'kc',
+    };
+    $axios({
+      method: 'POST',
+      url: 'listApiCourse.do',
+      data: data,
+    }).then(res => {
+      if (res.data.code === 200) {
+        context.commit('setTrainList', JSON.parse(res.data.data));
+      } else {
+        this.$Message.warning(res.code);
+      }
+    }).catch(error => {
+      console.log(error);
+    });
+  },
+  getMallList(context) {
+    let data = {
+      deliveryTerminal: '门户端',
+      gamesNum: '',
+      orgId: localStorage.getItem('orgId'),
+      productTypeId: '1eaf327dd46211e984598866394de9ee',
+      orgId_inList: ['0be0cef1d45f11e984598866394de9ee'],
+    };
+    $axios({
+      method: 'POST',
+      url: 'selectByProductTypeId.do',
+      data: data,
+    }).then(res => {
+      if (res.data.code === 200) {
+        console.log(res.data.data);
+        context.commit('setMallList', res.data.data);
       } else {
         this.$Message.warning(res.code);
       }

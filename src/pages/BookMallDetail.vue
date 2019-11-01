@@ -1,5 +1,5 @@
 <template>
-  <div id="bookTrainDetail">
+  <div  id="bookMallDetail">
     <div class="inner">
       <div class="sale">
         <div class="sale_left">
@@ -33,9 +33,9 @@
               </template>
             </div>
             <div  class="right">
-              <h3>{{gymInfo.sportItem}}</h3>
+              <h3>{{gymInfo.productPurchaseAndSale.productName}}</h3>
               <div class="info">
-                <div><label>价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格</label><span>￥{{gymInfo.price | toFixed(2)}}</span></div>
+                <div><label>价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格</label><span>￥{{gymInfo.productSalePrice}}</span></div>
                 <Row>
                   <Col :sm="12" :md="12" :lg="12"  class="leibie">
                     <template>
@@ -46,38 +46,24 @@
                     已售25%
                   </Col>
                 </Row>
-                <div><label>项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目</label><span>{{gymInfo.sportItem}}</span></div>
+                <div><label>项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目</label><span>{{JSON.parse(gymInfo.codeReplay)[1]}}</span></div>
+                <div><label>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</label><span>{{JSON.parse(gymInfo.codeReplay)[3]}}</span></div>
               </div>
               <ul style="margin:10px 0 20px;">
                 <li>
-                  <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;课&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时</label>
+                  <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;颜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色</label>
                   <radio-group v-model="buttonSize" type="button">
-                    <radio>10天</radio>
-                    <radio>1个月</radio>
-                    <radio>3个月</radio>
+                    <radio>黑色布帽</radio>
+                    <radio>红色布帽</radio>
                   </radio-group>
                 </li>
                 <li>
-                  <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;难&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度</label>
+                  <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;尺&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>
                   <radio-group v-model="buttonSize" type="button">
-                    <radio>初级</radio>
-                    <radio>中级</radio>
-                    <radio>高级</radio>
-                  </radio-group>
-                </li>
-                <li>
-                  <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;教&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;练</label>
-                  <radio-group v-model="buttonSize" type="button">
-                    <radio>吴晓达</radio>
-                    <radio>董晓珠</radio>
-                  </radio-group>
-                </li>
-                <li>
-                  <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;周&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;次</label>
-                  <radio-group v-model="buttonSize" type="button">
-                    <radio>一三五</radio>
-                    <radio>二四六</radio>
-                    <radio>双休日</radio>
+                    <radio>M</radio>
+                    <radio>L</radio>
+                    <radio>XL</radio>
+                    <radio>XXL</radio>
                   </radio-group>
                 </li>
                 <li>
@@ -90,99 +76,35 @@
             </div>
           </div>
           <div class="instructions">
-            <h4><i></i>报名须知</h4>
-            <div>
-              <div>
-                <label>开课时间</label>
-                <p>2019-11-01</p>
-              </div>
-              <div>
-                <label>报名对象</label>
-                <p>全年龄段</p>
-              </div>
-              <div>
-                <label>上课地址</label>
-                <p>南通市港闸区市北路33号</p>
-              </div>
-              <div>
-                <label>联系电话</label>
-                <p>0513-87690802</p>
-              </div>
-            </div>
-          </div>
-          <div class="instructions">
             <h4><i></i>购买须知</h4>
             <div>
-              <div calss="fw">
-                <label>配套服务</label>
-                <p>
-                  <ul>
-                    <li class="item">
-                      <c-icon type="dengguang"  :size="28"></c-icon>
-                      <div>灯光</div>
-                      <div>正常提供</div>
-                    </li>
-                    <li class="item">
-                      <c-icon type="xiuxishi"  :size="28"></c-icon>
-                      <div>休息室</div>
-                      <div>200<i>/300</i></div>
-                    </li>
-                    <li class="item">
-                      <c-icon type="xiyu"  :size="28"></c-icon>
-                      <div>浴室</div>
-                      <div>正常提供</div>
-                    </li>
-                    <li class="item">
-                      <c-icon type="gengyigui"  :size="28"></c-icon>
-                        <div>更衣柜</div>
-                        <div>200<i>/300</i></div>
-                    </li>
-                    <li class="item">
-                      <c-icon type="wuxianwang"  :size="28"></c-icon>
-                      <div>无线网</div>
-                      <div>正常提供</div>
-                    </li>
-                    <li class="item">
-                      <c-icon type="tingche"  :size="28"></c-icon>
-                      <div>停车</div>
-                      <div>200<i>/300</i></div>
-                    </li>
-                    <li class="item">
-                      <c-icon type="tingche"  :size="28"></c-icon>
-                      <div>水质</div>
-                      <div>合格</div>
-                    </li>
-                    <li class="item">
-                      <c-icon type="tingche"  :size="28"></c-icon>
-                      <div>饱和度</div>
-                      <div>繁忙</div>
-                    </li>
-                  </ul>
-                </p>
+              <div>
+                <label>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌</label>
+                <p>李宁(LI-NING)</p>
               </div>
               <div>
-                <label>有效期</label>
-                <p>购买后90天内有效</p>
+                <label>货&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</label>
+                <p>LSMP151</p>
               </div>
               <div>
-                <label>使用时间</label>
-                <p>10:00~22:00</p>
+                <label>使用人群</label>
+                <p>通用</p>
               </div>
               <div>
-                <label>预约信息</label>
-                <p>请您提前1天预约</p>
+                <label>吊&nbsp;&nbsp;牌&nbsp;&nbsp;价</label>
+                <p>36.00</p>
               </div>
               <div>
-                <label>适用人数</label>
-                <p>每张票最多1人使用</p>
+                <label>上市时间</label>
+                <p>2019年</p>
               </div>
               <div>
-                <label>适用人群</label>
-                <p>男女通用</p>
+                <label>款&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;式</label>
+                <p>纯色泳帽</p>
               </div>
               <div>
-                <label>使用规则</label>
-                <p>不再与其他优惠同享</p>
+                <label>材&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;质</label>
+                <p>布艺</p>
               </div>
               <div>
                 <label>温馨提示</label>
@@ -190,56 +112,8 @@
               </div>
             </div>
           </div>
-          <div class="teachers">
-            <h4><i></i>教员介绍</h4>
-            <Row>
-              <Col :sm="6" :md="6" :lg="6">
-                <div>
-                  <dl>
-                    <dd><img src="../assets/introduce.png" /></dd>
-                    <dt><div>唐小肉</div><div><span>5年教龄</span><i>|</i><span>游泳</span></div></dt>
-                  </dl>
-                  <p>简介：国家二级运动员、游泳社会体育指导员,，擅长从细节中把握学生的技术特点，总结其游泳特点，帮助他形成个人技术优势，有效提高游泳成绩。</p>
-                  <a>了解更多</a>
-                </div>
-              </Col>
-              <Col :sm="6" :md="6" :lg="6">
-                <div>
-                  <dl>
-                    <dd><img src="../assets/introduce.png" /></dd>
-                    <dt><div>唐小肉</div><div><span>5年教龄</span><i>|</i><span>游泳</span></div></dt>
-                  </dl>
-                  <p>简介：国家二级运动员、游泳社会体育指导员,，擅长从细节中把握学生的技术特点，总结其游泳特点，帮助他形成个人技术优势，有效提高游泳成绩。</p>
-                  <a>了解更多</a>
-                </div>
-              </Col>
-              <Col :sm="6" :md="6" :lg="6">
-                <div>
-                  <dl>
-                    <dd><img src="../assets/introduce.png" /></dd>
-                    <dt><div>唐小肉</div><div><span>5年教龄</span><i>|</i><span>游泳</span></div></dt>
-                  </dl>
-                  <p>简介：国家二级运动员、游泳社会体育指导员,，擅长从细节中把握学生的技术特点，总结其游泳特点，帮助他形成个人技术优势，有效提高游泳成绩。</p>
-                  <a>了解更多</a>
-                </div>
-              </Col>
-              <Col :sm="6" :md="6" :lg="6">
-                <div>
-                  <dl>
-                    <dd><img src="../assets/introduce.png" /></dd>
-                    <dt><div>唐小肉</div><div><span>5年教龄</span><i>|</i><span>游泳</span></div></dt>
-                  </dl>
-                  <p>简介：国家二级运动员、游泳社会体育指导员,，擅长从细节中把握学生的技术特点，总结其游泳特点，帮助他形成个人技术优势，有效提高游泳成绩。</p>
-                  <a>了解更多</a>
-                </div>
-              </Col>
-            </Row>
-          </div>
           <div class="introduce">
-            <h4><i></i>商家介绍</h4>
-            <div>
-              <P>瀚泽零基础游泳教练培训学校，拥有优秀的培训导师团队，以及更加全面的游泳知识教学，让你在较短的时间掌握技能，考取证书，成功就业！（所有培训合格学员推荐安排救生证和社会体育指导员证，证件考取后可推荐就业）</P>
-            </div>
+            <h4><i></i>商品介绍</h4>
             <div class="img">
               <img src="../assets/introduce.png" />
             </div>
@@ -277,7 +151,7 @@ import ShoppingCart from '@/components/ShoppingCart';
 import 'swiper/dist/css/swiper.css';
 import { swiper, swiperSlide } from 'vue-awesome-swiper';
 export default {
-  name: 'BookTicketDetail',
+  name: 'BookMallDetail',
   components: {
     ButtonGroups2,
     swiper,
@@ -340,7 +214,7 @@ export default {
 </script>
 <style lang="scss" scoped>
   $sub_height: 470px;
-  #bookTrainDetail {
+  #bookMallDetail {
     padding-bottom: 6em;
     background: #fff;
     .inner {

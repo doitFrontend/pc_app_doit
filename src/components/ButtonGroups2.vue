@@ -1,8 +1,8 @@
 <template>
   <ButtonGroup shape="circle">
-    <Button class="btn-remove" style="font-weight: 700" @click="minusNum(item)"><Icon type="md-remove" size="20" color="#333" style="position: relative;top:-3px" /></Button>
-    <Input v-model="item.num" placeholder="Enter something..." style="width: 50px;float:left;"/>
-    <Button class="addnum" @click="addNum(item)"><Icon type="md-add" size="20" color="#333" style="position: relative;top:-3px"/></Button>
+    <Button class="btn-remove" style="font-weight: 700" @click="minusNum(item)"><Icon type="md-remove" size="14" color="#333" style="position: relative;top:-7px" /></Button>
+    <Input v-model="item.num" placeholder="Enter something..." style="width: 50px;float:left;border-radius: 0 !important;position: relative;"/>
+    <Button class="addnum" @click="addNum(item)"><Icon type="md-add" size="14" color="#333" style="position: relative;top:-7px"/></Button>
     <!-- <Button  type="primary"  style="position: relative;left:-100px;z-index:-10">{{item.num}}</Button> -->
   </ButtonGroup>
 </template>
@@ -59,15 +59,19 @@ export default {
     z-index: 100;
   }
   .ivu-btn{padding: 0;}
+    .ivu-btn-group{ margin:0 5px;}
   .ivu-btn-primary{background: #e5e5e5;border: none; width: 40px;height: 30px;color: #333333;font-size: 14px;line-height: 30px;}
   .ivu-btn-group:not(.ivu-btn-group-vertical) > .ivu-btn:first-child,.ivu-btn-group:not(.ivu-btn-group-vertical)>.ivu-btn:nth-child(3){
-        border-radius: 32px;
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 22px;
+        margin:0 -5px;
         color: #fff;
-        margin: 0 15px;
         font-size: 18px;
+        z-index:10;
         &:focus{outline: 0px}
+  }
+  .ivu-btn-group-circle .ivu-btn{
+        border-radius: 4px;
   }
   .btn-remove{background: #f7f7f7 !important;text-align: center}
 

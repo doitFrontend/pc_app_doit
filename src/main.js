@@ -64,7 +64,7 @@ iView.LoadingBar.config({
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
   // to and from are both route objects. must call `next`.
-  let notOpenUrl = ['/train', '/games', 'mall', '/community'];
+  let notOpenUrl = ['/games', '/community'];
   if (notOpenUrl.indexOf(to.fullPath) !== -1) {
     next({
       path: '/404',

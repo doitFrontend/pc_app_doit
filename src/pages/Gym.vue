@@ -11,7 +11,7 @@
                   <div class="label">区&nbsp;&nbsp;&nbsp;&nbsp;域<span>|</span></div>
                 </Col>
                 <Col :sm="20" :md="20" :lg="20"  class="leibie2">
-                  <RadioGroup v-model="default_button" type="button" @on-change="handleChange">
+                  <RadioGroup v-model="default_button" type="button" @on-change="handleChange(default_button, '')">
                     <Radio label="所有"></Radio>
                     <Radio v-for="(item, index) in fData" :key="index" :label="item.label"></Radio>
                   </RadioGroup>
@@ -24,7 +24,7 @@
                   <div class="label">项&nbsp;&nbsp;&nbsp;&nbsp;目<span>|</span></div>
                 </Col>
                 <Col :sm="20" :md="20" :lg="20"  class="leibie2">
-                  <RadioGroup v-model="default_button1" type="button">
+                  <RadioGroup v-model="default_button1" type="button" @on-change="handleChange('', default_button1)">
                     <Radio label="所有"></Radio>
                     <Radio v-for="(item, index) in sData" :key="index" :label="item.label"></Radio>
                   </RadioGroup>
@@ -184,13 +184,33 @@ export default {
   //   },
   // },
   methods: {
-    handleChange(county) {
-      console.log(county);
-      if (county === '所有') {
-        this.tempGoodLists = this.goodLists.filter(item => item);
-      } else {
-        this.tempGoodLists = this.goodLists.filter(item => item.county === county);
-      }
+    handleChange(county, rcode_likeDouble) {
+      this.fetchData('pw', county, rcode_likeDouble);
+      // console.log(county);
+      // console.log(rcode_likeDouble);
+      // if (rcode_likeDouble === '所有') {
+      //   this.tempGoodLists = this.goodLists.filter(item => item);
+      // } else {
+      //   this.tempGoodLists = this.goodLists.filter(item => item.rcode_likeDouble === rcode_likeDouble);
+      // }
+      // if (county === '所有') {
+      //   this.tempGoodLists = this.goodLists.filter(item => item);
+      // } else {
+      //   this.tempGoodLists = this.goodLists.filter(item => item.county === county);
+      // }
+      // if (county === '所有') {
+      //   if (rcode_likeDouble === '所有') {
+      //     this.tempGoodLists = this.goodLists.filter(item => item);
+      //   } else {
+      //     this.tempGoodLists = this.goodLists.filter(item => item.rcode_likeDouble === rcode_likeDouble);
+      //   }
+      // } else {
+      //   if (rcode_likeDouble === '所有') {
+      //     this.tempGoodLists = this.goodLists.filter(item => item.county === county);
+      //   } else {
+      //     this.tempGoodLists = this.goodLists.filter(item => (item.rcode_likeDouble === rcode_likeDouble) && (item.county === county));
+      //   }
+      // }
     },
     handleRoute(to, from) {
       this.spinShow = true;
@@ -199,6 +219,12 @@ export default {
           this.fetchData('kw');
           break;
         case '/bookField':
+          this.fetchDataField();
+          break;
+        case '/train':
+          this.fetchDataField();
+          break;
+        case '/mall':
           this.fetchDataField();
           break;
         default:
@@ -220,14 +246,20 @@ export default {
       });
     },
     // 获取场馆信息(票、卡)
-    fetchData(type) {
+    fetchData(type, county, rcode_likeDouble) {
       this.showType = type;
+      if (county === '所有') {
+        county = '';
+      }
+      if (rcode_likeDouble === '所有') {
+        rcode_likeDouble = '';
+      }
       let data = {
         orgId: '123456',
         // city_likeDouble: localStorage.getItem('currentCity'),
         city_likeDouble: '',
-        county: '',
-        rcode_likeDouble: '游泳',
+        county: county,
+        rcode_likeDouble: rcode_likeDouble,
         doorType: type,
       };
       this.$axios({

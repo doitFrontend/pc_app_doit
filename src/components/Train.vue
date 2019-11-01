@@ -1,45 +1,21 @@
 <template>
-  <div id="bookTicket">
+  <div id="train">
     <div class="container">
       <div class="inner">
-        <Row>
-          <Col :sm="4" :md="4" :lg="4"  class="leibie">
-            <div class="label">票类别 <span>|</span></div>
-          </Col>
-          <Col :sm="20" :md="20" :lg="20"  class="leibie2">
-            <RadioGroup v-model="default_button" type="button" @on-change="changeTicketType">
-              <Radio label="所有"></Radio>
-              <Radio v-for="(item, i) in ticketOrCardTypeList" :key="i" :label="item"></Radio>
-            </RadioGroup>
-          </Col>
-        </Row>
-      </div>
-      <Divider />
-      <div class="inner">
-        <div>
-          <Row>
+        <div class="" style="margin:0 20px">
+          <Row :gutter="16">
             <!-- TODO: 缺省页 -->
-            <div v-if="!tempTicketList.length" style="text-align: center;line-height:100px;">暂无此类型票</div>
-            <Col v-else v-for="item in tempTicketList" :key="item.sportId" :sm="8" :md="8" :lg="8">
+            <div v-if="!tempTrainList.length" style="text-align: center;line-height:100px;">暂无此类型卡</div>
+            <Col v-else v-for="item in tempTrainList" :key="item.sportId" :sm="8" :md="8" :lg="8">
               <div class="item_ticket">
                 <div class="ticket">
                   <div class="piece">
-                    <!-- <div>
-                      <Icon color="#fff" size="20" :custom="`iconfont ${item.icon.split('#')[1]}`" />
-                      <span>{{item.typeName}}</span>
-                    </div>
-                    <div  class="ticket-dtail">
-                      <b style="font-size:18px;">￥</b>{{item.price | toFixed(2)}}<br>
-                      <div style="font-size: 16px;padding-top:10px">
-                        限时：{{item.time}}</br>{{item.timeSlotStr}}
-                      </div>
-                    </div> -->
-                    <div class="img" v-bind:style="{backgroundImage:'url(' + item.ticketImages + ')'}" @click="toBookTicketDetails(item)"></div>
+                    <div class="img" v-bind:style="{backgroundImage:'url(' + item.cardImages + ')'}" @click="toBookTicketDetails(item)"></div>
                   </div>
                 </div>
                 <div style="width:240px;background:rgba(248,248,248,1);margin: auto;padding:0 10px;">
                   <div style="font-size:12px;">
-                    <p style="font-size:14px;line-height:18px;padding-top:15px;">{{item.typeName}}</p>
+                    <p style="font-size:14px;line-height:18px;padding-top:15px;">{{item.sportItem}}</p>
                     <Row>
                       <Col :sm="18" :md="18" :lg="18"  class="leibie">
                         <template>
@@ -59,6 +35,10 @@
                     <button-groups @countSum="countPriz" :item="item"></button-groups>
                   </div>
                 </div>
+                <!-- <div class="price">
+                  <div calss="price2">￥{{item.price | toFixed(2)}}</div>
+                  <button-groups @countSum="countPriz" :item="item"></button-groups>
+                </div> -->
               </div>
             </Col>
           </Row>
@@ -69,9 +49,8 @@
 </template>
 <script>
 import ButtonGroups from './ButtonGroups';
-// import Mock from 'mockjs';
 export default {
-  name: 'BookTicket',
+  name: 'train',
   components: {
     ButtonGroups,
   },
@@ -83,77 +62,29 @@ export default {
   data() {
     return {
       MockData: {},
-      ticketOrCardTypeList: [],
-      default_button: '所有',
-      tempTicketList: [],
+      tempTrainList: [],
     };
   },
   methods: {
-    // 获取票卡所有的类别
-    getCardOrTicketTypes() {
-      let data = {
-        orgId: this.orgId,
-        type: 'pw',
-      };
-      this.$axios({
-        method: 'POST',
-        url: 'getCardOrTicketTypes.do',
-        data: data,
-      }).then(res => {
-        if (res.data.code === 200) {
-          this.ticketOrCardTypeList = res.data.data;
-        } else {
-          this.$Message.warning(res.code);
-        }
-      }).catch(error => {
-        console.log(error);
-      });
-    },
-    // 切换票类别
-    changeTicketType(label) {
-      if (label !== '所有') {
-        this.tempTicketList = this.ticketList.filter(item => item.sportItem === label);
-      } else {
-        this.tempTicketList = this.ticketList;
-      }
-    },
-    countPriz({ item, sign }) {
-      console.log(item);
-      if (sign === 'ADD') {
-        this.setToCart(item);
-      } else {
-        this.delFromCart(item);
-      }
-    },
-    setToCart(item) {
-      this.$store.commit('addTicket', item);
-    },
-    delFromCart(item) {
-      this.$store.commit('delTicket', item);
-    },
     toBookTicketDetails(item) {
       console.log(item);
       this.$router.push({
-        path: `/GymDetails/${item}`,
+        path: `/GymDetails2/${item}`,
         query: item,
       });
     },
   },
   computed: {
-    ticketList: {
-      get: function() {
-        return this.$store.state.ticketList;
-      },
-    },
+    trainList() {
+      return this.$store.state.trainList;
+    }
   },
   mounted() {
-    this.$store.dispatch('getTicketList');
-    this.getCardOrTicketTypes(); // 获取票卡类别
+    this.$store.dispatch('getTrainList');
     // 数据依赖于computed里的数据，computed数据来源于store，
     // 没有延迟的时候就是默认值，不是预期效果 TODO:
     setTimeout(() => {
-      this.tempTicketList = this.ticketList;
-      console.log(this.ticketList);
+      this.tempTrainList = this.trainList;
     }, 500);
   },
 };
@@ -164,7 +95,7 @@ export default {
     margin: 1em 1em 0 0;
     cursor: pointer;
   }
-  #bookTicket {
+  #train {
     .container {
       .inner {
         padding: 0 1em;
@@ -177,8 +108,8 @@ export default {
             span{padding-left: 10px;padding-right: 15px}
           }
         }
-        &:nth-child(3) {
-          min-height: 500px;
+        &:nth-child(1) {
+          min-height: 300px;
           .item_ticket {
             width: 100%;
             height: inherit;
@@ -254,17 +185,4 @@ export default {
       }
     }
   }
-  // .ivu-radio-default {
-  //   margin: 0 0 1em 1em;
-  // }
-  // .ivu-radio-wrapper {
-  //   border-radius: 4px !important;
-  //   border: 1px solid #dcdee2 !important;
-  //   &::before {
-  //     content: none;
-  //   }
-  //   &::after {
-  //     content: none;
-  //   }
-  // }
 </style>

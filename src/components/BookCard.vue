@@ -19,7 +19,7 @@
         <div class="" style="margin:0 20px">
           <Row :gutter="16">
             <!-- TODO: 缺省页 -->
-            <div v-if="!tempCardLists.length">暂无此类型卡</div>
+            <div v-if="!tempCardLists.length" style="text-align: center;line-height:100px;">暂无此类型卡</div>
             <Col v-else v-for="item in tempCardLists" :key="item.sportId" :sm="8" :md="8" :lg="8">
               <div class="item_ticket">
                 <div class="ticket">
@@ -132,6 +132,13 @@ export default {
     },
     delFromCart(item) {
       this.$store.commit('delCard', item);
+    },
+    toBookTicketDetails(item) {
+      console.log(item);
+      this.$router.push({
+        path: `/GymDetails/${item}`,
+        query: item,
+      });
     },
   },
   computed: {

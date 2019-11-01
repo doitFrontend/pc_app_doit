@@ -100,6 +100,12 @@
               <TabPane label="场地预定" name="field">
                 <book-field :orgId="gymInfo.orgId"></book-field>
               </TabPane>
+              <TabPane label="培训" name="train">
+                <train :orgId="gymInfo.orgId"></train>
+              </TabPane>
+              <TabPane label="商城" name="mall">
+                <mall :orgId="gymInfo.orgId"></mall>
+              </TabPane>
             </Tabs>
             <div class="comment">
               <h3>用户点评<span>（231）</span></h3>
@@ -219,10 +225,12 @@
 import BookTicket from '@/components/BookTicket';
 import BookCard from '@/components/BookCard';
 import BookField from '@/components/BookField';
+import Train from '@/components/Train';
+import Mall from '@/components/Mall';
 import ShoppingCart from '@/components/ShoppingCart';
 export default {
   name: 'GymDetails',
-  components: { BookTicket, BookCard, BookField, ShoppingCart },
+  components: { BookTicket, BookCard, BookField, Train, Mall, ShoppingCart },
   data() {
     return {
       gymInfo: {},

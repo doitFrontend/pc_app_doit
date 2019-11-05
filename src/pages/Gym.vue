@@ -35,6 +35,7 @@
         </div>
         <div class="container">
           <div class="inner">
+            <div v-if="!tempGoodLists.length" style="text-align: center;line-height:100px;">暂无此类场馆</div>
             <Row v-for="(item, i) in tempGoodLists" :key="i">
               <Col span="24">
                 <goods-item-new v-if="showType === 'pw' || showType === 'kw'" :arr="item.cardOrTicketMap.data" @getMoreItem="toSaleItem(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.orgImages" :baseRate="10">
@@ -214,6 +215,8 @@ export default {
     },
     handleRoute(to, from) {
       this.spinShow = true;
+      this.default_button = '所有';
+      this.default_button1 = '所有';
       switch (to.path) {
         case '/bookCard':
           this.fetchData('kw');

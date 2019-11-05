@@ -4,8 +4,8 @@
     <div class="h">
       <Row type="flex" align="bottom" :gutter="24">
         <Col>
-          <div>
-            <img :style="{ width: `${i_width}px`, height: `${i_height}px`, backgroundSize: 'cover', borderRadius: '4px', }" :src="imgSrc" alt="">
+          <div  v-for="(url,idx) in imgSrc.split(',')"   :key="idx" >
+            <img v-if="idx === 0" :style="{ width: `${i_width}px`, height: `${i_height}px`, backgroundSize: 'cover', borderRadius: '4px', }" :src="url" alt="">
           </div>
         </Col>
         <Col style="width: 464px;">

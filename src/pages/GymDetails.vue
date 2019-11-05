@@ -1,9 +1,9 @@
 <template>
     <div id="gymDetails">
       <div class="inner">
-        <Carousel autoplay v-model="default_value" loop>
-          <CarouselItem v-for="i in 3" :key="i">
-            <div class="demo-carousel" :style="{backgroundImage: `url(${gymInfo.orgImages})`}"></div>
+        <Carousel v-bind:autoplay="gymInfo.orgImages.split(',').length > 1" v-model="default_value" loop>
+          <CarouselItem  v-for="(url,i) in gymInfo.orgImages.split(',')"   :key="i">
+            <div class="demo-carousel" :style="{backgroundImage: `url(${url})`}"></div>
           </CarouselItem>
         </Carousel>
         <div style="display: flex;margin-top:20px;">

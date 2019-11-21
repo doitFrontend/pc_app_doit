@@ -4,8 +4,8 @@
     <div v-if="isHorizonal" class="h">
       <Row type="flex" justify="start" :gutter="16">
         <Col>
-          <div>
-            <img :style="{ width: `${i_width}px`, height: '140px', backgroundSize: 'cover', }" :src="imgSrc" alt="">
+          <div  v-for="(url,idx) in imgSrc.split(',')"   :key="idx" >
+            <img v-if="idx === 0" :style="{ width: `${i_width}px`, height: '140px', backgroundSize: 'cover', }" :src="url" alt="">
           </div>
         </Col>
         <Col>
@@ -27,8 +27,8 @@
       </Row>
     </div>
     <div v-else class="v">
-      <div>
-        <img :style="{ width: 'inherit', height: `${i_height}px` }" :src="imgSrc" alt="">
+      <div  v-for="(url,idx) in imgSrc.split(',')"   :key="idx" >
+        <img v-if="idx === 0" :style="{ width: 'inherit', height: `${i_height}px` }" :src="url" alt="">
       </div>
       <div>
         <slot name="title"></slot>

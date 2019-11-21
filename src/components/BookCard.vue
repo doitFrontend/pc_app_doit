@@ -19,13 +19,12 @@
         <div class="" style="margin:0 20px">
           <Row :gutter="16">
             <!-- TODO: 缺省页 -->
-            <div v-if="!tempCardLists.length">暂无此类型卡</div>
+            <div v-if="!tempCardLists.length" style="text-align: center;line-height:100px;">暂无此类型卡</div>
             <Col v-else v-for="item in tempCardLists" :key="item.sportId" :sm="8" :md="8" :lg="8">
               <div class="item_ticket">
                 <div class="ticket">
                   <div class="piece">
-                    <div>
-                      <!-- <Icon color="#fff" size="28" type="md-headset" /> -->
+                    <!-- <div>
                       <Icon color="#fff" size="20" :custom="`iconfont ${item.icon.split('#')[1]}`" />
                       <span>{{item.typeName}}</span>
                     </div>
@@ -34,13 +33,36 @@
                       <div style="font-size: 16px;padding-top:10px">
                         {{item.frequency1}}卡
                       </div>
-                    </div>
+                    </div> -->
+                    <div class="img" v-bind:style="{backgroundImage:'url(' + item.cardImages + ')'}" @click="toBookTicketDetails(item)"></div>
                   </div>
                 </div>
-                <div class="price">
+                <div style="width:240px;background:rgba(248,248,248,1);margin: auto;padding:0 10px;">
+                  <div style="font-size:12px;">
+                    <p style="font-size:14px;line-height:18px;padding-top:15px;">{{item.typeName}}</p>
+                    <Row>
+                      <Col :sm="18" :md="18" :lg="18"  class="leibie">
+                        <template>
+                          <Progress :percent="25" />
+                      </template>
+                      </Col>
+                      <Col v-if="percent > 80" :sm="6" :md="6" :lg="6"  class="leibie">
+                        已售25%
+                      </Col>
+                      <Col v-else :sm="6" :md="6" :lg="6"  class="leibie">
+                        即将售罄
+                      </Col>
+                    </Row>
+                  </div>
+                  <div class="price">
+                    <div calss="price2">￥{{item.price | toFixed(2)}}</div>
+                    <button-groups @countSum="countPriz" :item="item"></button-groups>
+                  </div>
+                </div>
+                <!-- <div class="price">
                   <div calss="price2">￥{{item.price | toFixed(2)}}</div>
                   <button-groups @countSum="countPriz" :item="item"></button-groups>
-                </div>
+                </div> -->
               </div>
             </Col>
           </Row>
@@ -111,6 +133,13 @@ export default {
     delFromCart(item) {
       this.$store.commit('delCard', item);
     },
+    toBookTicketDetails(item) {
+      console.log(item);
+      this.$router.push({
+        path: `/GymDetails/${item}`,
+        query: item,
+      });
+    },
   },
   computed: {
     cardLists() {
@@ -138,6 +167,7 @@ export default {
     .container {
       .inner {
         padding: 0 1em;
+        & /deep/  .ivu-progress-text{display: none;}
         &:nth-child(1) {
           .label {
             text-align: center;
@@ -147,26 +177,102 @@ export default {
           }
         }
         &:nth-child(3) {
-          min-height: 500px;
+          min-height: 300px;
+          // .item_ticket {
+          //   width: 100%;
+          //   height: inherit;
+          //   padding: 2em;
+          //   margin-bottom: 30px;
+          //   &:hover {
+          //     background: #e8eaec;
+          //   }
+          //   .ticket {
+          //     width: 220px;
+          //     height: 260px;
+          //     margin: auto;
+          //     display: flex;
+          //     & > div.piece{ // 票 左右两块
+          //       width: 100%;
+          //       height: inherit;
+          //       background: url(../assets/card.png) no-repeat;
+          //       background-size: 220px 260px;
+          //       position: relative;
+          //       & > div.spot {
+          //         width: 16px;
+          //         height: 16px;
+          //         background: #fff;
+          //         border-radius: 50%;
+          //         position: absolute;
+          //         top: calc( 50% - (16px/2) );
+          //       }
+          //       .spot_left {
+          //         left: -8px;
+          //       }
+          //       .spot_right {
+          //         right: -8px;
+          //       }
+          //       & > div:nth-child(1) { // 票内容样式
+          //         width: 100%;text-align: center;
+          //         height: 40px;
+          //         line-height: 40px;
+          //         margin-top: 20px;
+          //         font-size: 20px;font-weight: 200;
+          //         color: #fff;
+          //       }
+          //       .ticket-dtail {
+          //       width:80%;margin:auto;
+          //       background: #fff;
+          //       height:155px;
+          //       border-radius: 5px;
+          //       margin-top:15px;
+          //       color:#333;
+          //       font-size:32px;
+          //       padding-top:30px;
+          //       text-align: center;
+          //       vertical-align: midd
+          //       }
+          //     }
+          //   }
+          //     .price {
+          //     width: 100%;
+          //     margin-top: 30px;
+          //     display: flex;
+          //     position: relative;
+          //     .ivu-btn-group {
+          //     text-align: right;
+          //     position: absolute;
+          //     right: 0;
+          //     }
+          //     & > div:nth-child(1) {
+          //       width: 250px;
+          //       font-size: 18px;
+          //       color: #ed4014;
+          //       line-height: 32px;
+          //     }
+          //   }
+          // }
           .item_ticket {
             width: 100%;
             height: inherit;
-            padding: 2em;
+            padding: 2em 0;
             margin-bottom: 30px;
             &:hover {
               background: #e8eaec;
             }
+            .leibie{line-height: 32px;}
             .ticket {
-              width: 220px;
-              height: 260px;
+              width: 240px;
+              height: 240px;
               margin: auto;
               display: flex;
+              background:rgba(248,248,248,1);
               & > div.piece{ // 票 左右两块
                 width: 100%;
                 height: inherit;
-                background: url(../assets/card.png) no-repeat;
-                background-size: 220px 260px;
                 position: relative;
+                .img{width: 240px; height: 240px; background-size: cover; border-radius: 10px;background-repeat: no-repeat;background-size: 100% 100%;
+                }
+                .img:hover{cursor: pointer;}
                 & > div.spot {
                   width: 16px;
                   height: 16px;
@@ -181,18 +287,9 @@ export default {
                 .spot_right {
                   right: -8px;
                 }
-                & > div:nth-child(1) { // 票内容样式
-                  width: 100%;text-align: center;
-                  height: 40px;
-                  line-height: 40px;
-                  margin-top: 20px;
-                  font-size: 20px;font-weight: 200;
-                  color: #fff;
-                }
                 .ticket-dtail {
                 width:80%;margin:auto;
-                background: #fff;
-                height:155px;
+                height:175px;
                 border-radius: 5px;
                 margin-top:15px;
                 color:#333;
@@ -205,13 +302,15 @@ export default {
             }
               .price {
               width: 100%;
-              margin-top: 30px;
               display: flex;
               position: relative;
+              margin-top: 5px;
+              padding-bottom: 15px;
               .ivu-btn-group {
               text-align: right;
               position: absolute;
               right: 0;
+              font-size: 16px;
               }
               & > div:nth-child(1) {
                 width: 250px;
@@ -220,6 +319,8 @@ export default {
                 line-height: 32px;
               }
             }
+            & /deep/  .ivu-progress-show-info .ivu-progress-outer{padding-right:30px;}
+            & /deep/ .ivu-btn{position: relative;right: -5px}
           }
         }
       }

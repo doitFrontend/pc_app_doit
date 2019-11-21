@@ -11,7 +11,7 @@
                   <div class="label">区&nbsp;&nbsp;&nbsp;&nbsp;域<span>|</span></div>
                 </Col>
                 <Col :sm="20" :md="20" :lg="20"  class="leibie2">
-                  <RadioGroup v-model="default_button" type="button" @on-change="handleChange">
+                  <RadioGroup v-model="default_button" type="button" @on-change="handleChange(default_button, '')">
                     <Radio label="所有"></Radio>
                     <Radio v-for="(item, index) in fData" :key="index" :label="item.label"></Radio>
                   </RadioGroup>
@@ -24,7 +24,7 @@
                   <div class="label">项&nbsp;&nbsp;&nbsp;&nbsp;目<span>|</span></div>
                 </Col>
                 <Col :sm="20" :md="20" :lg="20"  class="leibie2">
-                  <RadioGroup v-model="default_button1" type="button">
+                  <RadioGroup v-model="default_button1" type="button" @on-change="handleChange('', default_button1)">
                     <Radio label="所有"></Radio>
                     <Radio v-for="(item, index) in sData" :key="index" :label="item.label"></Radio>
                   </RadioGroup>
@@ -35,6 +35,7 @@
         </div>
         <div class="container">
           <div class="inner">
+            <div v-if="!tempGoodLists.length" style="text-align: center;line-height:100px;">暂无此类场馆</div>
             <Row v-for="(item, i) in tempGoodLists" :key="i">
               <Col span="24">
                 <goods-item-new v-if="showType === 'pw' || showType === 'kw'" :arr="item.cardOrTicketMap.data" @getMoreItem="toSaleItem(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.orgImages" :baseRate="10">
@@ -109,7 +110,7 @@
         <h3 style="marginLeft: 1em;margin-top:5px;">猜你喜欢</h3>
         <Row v-for="(item, i) in goodLists" :key="i">
           <Col span="24">
-            <goods-item :imgSrc="item.orgImages" :i_height="130" :baseRate="10">
+            <goods-item :imgSrc="item.orgImages" :i_height="130" :baseRate="10"  @goodItemDetails="toSaleItem(item)">
               <span slot="title">{{item.orgName}}</span>
               <span slot="rate">201 条评价</span>
               <span slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</span>
@@ -184,21 +185,49 @@ export default {
   //   },
   // },
   methods: {
-    handleChange(county) {
-      console.log(county);
-      if (county === '所有') {
-        this.tempGoodLists = this.goodLists.filter(item => item);
-      } else {
-        this.tempGoodLists = this.goodLists.filter(item => item.county === county);
-      }
+    handleChange(county, rcode_likeDouble) {
+      this.fetchData('pw', county, rcode_likeDouble);
+      // console.log(county);
+      // console.log(rcode_likeDouble);
+      // if (rcode_likeDouble === '所有') {
+      //   this.tempGoodLists = this.goodLists.filter(item => item);
+      // } else {
+      //   this.tempGoodLists = this.goodLists.filter(item => item.rcode_likeDouble === rcode_likeDouble);
+      // }
+      // if (county === '所有') {
+      //   this.tempGoodLists = this.goodLists.filter(item => item);
+      // } else {
+      //   this.tempGoodLists = this.goodLists.filter(item => item.county === county);
+      // }
+      // if (county === '所有') {
+      //   if (rcode_likeDouble === '所有') {
+      //     this.tempGoodLists = this.goodLists.filter(item => item);
+      //   } else {
+      //     this.tempGoodLists = this.goodLists.filter(item => item.rcode_likeDouble === rcode_likeDouble);
+      //   }
+      // } else {
+      //   if (rcode_likeDouble === '所有') {
+      //     this.tempGoodLists = this.goodLists.filter(item => item.county === county);
+      //   } else {
+      //     this.tempGoodLists = this.goodLists.filter(item => (item.rcode_likeDouble === rcode_likeDouble) && (item.county === county));
+      //   }
+      // }
     },
     handleRoute(to, from) {
       this.spinShow = true;
+      this.default_button = '所有';
+      this.default_button1 = '所有';
       switch (to.path) {
         case '/bookCard':
           this.fetchData('kw');
           break;
         case '/bookField':
+          this.fetchDataField();
+          break;
+        case '/train':
+          this.fetchDataField();
+          break;
+        case '/mall':
           this.fetchDataField();
           break;
         default:
@@ -213,20 +242,27 @@ export default {
     //   });
     // },
     toSaleItem(item) {
+      // alert(11);
       this.$router.push({
         path: `gym/${item.orgId}`,
         query: item,
       });
     },
     // 获取场馆信息(票、卡)
-    fetchData(type) {
+    fetchData(type, county, rcode_likeDouble) {
       this.showType = type;
+      if (county === '所有') {
+        county = '';
+      }
+      if (rcode_likeDouble === '所有') {
+        rcode_likeDouble = '';
+      }
       let data = {
         orgId: '123456',
         // city_likeDouble: localStorage.getItem('currentCity'),
         city_likeDouble: '',
-        county: '',
-        rcode_likeDouble: '游泳',
+        county: county,
+        rcode_likeDouble: rcode_likeDouble,
         doorType: type,
       };
       this.$axios({

@@ -1,9 +1,9 @@
 <template>
     <div id="gymDetails">
       <div class="inner">
-        <Carousel autoplay v-model="default_value" loop>
-          <CarouselItem v-for="i in 3" :key="i">
-            <div class="demo-carousel" :style="{backgroundImage: `url(${gymInfo.orgImages})`}"></div>
+        <Carousel v-bind:autoplay="gymInfo.orgImages.split(',').length > 1" v-model="default_value" loop>
+          <CarouselItem  v-for="(url,i) in gymInfo.orgImages.split(',')"   :key="i">
+            <div class="demo-carousel" :style="{backgroundImage: `url(${url})`}"></div>
           </CarouselItem>
         </Carousel>
         <div style="display: flex;margin-top:20px;">
@@ -99,6 +99,12 @@
               </TabPane>
               <TabPane label="场地预定" name="field">
                 <book-field :orgId="gymInfo.orgId"></book-field>
+              </TabPane>
+              <TabPane label="培训" name="train">
+                <train :orgId="gymInfo.orgId"></train>
+              </TabPane>
+              <TabPane label="商城" name="mall">
+                <mall :orgId="gymInfo.orgId"></mall>
               </TabPane>
             </Tabs>
             <div class="comment">
@@ -219,10 +225,12 @@
 import BookTicket from '@/components/BookTicket';
 import BookCard from '@/components/BookCard';
 import BookField from '@/components/BookField';
+import Train from '@/components/Train';
+import Mall from '@/components/Mall';
 import ShoppingCart from '@/components/ShoppingCart';
 export default {
   name: 'GymDetails',
-  components: { BookTicket, BookCard, BookField, ShoppingCart },
+  components: { BookTicket, BookCard, BookField, Train, Mall, ShoppingCart },
   data() {
     return {
       gymInfo: {},

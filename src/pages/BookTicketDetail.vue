@@ -48,10 +48,12 @@
                 </Row>
                 <div><label>项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目</label><span>{{gymInfo.typeName}}</span></div>
               </div>
-              <div style="margin:10px 0 20px;">
-                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量</label>
-                <button-groups2 @countSum="countPriz" :item="gymInfo"></button-groups2>
-              </div>
+              <ul style="margin:10px 0 20px;">
+                <li>
+                  <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量</label>
+                  <button-groups2 @countSum="countPriz" :item="gymInfo"></button-groups2>
+                </li>
+              </ul>
               <button data-v-434690d6="" type="button" class="ivu-btn ivu-btn-default" style="width: 120px; font-size: 14px;line-height:32px; border-radius: 4px; color: rgb(255, 255, 255); background: rgb(0, 161, 233); margin-left: 20px; margin-top: 3px;"><span style=" padding-left: 0px;">加入购物车</span></button>
             </div>
           </div>
@@ -146,17 +148,17 @@
           <h2>看了又看</h2>
           <ul>
             <li>
-              <div class="img" v-bind:style="{backgroundImage:'url(' + gymInfo.ticketImages + ')'}"></div>
+              <div class="img"></div>
               <p>网球2小时票</p>
               <p>￥30.00</p>
             </li>
             <li>
-              <div class="img" v-bind:style="{backgroundImage:'url(' + gymInfo.ticketImages + ')'}"></div>
+              <div class="img"></div>
               <p>网球2小时票</p>
               <p>￥30.00</p>
             </li>
             <li>
-              <div class="img" v-bind:style="{backgroundImage:'url(' + gymInfo.ticketImages + ')'}"></div>
+              <div class="img"></div>
               <p>网球2小时票</p>
               <p>￥30.00</p>
             </li>
@@ -324,6 +326,20 @@ export default {
               }
               label{display: inline-block;color: #888;margin-right: 20px;}
               span{display: block;}
+              ul li{
+                list-style: none;
+                & /deep/ .ivu-radio-group-button .ivu-radio-wrapper{
+                      border: 1px solid #dcdee2;
+                      padding: 0 15px;
+                      border-radius: 4px;
+                      margin-right:15px;
+                }
+                & /deep/ .ivu-input-wrapper .ivu-input{line-height: 20px;height: 22px;text-align: center}
+                & /deep/ .ivu-radio-wrapper-checked{
+                  border:1px solid  #00A1E9 !important;
+                  color: #00A1E9;
+                  }
+              }
             }
           }
           .instructions{
@@ -391,8 +407,9 @@ export default {
             p:last-child{padding-left: 15px;color:rgba(247,105,0,1);}
           }
           .img{
-              width: 220px; height: 220px;
+              width: 218px; height: 218px;
               background-size: cover;
+              background-image:url('../assets/3.png');
               border-radius: 10px;background-repeat: no-repeat;
               background-size: 100% 100%;
               margin-bottom: 10px;

@@ -1,8 +1,9 @@
 <template>
   <div id="MyReserve">
-    <h2 id="org_name">我的票</h2>
+    <h2 id="org_name">我的场地</h2>
     <div>
       <Row>
+        <div v-if="!myReserveLists.length">暂无数据</div>
         <Col span="8" v-for="(item, i) in myReserveLists" :key="i">
           <div class="ticket" @click="toReserveDetails(item)">
             <div>

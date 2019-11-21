@@ -29,7 +29,7 @@
             </th>
             </tr>
         </thead>
-        <tbody id="201909275765a4d781">
+        <tbody>
           <tr v-for="(item2, j) in item" :key="j">
             <td class="w150 b-r-1">
               <h3 v-if="item2.orderChildProductType=='ticket'">票</h3>
@@ -150,6 +150,7 @@ export default {
           return this.myOrderLists;
         } else {
           this.$Message.warning(res.code);
+          return [];
         }
       }).then(myOrderLists => {
         myOrderLists.forEach(item => {
@@ -173,6 +174,7 @@ export default {
         if (res.data.code === 200) {
           this.sublist.push(res.data.data);
         } else {
+          this.sublist = [];
           this.$Message.warning(res.code);
         }
       }).catch(error => {

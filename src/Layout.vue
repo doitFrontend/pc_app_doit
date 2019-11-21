@@ -37,8 +37,8 @@
           <router-link tag="div" to="/bookCard">卡务</router-link>
           <router-link tag="div" to="/bookField">场地</router-link>
           <router-link tag="div" to="/train">培训</router-link>
-          <router-link tag="div" to="/games">赛事</router-link>
-          <!-- <router-link tag="div" to="/mall">商城</router-link> -->
+          <!-- <router-link tag="div" to="/games">赛事</router-link> -->
+          <router-link tag="div" to="/mall">商城</router-link>
           <!-- <router-link tag="div" to="/community">社区</router-link> -->
           <router-link tag="div" to="/PersonalCenter">个人</router-link>
           <input type="text" /><Icon size="24" type="ios-search-outline" />

@@ -36,7 +36,7 @@
         <div class="container">
           <div class="inner">
             <div v-if="!tempGoodLists.length" style="text-align: center;line-height:100px;">暂无此类场馆</div>
-            <Row v-for="(item, i) in tempGoodLists" :key="i">
+            <Row v-for="(item, index) in tempGoodLists" :key="index">
               <Col span="24">
                 <goods-item-new v-if="showType === 'pw' || showType === 'kw'" :arr="item.cardOrTicketMap.data" @getMoreItem="toSaleItem(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.orgImages" :baseRate="10">
                   <div class="text" slot="title">{{item.orgName}}</div>
@@ -108,7 +108,7 @@
       </div>
       <div class="right">
         <h3 style="marginLeft: 1em;margin-top:5px;">猜你喜欢</h3>
-        <Row v-for="(item, i) in goodLists" :key="i">
+        <Row v-for="(item, index) in goodLists" :key="index">
           <Col span="24">
             <goods-item :imgSrc="item.orgImages" :i_height="130" :baseRate="10"  @goodItemDetails="toSaleItem(item)">
               <span slot="title">{{item.orgName}}</span>
@@ -144,6 +144,7 @@ export default {
       i_width: 220,
       fData: null,
       showType: '', // 展示模块
+      topath: '',
       sData: [
         { label: '游泳', value: '' },
         { label: '羽毛球', value: '' },
@@ -186,7 +187,25 @@ export default {
   // },
   methods: {
     handleChange(county, rcode_likeDouble) {
-      this.fetchData('pw', county, rcode_likeDouble);
+      alert(this.topath);
+      // this.fetchData('pw', county, rcode_likeDouble);
+      switch (this.topath) {
+        case 'bookCard':
+          this.fetchData('kw', county, rcode_likeDouble);
+          break;
+        case 'bookField':
+          this.fetchDataField('', county, rcode_likeDouble);
+          break;
+        case 'train':
+          this.fetchDataField('', county, rcode_likeDouble);
+          break;
+        case 'mall':
+          this.fetchDataField('', county, rcode_likeDouble);
+          break;
+        default:
+          this.fetchData('pw', county, rcode_likeDouble);
+          break;
+      }
       // console.log(county);
       // console.log(rcode_likeDouble);
       // if (rcode_likeDouble === '所有') {
@@ -220,18 +239,25 @@ export default {
       switch (to.path) {
         case '/bookCard':
           this.fetchData('kw');
+          this.topath = 'bookCard';
+          this.showType = 'kw';
           break;
         case '/bookField':
-          this.fetchDataField();
+          this.fetchDataField('');
+          this.topath = 'bookField';
           break;
         case '/train':
-          this.fetchDataField();
+          this.fetchDataField('');
+          this.topath = 'train';
           break;
         case '/mall':
-          this.fetchDataField();
+          this.fetchDataField('');
+          this.topath = 'mall';
           break;
         default:
           this.fetchData('pw');
+          this.topath = 'bookTicket';
+          this.showType = 'pw';
           break;
       }
     },
@@ -282,14 +308,20 @@ export default {
       });
     },
     // 获取场馆信息(场地)
-    fetchDataField() {
+    fetchDataField(type, county, rcode_likeDouble) {
       this.showType = 'cd';
+      if (county === '所有') {
+        county = '';
+      }
+      if (rcode_likeDouble === '所有') {
+        rcode_likeDouble = '';
+      }
       let data = {
         orgId: '123456',
         // city_likeDouble: localStorage.getItem('currentCity'),
         city_likeDouble: '',
-        county: '',
-        project: '篮球',
+        county: county,
+        project: rcode_likeDouble,
 
       };
       this.$axios({
@@ -299,8 +331,11 @@ export default {
       }).then(res => {
         this.spinShow = false;
         if (res) {
+          // console.log(res.data);
           this.goodLists = res.data;
+          console.log(this.goodLists);
           this.tempGoodLists = this.goodLists;
+          console.log(this.tempGoodLists);
         } else {
           this.$Message.warning(res);
         }

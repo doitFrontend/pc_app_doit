@@ -41,7 +41,7 @@
           'color': (itemIn.status === 1) ? '#fff' : ''}"
           @click="handleCellClick($event, item, itemIn)">
             <Tooltip placement="top" :delay="500">
-              ￥{{itemIn.money}}
+              ￥{{Number(itemIn.money).toFixed(2)}}
               <div slot="content">
                 <p>{{itemIn.status}}</p>
                 <p>{{itemIn.time}}</p>

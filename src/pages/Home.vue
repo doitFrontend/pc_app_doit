@@ -49,18 +49,18 @@
     <div class="container">
       <div class="inner">
         <h2>特惠热卖&nbsp;&nbsp;<Button size="small">更多>></Button></h2>
-        <div style="margin:10px;">
+        <div style="margin:10px;height：596px">
           <Row>
             <Col :sm="12" :md="12" :lg="6">
               <div class="sale">
               </div>
             </Col>
             <Col :sm="12" :md="12" :lg="6" v-for="(item, i) in hotSaleLists" :key="i">
-              <goods-item :imgSrc="item.img" :baseRate="10">
+              <goods-item2 :imgSrc="item.img" :baseRate="10">
                 <span slot="title" style="font-size: 16px;">{{item.title}}</span>
                 <span slot="rate">{{item.rate}}</span>
-                <span slot="price">商品价格<span style="color: #ffac2d">￥{{item.price}}</span></span>
-              </goods-item>
+                <span slot="price"><span style="text-decoration:line-through;color: #999">￥{{item.price}}</span><span style="color: #ffac2d;font-size: 20px;">￥{{item.price2}}</span></span>
+              </goods-item2>
             </Col>
           </Row>
         </div>
@@ -70,10 +70,11 @@
 </template>
 <script>
 import GoodsItem from '@/components/GoodsItem.vue';
+import GoodsItem2 from '@/components/GoodsItem2.vue';
 import { hotGameLists, hotSaleLists } from '@/utils/mockdata';
 export default {
   name: 'Home',
-  components: { GoodsItem },
+  components: { GoodsItem, GoodsItem2 },
   data() {
     return {
       goodLists: [],
@@ -159,7 +160,7 @@ export default {
     }
     &:nth-child(3) {
       .ivu-row {
-        height: 300px;
+        height: 356px;
         .ivu-col {
           height: 100%;
           &:nth-child(1) {
@@ -173,10 +174,11 @@ export default {
             div {
               margin-left: 1em;
               background: url('../assets/temp/gobasket.png') no-repeat;
-              height: 48%;
+              height: calc(50% - 10px);
+              margin-bottom: 20px;
               &:nth-child(2) {
-                margin-top: 1em;
                 background: url('../assets/temp/gopinpong.png') no-repeat;
+                margin-bottom: 0;
               }
             }
           }

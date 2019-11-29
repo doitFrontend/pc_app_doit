@@ -11,7 +11,7 @@
                   <div class="label">区&nbsp;&nbsp;&nbsp;&nbsp;域<span>|</span></div>
                 </Col>
                 <Col :sm="20" :md="20" :lg="20"  class="leibie2">
-                  <RadioGroup v-model="default_button" type="button" @on-change="handleChange(default_button, '')">
+                  <RadioGroup v-model="default_button" type="button" @on-change="handleChange(default_button, default_button1)">
                     <Radio label="所有"></Radio>
                     <Radio v-for="(item, index) in fData" :key="index" :label="item.label"></Radio>
                   </RadioGroup>
@@ -24,7 +24,7 @@
                   <div class="label">项&nbsp;&nbsp;&nbsp;&nbsp;目<span>|</span></div>
                 </Col>
                 <Col :sm="20" :md="20" :lg="20"  class="leibie2">
-                  <RadioGroup v-model="default_button1" type="button" @on-change="handleChange('', default_button1)">
+                  <RadioGroup v-model="default_button1" type="button" @on-change="handleChange(default_button, default_button1)">
                     <Radio label="所有"></Radio>
                     <Radio v-for="(item, index) in sData" :key="index" :label="item.label"></Radio>
                   </RadioGroup>
@@ -190,10 +190,13 @@ export default {
   // },
   methods: {
     handleChange(county, rcode_likeDouble) {
+      // alert(county);
+      // alert(rcode_likeDouble);
       // alert(this.topath);
       // this.fetchData('pw', county, rcode_likeDouble);
       switch (this.topath) {
         case 'bookCard':
+          // alert(111);
           this.fetchData('kw', county, rcode_likeDouble);
           break;
         case 'bookField':

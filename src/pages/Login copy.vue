@@ -7,13 +7,33 @@
             <div :style="!isCountLog ? activeStyle : ''" @click="changeLog('code')">用户注册</div>
           </div>
           <input type="text" v-model="phoneNum" placeholder="请输入手机号">
-          <input v-if="!isCountLog" type="text" v-model="code" placeholder="请输入动态码">
-          <input v-if="!isCountLog" type="text" v-model="name" placeholder="请输入用户姓名">
+          <input v-if="!isCountLog" type="text" v-model="idCode" placeholder="请输入动态码">
+          <!-- <input  v-if="!isCountLog" type="text" v-model="password" placeholder="请输入密码" @keyup.enter="signIn"> -->
           <input type="text" v-model="password" placeholder="请输入密码">
-          <input  v-if="!isCountLog" type="button" value="注册"  id="register" @click="register">
-          <input  v-if="isCountLog" type="button" value="登录" @click="signIn" id="signIn">
-          <div v-if="!isCountLog" class="rcode" @click="getCode">{{codeText}}</div>
+          <input type="button" value="登录" @click="signIn" id="signIn">
+          <div v-if="!isCountLog" class="rcode" @click="sendIDCode">{{text}}</div>
           <div v-if="!isCountLog && isFloat" class="rcode" style="opacity: 0">遮罩</div>
+          <!-- <div class="common forgetcode">忘记密码</div>
+          <div class="common registry">免费注册</div> -->
+          <!-- <div class="company">
+            <h4>合作网站账号登录</h4>
+          </div>
+          <div class="inputlogo">
+            <div class="inputlog">
+              <Icon size="24" color="#999" custom="icon iconfont icon-shouji" />
+            </div>
+            <div class="inputlog">
+              <Icon size="24" color="#999" custom="icon iconfont icon-mima1" />
+            </div>
+          </div>
+          <div class="logo">
+            <div class="log">
+              <Icon size="40" color="rgb(4, 172, 238)" custom="icon iconfont icon-qq" />
+            </div>
+            <div class="log">
+              <Icon size="38" color="rgb(10, 183, 14)" custom="iconfont icon-weixin" />
+            </div>
+          </div> -->
         </div>
         <Spin size="large" fix v-if="spinShow">
           <Icon type="ios-loading" size=36 class="demo-spin-icon-load"></Icon>
@@ -28,15 +48,11 @@ export default {
   data() {
     return {
       text: '发送验证码',
-      codeText: '发送验证码',
+      default_scondes: 60,
       timer: null,
-      interval_timer: null,
       phoneNum: '',
       password: '',
-      name: '',
       idCode: '',
-      code: '',
-      codeSn: '',
       isCountLog: true,
       activeStyle: {
         color: '#00a1e9',
@@ -55,65 +71,29 @@ export default {
     this.timer && clearInterval(this.timer);
   },
   methods: {
-    // sendIDCode() {
-    //   if (this.isClickAble) {
-    //     this.timer = setInterval(() => {
-    //       if (this.default_scondes === 0) {
-    //         this.isFloat = false;
-    //         this.text = '发送验证码';
-    //         this.default_scondes = 60; // 重置定时器 ton
-    //         clearInterval(this.timer);
-    //       } else {
-    //         this.countDown();
-    //       }
-    //     }, 1000);
-    //   } else {
-    //     this.$Message.warning({
-    //       content: '请填写正确的手机号码',
-    //       duration: 3,
-    //     });
-    //   }
-    // },
-    // countDown() {
-    //   this.isFloat = true;
-    //   this.default_scondes--;
-    //   this.text = `已发送(${this.default_scondes}s)`;
-    // },
-    getCode() {
-      // 以下赋值采用that可，this不可为何？
-      let countdown = 60;
-      let that = this;
-      let data = {
-        phone: that.phoneNum,
-      };
-      that.$axios({
-        method: 'POST',
-        url: '/sendmsg/doit.do',
-        data: data,
-      }).then(res => {
-        that.spinShow = false;
-        if (res.data.code === 200) {
-          that.codeSn = res.data.code;
-          if (that.codeText.indexOf('s') === -1) {
-            that.interval_timer = setInterval(function() {
-              if (countdown === 0) {
-                that.codeText = '重新获取验证码';
-                countdown = 60;
-                clearInterval(that.interval_timer);
-                that.interval_timer = null;
-              } else {
-                countdown--;
-                that.codeText = countdown + 's';
-                console.log(that.codeText);
-              }
-            }, 1000);
+    sendIDCode() {
+      if (this.isClickAble) {
+        this.timer = setInterval(() => {
+          if (this.default_scondes === 0) {
+            this.isFloat = false;
+            this.text = '发送验证码';
+            this.default_scondes = 60; // 重置定时器 ton
+            clearInterval(this.timer);
+          } else {
+            this.countDown();
           }
-        } else {
-          that.$Message.warning(res.data.data);
-        }
-      }).catch(error => {
-        console.log(error);
-      });
+        }, 1000);
+      } else {
+        this.$Message.warning({
+          content: '请填写正确的手机号码',
+          duration: 3,
+        });
+      }
+    },
+    countDown() {
+      this.isFloat = true;
+      this.default_scondes--;
+      this.text = `已发送(${this.default_scondes}s)`;
     },
     signIn() {
       this.spinShow = true;
@@ -133,29 +113,6 @@ export default {
       }
       this.$router.push({
         path: url
-      });
-    },
-    register() {
-      let data = {
-        memberPhone: this.phoneNum,
-        memberPassword: this.password,
-        memberSex: '保密',
-        memberName: this.name,
-        orgId: '123456',
-      };
-      this.$axios({
-        method: 'POST',
-        url: 'addOrUpdateMemberZcr.do',
-        data: data,
-      }).then(res => {
-        console.log(res);
-        if (res.data.code === 200) {
-          this.$Message.warning('会员注册成功');
-        } else {
-          this.$Message.warning(res.data.data);
-        }
-      }).catch(error => {
-        console.log(error);
       });
     },
     login() {
@@ -288,14 +245,11 @@ $input_padding_left_right: 30px;
             &:nth-child(4) {
                 margin-top: 20px;
             }
-            &:nth-child(5) {
-                margin-top: 20px;
-            }
             &::-webkit-input-placeholder {
                 color: #999;
             }
         }
-        #signIn,#register {
+        #signIn {
                 margin-top: 64px;
                 padding: 0;
                 background: $g_default_color;

@@ -14,7 +14,7 @@
         <div class="right">
           <div class="signIn">
             <router-link tag="span" to="/login" v-if="!isSignIn">
-              登录
+              登录/注册
             </router-link>
             <div v-else @mouseleave="handleMouseleave">
               <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">

@@ -40,7 +40,8 @@
               <Col span="24">
                 <goods-item-new v-if="showType === 'pw' || showType === 'kw'" :arr="item.cardOrTicketMap.data" @getMoreItem="toSaleItem(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.orgImages" :baseRate="10">
                   <div class="text" slot="title">{{item.orgName}}</div>
-                  <div class="text" slot="rate">201 条评价</div>
+                  <div class="text" slot="rate" style="display: inline;"></div>
+                  <div class="text" slot="review"  style="display: inline;">201 条评价</div>
                   <div class="text" slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</div>
                   <div class="icons">
                     <div class="item">
@@ -71,7 +72,8 @@
                 </goods-item-new>
                 <goods-item-new v-else-if="showType === 'cd'" :arr="item.fieldSales" @getMoreItem="toSaleItem(item)" mode="horizontal" :i_width="i_width" :imgSrc="item.orgImages" :baseRate="10">
                   <div class="text" slot="title">{{item.orgName}}</div>
-                  <div class="text" slot="rate">201 条评价</div>
+                  <div class="text" slot="rate" style="display: inline;"><Icon color="rgb(233, 0, 33)" type="ios-star" v-for="n in 4" :key="n"></Icon><Icon color="rgb(233, 0, 33)" type="ios-star" v-if="9.4 >= baseRate"></Icon><Icon color="rgb(233, 0, 33)" type="ios-star-half" v-else></Icon></div>
+                  <div class="text" slot="review"  style="display: inline;">201 条评价</div>
                   <div class="text" slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</div>
                   <div class="icons">
                     <div class="item">
@@ -112,7 +114,8 @@
           <Col span="24">
             <goods-item :imgSrc="item.orgImages" :i_height="130" :baseRate="10"  @goodItemDetails="toSaleItem(item)">
               <span slot="title">{{item.orgName}}</span>
-              <span slot="rate">201 条评价</span>
+              <span slot="rate"></span>
+              <span slot="review">201 条评价</span>
               <span slot="address">{{item.city}}{{item.county}}{{item.adressDetail}}</span>
             </goods-item>
           </Col>
@@ -187,7 +190,7 @@ export default {
   // },
   methods: {
     handleChange(county, rcode_likeDouble) {
-      alert(this.topath);
+      // alert(this.topath);
       // this.fetchData('pw', county, rcode_likeDouble);
       switch (this.topath) {
         case 'bookCard':

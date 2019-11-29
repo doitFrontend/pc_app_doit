@@ -106,7 +106,7 @@ export default {
     fetchData() {
       let data = {
         orgId: '123456',
-        city_likeDouble: this.$route.params.location || localStorage.getItem('currentCity'),
+        // city_likeDouble: this.$route.params.location || localStorage.getItem('currentCity'),
         county: '',
       };
       this.$axios({

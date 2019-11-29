@@ -12,9 +12,12 @@
           <div class="title">
             <slot name="title"></slot>
           </div>
-          <div>
+          <div style="display: inline;">
             <Icon color="rgba(233,0,33,1)" type="ios-star" v-for="n in 4" :key="n"></Icon><Icon color="rgba(233,0,33,1)" type="ios-star" v-if="9.4 >= baseRate"></Icon><Icon color="rgba(233,0,33,1)" type="ios-star-half" v-else></Icon>
             <slot name="rate"></slot>
+          </div>
+          <div style="display: inline;margin-left:10px;">
+            <slot name="review"></slot>
           </div>
           <div>
             <slot name="address"></slot>

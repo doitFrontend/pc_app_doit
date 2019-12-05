@@ -2,11 +2,25 @@
   <div id="mall">
     <div class="container">
       <div class="inner">
+        <div>
+          <Row>
+            <Col :sm="4" :md="4" :lg="4"  class="leibie">
+              <div class="label">票类别 <span>|</span></div>
+            </Col>
+            <Col :sm="20" :md="20" :lg="20"  class="leibie2">
+              <RadioGroup v-model="default_button" type="button" @on-change="changeMallType">
+                <Radio label="所有"></Radio>
+                <Radio v-for="(item, i) in tempProductType" :key="i" :label="item"></Radio>
+              </RadioGroup>
+            </Col>
+          </Row>
+        </div>
+        <Divider />
         <div class="" style="margin:0 20px">
           <Row :gutter="16">
             <!-- TODO: 缺省页 -->
             <div v-if="!tempMallList.length" style="text-align: center;line-height:100px;">暂无此类型商品</div>
-            <Col v-else v-for="item in tempMallList" :key="item.productId" :sm="8" :md="8" :lg="8">
+            <Col v-else v-for="item in tempMallList" :key="item" :sm="8" :md="8" :lg="8">
               <div class="item_ticket">
                 <div class="ticket">
                   <div class="piece">
@@ -59,9 +73,57 @@ export default {
     return {
       MockData: {},
       tempMallList: [],
+      tempProductType: [],
+      default_button: '所有',
     };
   },
   methods: {
+    // 获取商品所有的类别
+    getProductType() {
+      let data = {
+        orgId: this.orgId,
+        orgId_inList: this.orgId,
+        type: 'sp',
+      };
+      this.$axios({
+        method: 'POST',
+        url: 'listApiProductTypeForPage.do',
+        data: data,
+      }).then(res => {
+        if (res.data.code === 200) {
+          for (var i = 0; i < res.data.rows.length; i++) {
+            this.tempProductType.push(res.data.rows[i].productTypeName);
+          }
+        } else {
+          this.$Message.warning(res.code);
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+    },
+    // 切换卡类别
+    changeMallType(label) {
+      console.log(label);
+      if (label !== '所有') {
+        this.tempMallList = this.mallList.filter(item => item.productPurchaseAndSale.productName === label);
+      } else {
+        this.tempMallList = this.mallList;
+      }
+    },
+    countPriz({ item, sign }) {
+      console.log(item);
+      if (sign === 'ADD') {
+        this.setToCart(item);
+      } else {
+        this.delFromCart(item);
+      }
+    },
+    setToCart(item) {
+      this.$store.commit('addTicket', item);
+    },
+    delFromCart(item) {
+      this.$store.commit('delTicket', item);
+    },
     toBookTicketDetails(item) {
       console.log(item);
       this.$router.push({
@@ -77,6 +139,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getMallList');
+    this.getProductType(); // 获取商品类别
     // 数据依赖于computed里的数据，computed数据来源于store，
     // 没有延迟的时候就是默认值，不是预期效果 TODO:
     setTimeout(() => {

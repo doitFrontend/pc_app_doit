@@ -9,7 +9,7 @@
     }
     #bookTicket .leibie,#bookCard .leibie, #gym .leibie{position: relative;line-height:36px}
     // #bookTicket .leibie2,#bookCard .leibie2,#BookField .leibie2,#gym .leibie2,{position: relative;left:-20px}
-    #bookTicket .ivu-radio-wrapper,#bookCard .ivu-radio-wrapper, #BookField .ivu-radio-wrapper, #gym .ivu-radio-wrapper{
+    #bookTicket .ivu-radio-wrapper,#bookCard .ivu-radio-wrapper, #BookField .ivu-radio-wrapper, #mall .ivu-radio-wrapper, #gym .ivu-radio-wrapper{
         font-size: 14px;
         line-height: 28px;
         height: 28px;
@@ -20,14 +20,14 @@
         border:none;
         letter-spacing:2px;
         }
-        #bookTicket .ivu-radio-group-button .ivu-radio-wrapper:after, .ivu-radio-group-button .ivu-radio-wrapper:before,#bookCard .ivu-radio-group-button .ivu-radio-wrapper:after, .ivu-radio-group-button .ivu-radio-wrapper:before,#BookField .ivu-radio-group-button .ivu-radio-wrapper:after, .ivu-radio-group-button .ivu-radio-wrapper:before,#gym .ivu-radio-group-button .ivu-radio-wrapper:after, .ivu-radio-group-button .ivu-radio-wrapper:before{width: 0;}
+        #bookTicket .ivu-radio-group-button .ivu-radio-wrapper:after, .ivu-radio-group-button .ivu-radio-wrapper:before,#bookCard .ivu-radio-group-button .ivu-radio-wrapper:after, .ivu-radio-group-button .ivu-radio-wrapper:before,#BookField .ivu-radio-group-button .ivu-radio-wrapper:after, .ivu-radio-group-button .ivu-radio-wrapper:before,#mall .ivu-radio-group-button .ivu-radio-wrapper:after, .ivu-radio-group-button .ivu-radio-wrapper:before,#gym .ivu-radio-group-button .ivu-radio-wrapper:after, .ivu-radio-group-button .ivu-radio-wrapper:before{width: 0;}
     #bookTicket .ivu-radio-wrapper:first-child,#bookCard .ivu-radio-wrapper:first-child, #BookField .ivu-radio-wrapper:first-child, #gym .ivu-radio-wrapper:first-child{
         border-radius: 15px;
         }
     #bookTicket .ivu-radio-wrapper:last-child,#bookCard .ivu-radio-wrapper:last-child {
         border-radius: 15px;
     }
-    #bookTicket .ivu-radio-group-button .ivu-radio-wrapper-checked,#bookCard .ivu-radio-group-button .ivu-radio-wrapper-checked,#BookField .ivu-radio-group-button .ivu-radio-wrapper-checked,#gym .ivu-radio-group-button .ivu-radio-wrapper-checked{
+    #bookTicket .ivu-radio-group-button .ivu-radio-wrapper-checked,#bookCard .ivu-radio-group-button .ivu-radio-wrapper-checked,#BookField .ivu-radio-group-button .ivu-radio-wrapper-checked,#mall .ivu-radio-group-button .ivu-radio-wrapper-checked,#gym .ivu-radio-group-button .ivu-radio-wrapper-checked{
       padding: 0 13px 0 15px;color:#fff;box-shadow:none;background:rgba(0,161,233,1);
     }
     #gymDetails .ivu-tabs-bar .ivu-tabs-nav-container{

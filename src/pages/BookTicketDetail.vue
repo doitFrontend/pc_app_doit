@@ -109,11 +109,11 @@
               </div>
               <div>
                 <label>有效期</label>
-                <p>购买后90天内有效</p>
+                <p>{{JSON.parse(gymInfo.dictionaries)[20]}}</p>
               </div>
               <div>
                 <label>使用时间</label>
-                <p>10:00~22:00</p>
+                <p>{{JSON.parse(gymInfo.dictionaries)[21]}}</p>
               </div>
               <div>
                 <label>预约信息</label>
@@ -125,7 +125,7 @@
               </div>
               <div>
                 <label>适用人群</label>
-                <p>男女通用</p>
+                <p>{{JSON.parse(gymInfo.dictionaries)[3]}}</p>
               </div>
               <div>
                 <label>使用规则</label>
@@ -209,6 +209,7 @@ export default {
     };
   },
   created() {
+    console.log(this.$route.query);
     this.gymInfo = this.$route.query;
   },
   mounted() {

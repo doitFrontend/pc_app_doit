@@ -11,7 +11,7 @@
           <input v-if="!isCountLog" type="text" v-model="name" placeholder="请输入用户姓名">
           <input type="text" v-model="password" placeholder="请输入密码">
           <input  v-if="!isCountLog" type="button" value="注册"  id="register" @click="register">
-          <input  v-if="isCountLog" type="button" value="登录" @click="signIn" id="signIn">
+          <input  v-if="isCountLog" type="button" value="登录" @click="login" id="login">
           <div v-if="!isCountLog" class="rcode" @click="getCode">{{codeText}}</div>
           <div v-if="!isCountLog && isFloat" class="rcode" style="opacity: 0">遮罩</div>
         </div>
@@ -22,7 +22,7 @@
     </div>
 </template>
 <script>
-import Qs from 'qs';
+// import Qs from 'qs';
 export default {
   name: 'Login',
   data() {
@@ -55,30 +55,6 @@ export default {
     this.timer && clearInterval(this.timer);
   },
   methods: {
-    // sendIDCode() {
-    //   if (this.isClickAble) {
-    //     this.timer = setInterval(() => {
-    //       if (this.default_scondes === 0) {
-    //         this.isFloat = false;
-    //         this.text = '发送验证码';
-    //         this.default_scondes = 60; // 重置定时器 ton
-    //         clearInterval(this.timer);
-    //       } else {
-    //         this.countDown();
-    //       }
-    //     }, 1000);
-    //   } else {
-    //     this.$Message.warning({
-    //       content: '请填写正确的手机号码',
-    //       duration: 3,
-    //     });
-    //   }
-    // },
-    // countDown() {
-    //   this.isFloat = true;
-    //   this.default_scondes--;
-    //   this.text = `已发送(${this.default_scondes}s)`;
-    // },
     getCode() {
       // 以下赋值采用that可，this不可为何？
       let countdown = 60;
@@ -86,34 +62,41 @@ export default {
       let data = {
         phone: that.phoneNum,
       };
-      that.$axios({
-        method: 'POST',
-        url: '/sendmsg/doit.do',
-        data: data,
-      }).then(res => {
-        that.spinShow = false;
-        if (res.data.code === 200) {
-          that.codeSn = res.data.code;
-          if (that.codeText.indexOf('s') === -1) {
-            that.interval_timer = setInterval(function() {
-              if (countdown === 0) {
-                that.codeText = '重新获取验证码';
-                countdown = 60;
-                clearInterval(that.interval_timer);
-                that.interval_timer = null;
-              } else {
-                countdown--;
-                that.codeText = countdown + 's';
-                console.log(that.codeText);
-              }
-            }, 1000);
+      if (this.isClickAble) {
+        that.$axios({
+          method: 'POST',
+          url: '/sendmsg/doit.do',
+          data: data,
+        }).then(res => {
+          that.spinShow = false;
+          if (res.data.code === 200) {
+            that.codeSn = res.data.code;
+            if (that.codeText.indexOf('s') === -1) {
+              that.interval_timer = setInterval(function() {
+                if (countdown === 0) {
+                  that.codeText = '重新获取验证码';
+                  countdown = 60;
+                  clearInterval(that.interval_timer);
+                  that.interval_timer = null;
+                } else {
+                  countdown--;
+                  that.codeText = countdown + 's';
+                  console.log(that.codeText);
+                }
+              }, 1000);
+            }
+          } else {
+            that.$Message.warning(res.data.data);
           }
-        } else {
-          that.$Message.warning(res.data.data);
-        }
-      }).catch(error => {
-        console.log(error);
-      });
+        }).catch(error => {
+          console.log(error);
+        });
+      } else {
+        this.$Message.warning({
+          content: '请填写正确的手机号码',
+          duration: 3,
+        });
+      }
     },
     signIn() {
       this.spinShow = true;
@@ -123,7 +106,7 @@ export default {
       }
     },
     moreTodo(res) {
-      localStorage.setItem('username', res.data.username);
+      localStorage.setItem('username', res.data.data.memberName);
       let temp_url = decodeURIComponent(this.$router.currentRoute.fullPath); // /login?redirect=/checkout
       let url = '';
       if (temp_url.indexOf('?') !== -1) { // 到支付页面 // 登录成功后，跳转刚刚购买的页面
@@ -143,36 +126,45 @@ export default {
         memberName: this.name,
         orgId: '123456',
       };
-      this.$axios({
-        method: 'POST',
-        url: 'addOrUpdateMemberZcr.do',
-        data: data,
-      }).then(res => {
-        console.log(res);
-        if (res.data.code === 200) {
-          this.$Message.warning('会员注册成功');
-        } else {
-          this.$Message.warning(res.data.data);
-        }
-      }).catch(error => {
-        console.log(error);
-      });
+      if (this.password) {
+        this.$axios({
+          method: 'POST',
+          url: 'addOrUpdateMemberZcr.do',
+          data: data,
+        }).then(res => {
+          console.log(res);
+          if (res.data.code === 200) {
+            this.$Message.warning('会员注册成功');
+            this.login();
+          } else {
+            this.$Message.warning(res.data.data);
+          }
+        }).catch(error => {
+          console.log(error);
+        });
+      } else {
+        this.$Message.warning({
+          content: '请填写密码',
+          duration: 3,
+        });
+      }
     },
     login() {
       let data = {
-        username: this.phoneNum,
-        password: this.password,
-        orgId: '0be0cef1d45f11e984598866394de9ee',
+        memberPhone: this.phoneNum,
+        memberPassword: this.password,
+        orgId: '123456',
       };
       this.$axios({
         method: 'POST',
-        url: 'login.do',
+        url: 'memberLogin.do',
         data: data,
-        transformRequest: [function(data) {
-          return Qs.stringify(data);
-        }], // 重要
+        // transformRequest: [function(data) {
+        //   return Qs.stringify(data);
+        // }], // 重要
       }).then(res => {
         this.spinShow = false;
+        // console.log(res.data);
         if (res.data.code === 200) {
           this.moreTodo(res);
         } else {
@@ -295,7 +287,7 @@ $input_padding_left_right: 30px;
                 color: #999;
             }
         }
-        #signIn,#register {
+        #login,#register {
                 margin-top: 64px;
                 padding: 0;
                 background: $g_default_color;

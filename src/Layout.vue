@@ -18,7 +18,7 @@
             </router-link>
             <div v-else @mouseleave="handleMouseleave">
               <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-                <div :key="0" @mouseenter="handleMouseenter">欢迎你:{{isSignIn}}</div>
+                <div :key="0" @mouseenter="handleMouseenter">欢迎你：{{isSignIn}}</div>
                 <div v-show="!isNone" :key="1" @click="toPersonalCenter">个人中心</div>
                 <div v-show="!isNone" :key="2" @click="signOut">退出登录</div>
               </transition-group>

@@ -212,7 +212,7 @@ const actions = {
       deliveryTerminal: '门户端',
       gamesNum: '',
       orgId: localStorage.getItem('orgId'),
-      productTypeId: '1eaf327dd46211e984598866394de9ee',
+      // productTypeId: '1eaf327dd46211e984598866394de9ee',
       orgId_inList: ['0be0cef1d45f11e984598866394de9ee'],
     };
     $axios({

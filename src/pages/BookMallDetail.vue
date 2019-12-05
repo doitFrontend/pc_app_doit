@@ -12,7 +12,7 @@
                   <md-card-media  style="height: 500px"> -->
                     <!-- swiper1 -->
                     <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop">
-                      <swiper-slide class="slide-1"></swiper-slide>
+                      <!-- <swiper-slide class="slide-1" v-bind:style="{backgroundImage:'url(' + gymInfo.productPurchaseAndSale.productImages + ')'}"></swiper-slide> -->
                       <swiper-slide class="slide-2"></swiper-slide>
                       <swiper-slide class="slide-3"></swiper-slide>
                       <swiper-slide class="slide-4"></swiper-slide>
@@ -22,7 +22,7 @@
                     </swiper>
                     <!-- swiper2 Thumbs -->
                     <swiper :options="swiperOptionThumbs" class="gallery-thumbs" ref="swiperThumbs">
-                      <swiper-slide class="slide-1"></swiper-slide>
+                      <!-- <swiper-slide class="slide-1" v-bind:style="{backgroundImage:'url(' + gymInfo.productPurchaseAndSale.productImages + ')'}"></swiper-slide> -->
                       <swiper-slide class="slide-2"></swiper-slide>
                       <swiper-slide class="slide-3"></swiper-slide>
                       <swiper-slide class="slide-4"></swiper-slide>
@@ -33,9 +33,9 @@
               </template>
             </div>
             <div  class="right">
-              <h3>{{gymInfo.productPurchaseAndSale.productName}}</h3>
+              <!-- <h3>{{gymInfo.productPurchaseAndSale.productName}}</h3> -->
               <div class="info">
-                <div><label>价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格</label><span>￥{{gymInfo.productSalePrice}}</span></div>
+                <!-- <div><label>价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格</label><span>￥{{gymInfo.productSalePrice}}</span></div> -->
                 <Row>
                   <Col :sm="12" :md="12" :lg="12"  class="leibie">
                     <template>
@@ -46,8 +46,8 @@
                     已售25%
                   </Col>
                 </Row>
-                <div><label>项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目</label><span>{{JSON.parse(gymInfo.codeReplay)[1]}}</span></div>
-                <div><label>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</label><span>{{JSON.parse(gymInfo.codeReplay)[3]}}</span></div>
+                <!-- <div><label>项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目</label><span>{{JSON.parse(gymInfo.codeReplay)[1]}}</span></div>
+                <div><label>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</label><span>{{JSON.parse(gymInfo.codeReplay)[3]}}</span></div> -->
               </div>
               <ul style="margin:10px 0 20px;">
                 <li>
@@ -78,22 +78,22 @@
           <div class="instructions">
             <h4><i></i>购买须知</h4>
             <div>
-              <div>
+              <!-- <div>
                 <label>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌</label>
-                <p>李宁(LI-NING)</p>
-              </div>
-              <div>
+                <p>{{gymInfo.productPurchaseAndSale.productName}}</p>
+              </div> -->
+              <!-- <div>
                 <label>货&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</label>
-                <p>LSMP151</p>
+                <p>{{gymInfo.productPurchaseAndSale.productName}}</p>
               </div>
               <div>
                 <label>使用人群</label>
-                <p>通用</p>
+                <p>{{JSON.parse(gymInfo.dictionaries)[20]}}</p>
               </div>
               <div>
                 <label>吊&nbsp;&nbsp;牌&nbsp;&nbsp;价</label>
-                <p>36.00</p>
-              </div>
+                <p>{{gymInfo.productSalePrice}}</p>
+              </div> -->
               <div>
                 <label>上市时间</label>
                 <p>2019年</p>
@@ -115,7 +115,7 @@
           <div class="introduce">
             <h4><i></i>商品介绍</h4>
             <div class="img">
-              <img src="../assets/introduce.png" />
+              <!-- <img v-bind:style="{backgroundImage:'url(' + gymInfo.productPurchaseAndSale.productImages + ')'}"> -->
             </div>
           </div>
         </div>
@@ -184,6 +184,7 @@ export default {
     };
   },
   created() {
+    console.log(this.$route.query);
     this.gymInfo = this.$route.query;
   },
   mounted() {

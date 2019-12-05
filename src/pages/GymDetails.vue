@@ -18,8 +18,8 @@
               </div>
               <div class="moreInfo">
                 <Row>
-                  <Col span="3"><label>场馆场地：</label></Col>
-                  <Col span="21" style="margin-left:-20px">日照游泳馆总建筑面积29200平方米，设有3500个坐席，主要由游泳馆、跳水馆、训练馆、戏水池等组成。该方案采用“阳光、海浪、沙滩、珍贝”日照独特的海滨城市元素，以“金色沙滩”为背景勾勒出阳光下海浪亲吻沙滩爱抚贝壳的画面。2010第二届中国水上运动会将在这里举行</Col>
+                  <Col span="3"><label>场馆介绍：</label></Col>
+                  <Col span="21" style="margin-left:-20px">{{gymInfo.orgDec}}</Col>
                 </Row>
               </div>
               <div class="inside">
@@ -174,8 +174,8 @@
               </div>
           </div>
           <div class="sale_right">
-            <div style="padding:20px;text-align: center;background: #fff;" class="">
-              <img data-v-64778763="" src="/static/img/erweima.fccf08c.jpg" alt="" srcset="">
+            <div style="padding:20px;text-align: center;background: #fff;">
+              <img  v-bind:style="{backgroundImage:'url(' + WechatQrcodeList + ')'}">
               <p>关注场馆公众号</p>
             </div>
             <div>
@@ -234,6 +234,7 @@ export default {
   data() {
     return {
       gymInfo: {},
+      WechatQrcodeList: [],
       default_value: 0,
       center: {lng: 0, lat: 0},
       zoom: 17,
@@ -257,6 +258,31 @@ export default {
         };
       });
     },
+    // 获取票卡所有的类别
+    getOrgWechatQrcode() {
+      let data = {
+        orgId: '0be0cef1d45f11e984598866394de9ee',
+      };
+      this.$axios({
+        method: 'POST',
+        url: 'getOrgWechatQrcode.do',
+        data: data,
+      }).then(res => {
+        if (res.data.code === 200) {
+          console.log(1111);
+          console.log(res.data.data);
+          this.WechatQrcodeList = res.data.data;
+          console.log(this.WechatQrcodeList);
+        } else {
+          this.$Message.warning(res.code);
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+    },
+  },
+  mounted() {
+    this.getOrgWechatQrcode(); // 获取票卡类别
   },
 };
 </script>
@@ -465,6 +491,7 @@ export default {
         img{
           width: 130px;
           height: 130px;
+          background-size:cover;
         }
       }
     }
